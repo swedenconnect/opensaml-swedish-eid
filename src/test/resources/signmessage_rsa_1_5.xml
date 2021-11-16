@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saml2p:AuthnRequest
+  Destination="https://idp.sandbox.swedenconnect.se/idp/profile/SAML2/POST/SSO"
+  ForceAuthn="true" ID="_3aa92929392c2f58badc0ed1e947020e" IsPassive="false"
+  IssueInstant="2019-02-15T13:46:40.803Z"
+  ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Version="2.0"
+  xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol">
+  <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">https://eid2csig.konki.se/sign</saml2:Issuer>
+  <ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+    <ds:SignedInfo>
+      <ds:CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+      <ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+      <ds:Reference URI="#_3aa92929392c2f58badc0ed1e947020e">
+        <ds:Transforms>
+          <ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+          <ds:Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" />
+        </ds:Transforms>
+        <ds:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+        <ds:DigestValue>1auQJbszdc1tiYpodhe6SZ6MDMI=</ds:DigestValue>
+      </ds:Reference>
+    </ds:SignedInfo>
+    <ds:SignatureValue>
+      aIlXtsvqrGrhlgDwuqTrLB/IXIXjxj6uD0IgekfPJGoPgmc/Ep9hILVUo4og8W49Y7VUUZKK5Nzq
+      AIDDJkfDCqmZ3Pj7uMuV2bzjq4ZdZTxWK73cxVevRB36nsfOH/SKgv5wsTyXwQpik62MKvXs8IpR
+      VTUB5UEWiu4KguvZKNZd1Sc/bVxTnibotuoPzDakI3PF0K3YkUXbOKM9aHT28kcg21B7B0hu7aMT
+      AXnqJVHwwaoULcIf9h8L5PhGuYsH4AyElcFJI9NBInRxFhBJdE3RUQ8aO6O2gxs0HOCKNA6AlP+L
+      PtFjt6apAvnR/UD+ZAHxobNWiVX7mE9+BRI8Nw==
+    </ds:SignatureValue>
+    <ds:KeyInfo>
+      <ds:X509Data>
+        <ds:X509Certificate>MIIDIzCCAgsCBgFSOj9mhTANBgkqhkiG9w0BAQUFADBVMR0wGwYDVQQDExRFaWQyIFNpZ25pbmcgU2VydmljZTEnMCUGA1UEChMeU3dlZGlzaCBFLUlkZW50aWZpY2F0aW9uIEJvYXJkMQswCQYDVQQGEwJTRTAeFw0xNjAxMTMwNzA5MzlaFw0yMTAxMTMwOTA5MzlaMFUxHTAbBgNVBAMTFEVpZDIgU2lnbmluZyBTZXJ2aWNlMScwJQYDVQQKEx5Td2VkaXNoIEUtSWRlbnRpZmljYXRpb24gQm9hcmQxCzAJBgNVBAYTAlNFMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr8PEIxU5l4bsQbZPLBqc/L14hQ9Wm2iCtOMUiUvt+RA5HyrtdOuP4+QffMP42F652IBDoHlv9XnA5EdMYdFth5sFSZ+qK6sHBxOPaxnJ54leZJcUOUyVIA+xe3UAiaFdQ7Tvv2YGtgKkpAAsWnKdTZxpc9xr5AkP3OGvMku1ypm33licSDhLWUDWHyHa9TdKK0szealorm+PeWWd9oymxOADlJRFAbCe9oYFcLXLtrZ6f7LjrCTDWXm0GBFy4INey1XsJr/BlTReSuxzNcAFmt1hTXjiwul4hK1PKF4P1hLbJaGJMlpGXWOKrsgfl/NgIsOp8Lp+57NNgq7Vg0zXEQIDAQABMA0GCSqGSIb3DQEBBQUAA4IBAQCPmio8wGfSAwQqW13y4oY+xlzmDDlax1q3TY/7TOWzD0sWz9byIAp/avJMJPDNcCZK5+wnOJd92cIXwMrypasGsubN6w9ErFbGRnTvbReUaBIcGeLQOcQkM89QfdL02ZHC5Xg8OxJzRubBp6XZlZIKbv04ZZYd5AoLRNwl5smcyaCBwYnmvbNcgL7XiyCFyxrysD+mB4mJp/Rhi/h48E15PbANte035aOvZJl4Vwzq0qG4Vh8kPKDeZxREC60n/lV+AN3hrIzrcdiwVnrM/woEoZegGIjqydafgVBRgg9Z+LDFQrF3MgRAgDsO2YoMS1XY8jJWkhIY9EFnS1aIFFMw</ds:X509Certificate>
+      </ds:X509Data>
+    </ds:KeyInfo>
+  </ds:Signature>
+  <saml2p:Extensions>
+    <ns:SignMessage
+      DisplayEntity="http://dev.test.swedenconnect.se/idp" MimeType="text"
+      MustShow="true" xmlns:dss="urn:oasis:names:tc:dss:1.0:core:schema"
+      xmlns:ns="http://id.elegnamnden.se/csig/1.1/dss-ext/ns">
+      <ns:EncryptedMessage>
+        <xenc:EncryptedData Type="http://www.w3.org/2001/04/xmlenc#Element" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+          <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc" />
+          <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+            <xenc:EncryptedKey>
+              <xenc:EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5" />
+              <xenc:CipherData>
+                <xenc:CipherValue>iUWD7y6Dtjrcbu3fJYaM1UV9rDdg4Ba3iuf3/SIho3KIflz0vkXX531slJmatRptsb1lOIHjpVHSTfeh3ZfHY1cwLHNBM38C1GmcO5QjwmQH6MzI6nreR4M9d+BsPkki/FCW8UaPCpctHQqpuVq3KfhEnkKFa2NNPGCOeHkoYPV/A666gnuQW3K54qIVPM3z6QRhfaaOlwjHHHq7OPSPIyeTutv/SiSbolTPw3/qRjYWiv3RMq73AaIJWGGXvaPB9hB6C7Wai6sJQmlJZGCAINjjdcT1Svw1ajy9m64nlrtt8f0vRfT5pagae+iF6eU3jZzNuWeLmqUp5BMGKLzkscdBelhohcq8XiaZtRZdAKcUWe4nsZfqMprqSfA3XUIiuqYAHbKXM44BWghd3Q4035VdFgfxY7as4gRv4nDpdWkBiTeYdwmMHTIhPlPfvYvlCPN222b0Ndbwa0fhm9V5lX4qo0g+mERxRX3DipppQF//eU2bt8Ius3V5y488jaPGkdeITt7yuRRo9d9aVXzFIqnjfeaasspH1Zn1yRnIx12Vlcfw+SFQq+/GKW9AVH5qTt9/KOmULvqiWfojxYj2qXGOoPWTV3J1gGjYuiDxsNA+9Zmb2aY5oQFJi4hFraMSCr4e1F15j3wrP784irx6yXrrOXIZ7DRNMNBk9nm1hd4=</xenc:CipherValue>
+              </xenc:CipherData>
+            </xenc:EncryptedKey>
+          </ds:KeyInfo>
+          <xenc:CipherData>
+            <xenc:CipherValue>GoZlzcC+pfF0gsuNcncOUcGS/kfTKYOK+uaGzhjQFUCNJTtvZWyX7xTVFapbyE86Hnvr7XjCxYl6CEPZS8Zv0FSLWsn8g1CevfsWhLMPSHIvGl6L3eXsHlN4mEPAVPngn3BNMh4nY8IsVBmFjqzNVzGtgKb5S/KQgeeto6RrtaRnyYiSvq0uEQ35LCRPaMHKxA3IEyX0YoBkx5n7usQfwktvuYPkfpkjrmqGMZ2PAz8kJFC9mnH5czAYudWYNIAZwDX+UX+ZJEFC9nd84N4qJOEEUhqcOQk0MIlV9SnKVhoPQp3iy2DOV4B5fes3gVSHF8kE8IbtK2IiLJG5cIQ9mWBzDIdYICn+PHR/xbmiWpZfFxzSt2KaHy3Kzj8guo5oIBxah50HuC4l859vVByYmFDxQ6AsV9j0Uzg+j/DFtsJgLRyCkuukiS7hszcezgkh1Ql7wExa5sJAijmzkkJRPw==</xenc:CipherValue>
+          </xenc:CipherData>
+        </xenc:EncryptedData>
+      </ns:EncryptedMessage>
+    </ns:SignMessage>
+    <ns:SADRequest ID="_f55406c26a4ff886f00b179327f46b4a"
+      xmlns:ns="http://id.elegnamnden.se/csig/1.1/sap/ns">
+      <ns:RequesterID>https://eid2csig.konki.se/sign</ns:RequesterID>
+      <ns:SignRequestID>3aa92929392c2f58badc0ed1e947020e</ns:SignRequestID>
+      <ns:DocCount>1</ns:DocCount>
+      <ns:RequestedVersion>1.0</ns:RequestedVersion>
+    </ns:SADRequest>
+  </saml2p:Extensions>
+  <saml2p:NameIDPolicy AllowCreate="true" />
+  <saml2p:RequestedAuthnContext Comparison="exact">
+    <saml2:AuthnContextClassRef
+      xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://id.elegnamnden.se/loa/1.0/loa3-sigmessage</saml2:AuthnContextClassRef>
+  </saml2p:RequestedAuthnContext>
+</saml2p:AuthnRequest>

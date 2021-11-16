@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saml2p:AuthnRequest
+  xmlns:saml2p="urn:oasis:names:tc:SAML:2.0:protocol"
+  AssertionConsumerServiceURL="https://eid.litsec.se/svelegtest-sp/saml2/post/6"
+  Destination="https://qa.test.swedenconnect.se/idp/profile/SAML2/Redirect/SSO"
+  ForceAuthn="true" ID="_DIAi8Tpaxoiq9MoSoCXedKYE2bb7xkd0yBUkblmE"
+  IsPassive="false" IssueInstant="2019-02-15T13:30:38.688Z"
+  ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Version="2.0">
+  <saml2:Issuer xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion"
+    Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity">https://eid.litsec.se/sp/sigservice/6</saml2:Issuer>
+  <saml2p:Extensions>
+    <csig:SignMessage
+      xmlns:csig="http://id.elegnamnden.se/csig/1.1/dss-ext/ns"
+      DisplayEntity="http://qa.test.swedenconnect.se/idp" MimeType="text"
+      MustShow="true">
+      <csig:EncryptedMessage>
+        <xenc:EncryptedData
+          xmlns:xenc="http://www.w3.org/2001/04/xmlenc#"
+          Id="_83743cadd70d6f8b8d5f7d8b5a7549f9"
+          Type="http://www.w3.org/2001/04/xmlenc#Element">
+          <xenc:EncryptionMethod
+            Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc"
+            xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" />
+          <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+            <xenc:EncryptedKey
+              Id="_6cfc76286162d48a167cdb64fe7a8b3b"
+              xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+              <xenc:EncryptionMethod
+                Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p"
+                xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                <ds:DigestMethod
+                  Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"
+                  xmlns:ds="http://www.w3.org/2000/09/xmldsig#" />
+              </xenc:EncryptionMethod>
+              <ds:KeyInfo>
+                <ds:X509Data>
+                  <ds:X509Certificate>MIIFezCCA2OgAwIBAgIJALn6feCvwdi5MA0GCSqGSIb3DQEBCwUAMFQxLDAqBgNVBAMMI3JlZmlk
+                    cC0xLnFhLnN2ZWlkYXMuc2UgKEVuY3J5cHRpb24pMRcwFQYDVQQKDA5Td2VkZW4gQ29ubmVjdDEL
+                    MAkGA1UEBhMCU0UwHhcNMTgwODE1MTMwNzAzWhcNMjgwODEyMTMwNzAzWjBUMSwwKgYDVQQDDCNy
+                    ZWZpZHAtMS5xYS5zdmVpZGFzLnNlIChFbmNyeXB0aW9uKTEXMBUGA1UECgwOU3dlZGVuIENvbm5l
+                    Y3QxCzAJBgNVBAYTAlNFMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAv3WOPfH7vvxt
+                    SeVF/UZ05/W7MM8W5lF4Fr74TTAAHQo5M9ECwJPBF/4+Ab/N+8coiOrZXztrfMyP+Ob5EvA+//Fj
+                    TNswrf1buhW+2XesjCqtvXfCxCEbDlNWbUSPSFZ7M5idn1zi0BgVmK5+tpSTCfL43qmjCexD5F6v
+                    aX4c2jDl24+9HaRq0gvSU/ZEaxIlABnyS59ps6cb5YYJRy53uJz7v34IevNRMel9dKFqh4QXZc0M
+                    cCP31UrNyVkDOcI/kj0duK3b7/A+Cj0VuyJGpJcV9kTO1Rqyd/Id0AjUWjqRSlJTX+arPqE8cZD/
+                    ouDevTEqlGJf72Ja4nB97QWCRtCmomcSPBjwGt9weqCNXkKqfqfuLhVEuxbov4gwL1NDhKur04KU
+                    RIVvhOwU+BuAOar2i8HFt8GIkiDLrbYEGspBln5INjthlfvZULL7Qi+FARKycRWndzBtehV9YoqS
+                    3DM+erJmi8m4J4uDVWPn9yQqF9xN4v/VwupIbUZ2o6ie8qBNavGsqTI2dto6erJ9136Vv5Mol7Bk
+                    bbyqirkO3/8ukaaJKMURz7lQO0Xs/NO74DPJ29ybaeOIvzDfxOWjnPi9yEZ7GQVsHnfqdqVOErdq
+                    Rx2ubu71f2BQXvlQbKJjBQ7dXIs+yKSxjE7SVc+iVLpw6PzT2ABEhPci+uypj/0CAwEAAaNQME4w
+                    HQYDVR0OBBYEFLYhisYGCtET5DerzPzVlHT2UQkaMB8GA1UdIwQYMBaAFLYhisYGCtET5DerzPzV
+                    lHT2UQkaMAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggIBAJhjYTGQbLL2yKt027vjrcol
+                    U8Rs/Y1QoKhvGKaWm7K7vXRmAV1CvfIamYOzC23DIRwjqOQO9qGrfF6mg6vGAU+qsDKDlfl83oBz
+                    U+fz2zYTIA8ebEWCCtUk+kfw3vDThbxga/wwNIJoXcJ0FNOaNEDmsG8hpVafmwvNL3bcKNe9ojSa
+                    4TkNU9OxLOEWjsOMLhlxJ5pbDpXQWth6lXGaItdzq7R0up2ohpqzHZDtBaRlFO88+LHJr9xvkYBl
+                    L5chIilM3TaOatLS8jnmaoIsbTw2DMxWLhiwdel5SKPzKSnwo837y18FIQUJjfRgfIdyII4RiVXj
+                    ybwgDtDml7mQlZ6Z0f1Q2xA7XmqfsAj4raSIrkuZKUskIt6T/HP3k9gxlUStUnVy+rwVzJJ+/KO5
+                    vhS/wZq/omntVnh5EnLDITBi0Lj4djvvOzVxH9kK8vzNDWNHgTCcgO7FAufSx2CLQMZUzhLp7ta6
+                    ivpFOhU8162MNKRxmdQZDOwrSFQ88CFwJ1r4qr79InRKbQ4fnkLWhPjGXuy8KpoCCtTPAkm5GBcI
+                    Wj60ANfNcHpml4irxs4Ko8+A5PsEgGQmrvKAwNpyeetGQwjT/Na1e2n4f+5RSRFaZ8u7kmBCYDSe
+                    L8DcLMjNtuHOH8GUaYch4vLqACmlMxYZT5O4i45vRorWJHyTiuWt
+                  </ds:X509Certificate>
+                </ds:X509Data>
+              </ds:KeyInfo>
+              <xenc:CipherData
+                xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+                <xenc:CipherValue>gdwMphBjUkPO+p3pJR88gRtzAU4zBMSHiuGhNo0WS8KAglylBRuZ3hS5MT8kJqBR/wkZLMgdH76eV1dAqphf4o9TCTfgjY911Gh9hPmV48YeeYSshtlggMyHRjJwZMDIRgAGDXUJeK1Rg24NK2onqM5c7b+9clkan1Vfi4/x2gLc2i/7mVHkIEBKq3tZPcJ+arkeTiRDkyRd2CQQDdkp08mRZIvlMXWsiz63ISadcrBdtK0Qtstkfd8DUPJJpaHz/bm/Mo3LLUZ5dMsFYUo0ONwVMILujzWVBAizGtBic0656tqsPk8CsqcE0Jza95nIZ1kWltMMcASAkR5Zw6MJBWf8kvE5oHkUE0xZ8r2zq7OTrITbX3nXQSNWGhx6LU/JjDNWvmXa1y5BMzo2PVji7POwTMmhNyjTJgn2DuXQuKfu6opkWwgxngBPP+i8o5lP+vx1BJcfnLgRuBoihuhsWy6qKGcz67CEJ9VKdhfOz9TSH1fl77kOD9UBbUnGHXGIjMXubkX6mNJ+maEqQaSCBLSIUhvL0S0g4P8+KxtiDCCdkpCQ55PUIVo7DUUB1OR8cITNMM9UMXKpw0EEZbVd5fiRSGQOmnG1ljnAMeKqg0yMiMiIZlUngONcxNvNy1o2EGMtj+UhfHyerMbIrCyU4Q+ia3VOtwQkzQpfHDT6haA=
+                </xenc:CipherValue>
+              </xenc:CipherData>
+            </xenc:EncryptedKey>
+          </ds:KeyInfo>
+          <xenc:CipherData
+            xmlns:xenc="http://www.w3.org/2001/04/xmlenc#">
+            <xenc:CipherValue>qRwVqH6OBnS2dbQLggupoBS26TgORBCLJH6/v5xH2JZws9WIh0rBW4/jed1/qdUyRE7x2kM5F3dD/MyJY/yzve7NpUlCRFezCgZbaIln4ykXJ5WCxJWzQrhGiglBHh58nYoZES6EXgaGLwoRQ1fIFU0CHIMtFC5u7J2iDDdbTr8MtiAhJLyi8tAvOXwOpGzNXU3pqtvFrRbxr4oLUWJWhYBN7doagLOBMbgz59nAMc2q7VHHjhjlZs+50id8Tchz
+            </xenc:CipherValue>
+          </xenc:CipherData>
+        </xenc:EncryptedData>
+      </csig:EncryptedMessage>
+    </csig:SignMessage>
+  </saml2p:Extensions>
+  <saml2p:NameIDPolicy AllowCreate="true"
+    Format="urn:oasis:names:tc:SAML:2.0:nameid-format:persistent" />
+  <saml2p:RequestedAuthnContext Comparison="exact">
+    <saml2:AuthnContextClassRef
+      xmlns:saml2="urn:oasis:names:tc:SAML:2.0:assertion">http://id.elegnamnden.se/loa/1.0/loa3-sigmessage
+    </saml2:AuthnContextClassRef>
+  </saml2p:RequestedAuthnContext>
+</saml2p:AuthnRequest>

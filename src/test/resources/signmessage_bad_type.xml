@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthnRequest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="_cf83e733-ceb3-4094-8fdf-2f823cbb8dfa" Version="2.0"
+  IssueInstant="2019-02-15T12:42:24Z"
+  Destination="https://idp.sandbox.swedenconnect.se/idp/profile/SAML2/Redirect/SSO"
+  ForceAuthn="false"
+  ProtocolBinding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+  AssertionConsumerServiceURL="https://dss.test.underskriftstjanst.se/Sign/ContinueSigning"
+  xmlns="urn:oasis:names:tc:SAML:2.0:protocol">
+  <Issuer Format="urn:oasis:names:tc:SAML:2.0:nameid-format:entity"
+    xmlns="urn:oasis:names:tc:SAML:2.0:assertion">https://dss.test.underskriftstjanst.se/Metadata/Get/Pensionsmyndigheten</Issuer>
+  <Extensions>
+    <SignMessage xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+      DisplayEntity="http://dev.test.swedenconnect.se/idp" xmlns="http://id.elegnamnden.se/csig/1.1/dss-ext/ns">
+      <EncryptedMessage>
+        <EncryptedData Type="http://www.w3.org/2001/04/xmlenc#Element" xmlns="http://www.w3.org/2001/04/xmlenc#">
+          <EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc" />
+          <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <EncryptedKey xmlns="http://www.w3.org/2001/04/xmlenc#">
+              <EncryptionMethod Algorithm="http://www.w3.org/2001/04/xmlenc#rsa-1_5" />
+              <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+                <X509Data>
+                  <X509Certificate>MIIE+DCCAuCgAwIBAgIEWwfwUTANBgkqhkiG9w0BAQsFADA+MQswCQYDVQQGEwJTRTEXMBUGA1UECgwOU3dlZGVuIENvbm5lY3QxFjAUBgNVBAMMDVJlZmVyZW5jZSBJZFAwHhcNMTgwNTI1MTExNTI5WhcNMTkwNTI1MTExNTI5WjA+MQswCQYDVQQGEwJTRTEXMBUGA1UECgwOU3dlZGVuIENvbm5lY3QxFjAUBgNVBAMMDVJlZmVyZW5jZSBJZFAwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCZCAQORPkyayDKEqoZm4C5qXv8Y8h93FMLA96WfIP7UZxZI7edbZPr3nEDW//k97c5eMAqEnfK5pFxBbOM3VsBpxg2YNNz+BpGTmF9BmNjQONs4DKjFJc5Xt2IUyW2tq7UG3Bb89x/LZqxewHp6vH6jf0MpG5HgrAA30w5559cNL/qglxy8noVqCazuG7Ln0serQk5hW6KMMf1o2R+whi55h3SLHUqmemEnUi//KR+ZgQlpY9lJhVwDuYR0/PwLYTfW47OfbfySlqRiNWlgG1HAdYCUdUrX86fI4R3USRB+gPeqp+OwuONILDfiwv5oH87DklJXtfJOz+sVFD5SHSyALKLiaamVTPK+IRlxUDRZh8K/ZUv6ljFul/f74w+VJW9AkIORJBPezags9ZZZVhktQ8mErQqeP/c0JoK1vfvJAUI4g8ZuVeM+yURljMRVPQWdYHKq/e9viFVbCDEf5IqQi/laAZpCTRqv569qAnQX/WvkcoGM9UFdpz9SH0SayJuFGizXfRT/vXXuts250FOzTiR53MWATLck+7JXoJluaQJfu41NFxP0Pch114k1GRBhVzr8XZBtiIZXZCVHSok1h+jrpgtRFrUmelh5T00r8en/o2Y21zVPKdvu3z6T0pmuh2xphjWRzzJfMvcx5DqEEUE4Bej2IatLtzuhdqaDQIDAQABMA0GCSqGSIb3DQEBCwUAA4ICAQAkKeKpXvKD5tfhF4b4L5Xd8jgZ9f9DXPcPG1GejupnovJ0dCqQWytcyDHweNXwIrx5zQizX7OWuEcOrfA+IZ7G5xFHPKcPtKaZ5e1+vxqRlJ0IG/mGhXx58ZuLK/7ckox//51VimzM8hw4fC89Va1hZw1tJlWx8KpQBzvr53EMGYyFdRk7uT8h2o/SLymC8yTc5UpW0h/dvH2HLYRZn1L79sfB4uAE0u5D7+OHVjI9p33WYfJKDebGnhS5LfQOge8YHxFbAvqCIyX40+E0l2QFiNORAsk+K2wBcEySrq3+G4LpeWdCQsn02/MEp1fiAGQYV68gpUJFYYbFqq2zecUkyfz57xRFcnN/YzZnXeFMEbu5Xm2B5qQuNF6Y0E/cik/+Be6HQgRmtSx51JIdgzBuZXQhSlEU73Xcm1HActy/n4nc5QZzycOSdQy4qh5pABFdMviTcKFBGQeNh8VBRoAd0x/9PujsKeIhvtadWIQ3FohBaVzhY6TSlwthDQskhr1SBTSbPsQp1fVjafbG9/imFeZKGxxoqXgJ8pOA70cwKbCGVdxwok4s1Spw60bg2omP3Jbq2RyT0IT8litd1q+iYkveFIqSl/Z/wrNZ2UQfWdVbBjqhmysls2btNVq7X3a0ie5qSw5+TXTpBQtwmTAElQBBMFgU/WBa7Bi2t2KZZQ==</X509Certificate>
+                </X509Data>
+              </KeyInfo>
+              <CipherData>
+                <CipherValue>I+aPd8rNsSzH4l3sBZB/m1otpXxRqWPsIARJYQhpn96PL16O1jUETD/bVHVLCOkReHCPke9Nti+ebU569K2TTgPPCu+Lhyhcro00xa471zxkPcZ+GFZ6khaFcN/sXmdJ7mFBvFniWar5Sypq20IdbkW1I9ODkQH6zLfqBcprgscbhDKMbK7xDv9IEr2adtwMxyHRxCnzjBJ3pP1Xr4w4HF+gHATqwc7J9oeOiCth+WyS4GCU+gmfkuHJxSJ2JZ4HfKwmgPfLC8U1oF+7Zjijzj1emUqsjqZOIqZj3wWODdu77ZoTPCkdvz4ED8a+uj1XAJiwX1A59z75QByML8E58S52wqvjY9whaCTHiauIX3WPLiDgjgWYxO3l8cMhkCh5tqIY2i6k5xdR+4gqaeUYPqc4E6D/+rTFrKVDmdvdM5bCZNyTlSkjvZTuG37Xa3W9IHK4isMnIlQ07CG+YQd8MnMLP/bjw1MDgyk1rXhMGWx0z5tTXWMAGfwLf8dfKsBnzfpscFhWfbDyq3wyphddVn+GoqfIwN6/SVe0YaCgy7Nuumf/cGhemwdelhQ7ff2jksilb8VeTh/3ZeeI8X+axOjoVc0DtMwTPpknIJqTefI8m6lAEd9HBp7NYMYWWDs38jpi26yMYInnXXyFhPqDdqHl379pY9E2WjODbrbGksA=</CipherValue>
+              </CipherData>
+            </EncryptedKey>
+          </KeyInfo>
+          <CipherData>
+            <CipherValue>Xm8T/tbUQWb46JDYOE0aJqVlivET8uoRCaCf7ZroFJLChj6wuOfb90YFfiO13od+4rk7eMeFKl5tU2cDfikfeg==</CipherValue>
+          </CipherData>
+        </EncryptedData>
+      </EncryptedMessage>
+    </SignMessage>
+  </Extensions>
+  <RequestedAuthnContext>
+    <AuthnContextClassRef xmlns="urn:oasis:names:tc:SAML:2.0:assertion">http://id.elegnamnden.se/loa/1.0/loa3-sigmessage</AuthnContextClassRef>
+  </RequestedAuthnContext>
+  <Scoping>
+    <RequesterID>https://uhtestsp1.identityhub.se/</RequesterID>
+  </Scoping>
+</AuthnRequest>
