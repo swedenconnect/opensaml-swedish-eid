@@ -28,7 +28,7 @@ The library contains support for the following functionality:
 
 ### API Documentation
 
-Java API documentation of the opensaml-swedish-eid library is found at [https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc](https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc/).
+Java API documentation of the opensaml-swedish-eid library is found at [https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc](https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc/index.html).
 
 ### Maven
 
