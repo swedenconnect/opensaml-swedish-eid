@@ -7,7 +7,7 @@
   <groupId>se.swedenconnect.opensaml</groupId>
   <artifactId>opensaml-swedish-eid</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>Sweden Connect :: Swedish eID OpenSAML extensions</name>
   <description>OpenSAML 4.X extension library for the Swedish eID Framework</description>
