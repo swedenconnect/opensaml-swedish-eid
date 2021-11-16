@@ -1,6 +1,6 @@
 ![Logo](https://raw.githubusercontent.com/swedenconnect/technical-framework/master/img/sweden-connect.png)
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.swedenconnect.opensaml.sweid/opensaml-swedish-eid/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.swedenconnect.opensaml.sweid/opensaml-swedish-eid)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/se.swedenconnect.opensaml/opensaml-swedish-eid/badge.svg)](https://maven-badges.herokuapp.com/maven-central/se.swedenconnect.opensaml/opensaml-swedish-eid)
 
 # opensaml-swedish-eid
 
@@ -26,6 +26,23 @@ The library contains support for the following functionality:
 
 * Validation support for validating SAML responses according to the [Deployment Profile for the Swedish eID Framework](https://docs.swedenconnect.se/technical-framework/latest/02_-_Deployment_Profile_for_the_Swedish_eID_Framework.html) specification.
 
+### API Documentation
+
+Java API documentation of the opensaml-swedish-eid library is found at [https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc](https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc/).
+
+### Maven
+
+The opensaml-swedish-eid project artifacts are published to Maven central.
+
+Include the following snippet in your Maven POM to add opensaml-swedish-eid as a dependency for your project.
+
+```
+<dependency>
+  <groupId>se.swedenconnect.opensaml</groupId>
+  <artifactId>opensaml-swedish-eid</artifactId>
+  <version>${opensaml-swedish-eid.version}</version>
+</dependency>
+```
 ------
 
 Copyright &copy; 2016-2021, [Sweden Connect](https://swedenconnect.se). Licensed under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
