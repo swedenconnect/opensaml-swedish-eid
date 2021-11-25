@@ -18,17 +18,25 @@ package se.swedenconnect.opensaml.sweid.saml2.validation;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.opensaml.core.xml.XMLObject;
+import org.opensaml.saml.common.assertion.AssertionValidationException;
 import org.opensaml.saml.common.assertion.ValidationContext;
 import org.opensaml.saml.common.assertion.ValidationResult;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.core.AttributeStatement;
+import org.opensaml.saml.saml2.core.Statement;
+import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.swedenconnect.opensaml.common.validation.CoreValidatorParameters;
 import se.swedenconnect.opensaml.saml2.assertion.validation.AbstractAttributeStatementValidator;
+import se.swedenconnect.opensaml.saml2.attribute.AttributeUtils;
+import se.swedenconnect.opensaml.saml2.metadata.scope.ScopeUtils;
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSet;
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributesValidationException;
 
@@ -43,6 +51,8 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributesValidationExcep
  * find in the assertion.</li>
  * <li>{@link #REQUIRED_ATTRIBUTES}: Optional. Holds a collection of strings that are the attribute names that we
  * require to find in the assertion.</li>
+ * <li>{@link #SCOPED_ATTRIBUTES}: Optional. Carries a {@link Collection} of strings holding attribute names of
+ * requested attributes.</li>
  * </ul>
  * 
  * <p>
@@ -65,8 +75,32 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
    */
   public static final String REQUIRED_ATTRIBUTES = CoreValidatorParameters.STD_PREFIX + ".RequiredAttributes";
 
+  /**
+   * Key for a validation context parameter. Carries a {@link Collection} of strings holding the attribute names for
+   * attributes that are "scoped".
+   */
+  public static final String SCOPED_ATTRIBUTES = CoreValidatorParameters.STD_PREFIX + ".ScopedAttributes";
+
   /** Class logger. */
   private final Logger log = LoggerFactory.getLogger(SwedishEidAttributeStatementValidator.class);
+
+  /** {@inheritDoc} */
+  @Override
+  public ValidationResult validate(final Statement statement, final Assertion assertion, final ValidationContext context)
+      throws AssertionValidationException {
+
+    ValidationResult result = super.validate(statement, assertion, context);
+    if (result != ValidationResult.VALID) {
+      return result;
+    }
+
+    final AttributeStatement attributeStatement = (AttributeStatement) statement;
+    final List<Attribute> attributes =
+        Optional.ofNullable(AttributeStatement.class.cast(statement).getAttributes())
+          .orElse(Collections.emptyList());
+
+    return this.validateScopedAttributes(attributes, attributeStatement, assertion, context);
+  }
 
   /**
    * Validates that the required attributes have been received by using the optional context parameter
@@ -100,7 +134,7 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
         }
       }
     }
-    
+
     if (attributeSet == null && requiredAttributes.isEmpty()) {
       log.debug("No required attributes were supplied - can not check if required attributes were delivered");
     }
@@ -119,5 +153,63 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
     @SuppressWarnings("unchecked")
     final Collection<String> attributes = (Collection<String>) context.getStaticParameters().get(REQUIRED_ATTRIBUTES);
     return attributes != null ? attributes : Collections.emptyList();
+  }
+
+  /**
+   * Validates that the issuing IdP has been authorized to issue scoped attributes.
+   * 
+   * @param attributes
+   *          a list of the attributes
+   * @param statement
+   *          the statement
+   * @param assertion
+   *          the assertion
+   * @param context
+   *          the validation context
+   * @return a validation result
+   */
+  protected ValidationResult validateScopedAttributes(final List<Attribute> attributes, final AttributeStatement statement,
+      final Assertion assertion, ValidationContext context) {
+    
+    @SuppressWarnings("unchecked")
+    final Collection<String> scopedAttributes = (Collection<String>) context.getStaticParameters().get(SCOPED_ATTRIBUTES);
+    if (scopedAttributes == null || scopedAttributes.isEmpty()) {
+      // Nothing to check
+      return ValidationResult.VALID;
+    }
+    
+    final List<Attribute> attributesToCheck = attributes.stream()
+        .filter(a -> a.getName() != null && scopedAttributes.contains(a.getName()))
+        .collect(Collectors.toList());
+    if (attributesToCheck.isEmpty()) {
+      // No attributes to check ...
+      return ValidationResult.VALID;
+    }
+    
+    // For the check we need the IdP metadata ...
+    //
+    final EntityDescriptor idpMetadata =
+        (EntityDescriptor) context.getStaticParameters().get(CoreValidatorParameters.IDP_METADATA);
+    if (idpMetadata == null) {
+      final String msg = String.format("Could not check scoped attributes. '%s' parameter is missing",
+        CoreValidatorParameters.IDP_METADATA);
+      log.debug(msg);
+      context.setValidationFailureMessage(msg);
+      return ValidationResult.INDETERMINATE;
+    }
+    
+    final List<XMLObject> authorizedScopes = ScopeUtils.getScopeExtensions(idpMetadata);
+    for (final Attribute scopedAttribute : attributesToCheck) {
+      if (!ScopeUtils.isAuthorized(scopedAttribute, authorizedScopes)) {
+        final String msg = String.format("IdP '%s' is not authorized to issue scoped attribute '%s' for domain '%s'",
+          idpMetadata.getEntityID(), scopedAttribute.getName(), 
+          ScopeUtils.getScopedDomain(AttributeUtils.getAttributeStringValue(scopedAttribute)));
+        log.debug(msg);
+        context.setValidationFailureMessage(msg);
+        return ValidationResult.INVALID;
+      }
+    }
+    
+    return ValidationResult.VALID;
   }
 }
