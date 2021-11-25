@@ -51,7 +51,7 @@ public class SwedishEidAssertionValidationParametersBuilder
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_NOT_ON_OR_AFTER_REQUIRED, Boolean.TRUE);
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_IN_RESPONSE_TO_REQUIRED, Boolean.TRUE);
     final Boolean addressRequired = (Boolean) this.getStaticParameter(SAML2AssertionValidationParameters.SC_ADDRESS_REQUIRED);
-    if (addressRequired) {
+    if (addressRequired != null && addressRequired.booleanValue()) {
       if (this.getStaticParameter(SAML2AssertionValidationParameters.SC_VALID_ADDRESSES) == null) {
         // Nothing to compare with ...
         this.addStaticParameter(SAML2AssertionValidationParameters.SC_ADDRESS_REQUIRED, Boolean.FALSE);
