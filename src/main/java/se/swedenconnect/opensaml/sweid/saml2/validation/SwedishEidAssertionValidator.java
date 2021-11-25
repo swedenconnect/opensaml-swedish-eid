@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 import org.opensaml.saml.common.assertion.ValidationContext;
 import org.opensaml.saml.common.assertion.ValidationResult;
@@ -28,6 +29,8 @@ import org.opensaml.saml.saml2.assertion.SAML2AssertionValidationParameters;
 import org.opensaml.saml.saml2.assertion.StatementValidator;
 import org.opensaml.saml.saml2.assertion.SubjectConfirmationValidator;
 import org.opensaml.saml.saml2.assertion.impl.AudienceRestrictionConditionValidator;
+import org.opensaml.saml.saml2.assertion.impl.BearerSubjectConfirmationValidator;
+import org.opensaml.saml.saml2.assertion.impl.HolderOfKeySubjectConfirmationValidator;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.AuthnStatement;
 import org.opensaml.saml.saml2.core.NameID;
@@ -48,15 +51,11 @@ import se.swedenconnect.opensaml.saml2.assertion.validation.AssertionValidator;
  * </p>
  * 
  * <ul>
- * <li>
- * {@link SAML2AssertionValidationParameters#SC_VALID_ADDRESSES}: Optional. If the set of {@link InetAddress}
+ * <li>{@link SAML2AssertionValidationParameters#SC_VALID_ADDRESSES}: Optional. If the set of {@link InetAddress}
  * objects are given, the Address-attribute found in the Subject confirmation will be compared against these.</li>
- * <li>
- * {@link SAML2AssertionValidationParameters#SC_VALID_RECIPIENTS}: Required. A set of valid recipient URL:s.
- * </li>
- * <li>
- * {@link SAML2AssertionValidationParameters#COND_VALID_AUDIENCES}: Required. A set of valid audiences of the assertion.
- * </li>
+ * <li>{@link SAML2AssertionValidationParameters#SC_VALID_RECIPIENTS}: Required. A set of valid recipient URL:s.</li>
+ * <li>{@link SAML2AssertionValidationParameters#COND_VALID_AUDIENCES}: Required. A set of valid audiences of the
+ * assertion.</li>
  * </ul>
  * 
  * @author Martin Lindström (martin@idsec.se)
@@ -69,9 +68,11 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
   /**
    * Constructor setting up the validator with the following validators:
    * <ul>
-   * <li>confirmationValidators: {@link SwedishEidSubjectConfirmationValidator}</li>
+   * <li>confirmationValidators: {@link BearerSubjectConfirmationValidator},
+   * {@link HolderOfKeySubjectConfirmationValidator}</li>
    * <li>conditionValidators: {@link AudienceRestrictionConditionValidator}</li>
-   * <li>statementValidators: {@link SwedishEidAuthnStatementValidator}, {@link SwedishEidAttributeStatementValidator}.</li>
+   * <li>statementValidators: {@link SwedishEidAuthnStatementValidator},
+   * {@link SwedishEidAttributeStatementValidator}.</li>
    * </ul>
    * 
    * @param trustEngine
@@ -80,12 +81,12 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
    *          the signature pre-validator used to pre-validate the object's signature
    */
   public SwedishEidAssertionValidator(final SignatureTrustEngine trustEngine, final SignaturePrevalidator signaturePrevalidator) {
-    this(trustEngine, signaturePrevalidator, 
-      Arrays.asList(new SwedishEidSubjectConfirmationValidator()),
-      Arrays.asList(new AudienceRestrictionConditionValidator()), 
+    this(trustEngine, signaturePrevalidator,
+      Arrays.asList(new BearerSubjectConfirmationValidator(), new HolderOfKeySubjectConfirmationValidator()),
+      Arrays.asList(new AudienceRestrictionConditionValidator()),
       Arrays.asList(new SwedishEidAuthnStatementValidator(), new SwedishEidAttributeStatementValidator()));
   }
-    
+
   /**
    * Constructor.
    * 
@@ -99,7 +100,7 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
    *          validators used to validate the Condition elements within the assertion
    * @param statementValidators
    *          validators used to validate Statements within the assertion
-   */  
+   */
   public SwedishEidAssertionValidator(
       final SignatureTrustEngine trustEngine,
       final SignaturePrevalidator signaturePrevalidator,
@@ -162,7 +163,7 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
       }
     }
 
-    List<SubjectConfirmation> confirmations = assertion.getSubject().getSubjectConfirmations();
+    final List<SubjectConfirmation> confirmations = assertion.getSubject().getSubjectConfirmations();
     if (confirmations == null || confirmations.isEmpty()) {
       context.setValidationFailureMessage("Assertion/@Subject element contains no SubjectConfirmation elements - invalid");
       return ValidationResult.INVALID;
@@ -170,18 +171,18 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
 
     // We require the bearer method ...
     //
-    boolean bearerFound = false;
-    for (SubjectConfirmation sc : confirmations) {
-      if (SubjectConfirmation.METHOD_BEARER.equals(sc.getMethod())) {
-        bearerFound = true;
-        break;
+    final boolean hokProfileActive = Optional.ofNullable(context.getStaticParameters().get(HOK_PROFILE_ACTIVE))
+      .map(Boolean.class::cast).orElse(Boolean.FALSE);
+    
+    if (!hokProfileActive) {
+      boolean bearerFound = confirmations.stream()
+        .filter(s -> SubjectConfirmation.METHOD_BEARER.equals(s.getMethod())).findFirst().isPresent();
+      if (!bearerFound) {
+        final String msg = String.format("No SubjectConfirmation with method '%s' is available under Assertion's Subject element",
+          SubjectConfirmation.METHOD_BEARER);
+        context.setValidationFailureMessage(msg);
+        return ValidationResult.INVALID;
       }
-    }
-    if (!bearerFound) {
-      final String msg = String.format("No SubjectConfirmation with method '%s' is available under Assertion's Subject element",
-        SubjectConfirmation.METHOD_BEARER);
-      context.setValidationFailureMessage(msg);
-      return ValidationResult.INVALID;
     }
 
     return super.validateSubject(assertion, context);
@@ -237,7 +238,7 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
       context.setValidationFailureMessage("No AttributeStatement in Assertion");
       return ValidationResult.INVALID;
     }
-    
+
     return super.validateStatements(assertion, context);
   }
 

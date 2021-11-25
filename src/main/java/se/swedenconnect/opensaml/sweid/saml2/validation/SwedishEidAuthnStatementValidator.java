@@ -16,8 +16,10 @@
 package se.swedenconnect.opensaml.sweid.saml2.validation;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.opensaml.saml.common.assertion.ValidationContext;
@@ -29,7 +31,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import se.swedenconnect.opensaml.common.validation.CoreValidatorParameters;
+import se.swedenconnect.opensaml.saml2.assertion.validation.AssertionValidator;
 import se.swedenconnect.opensaml.saml2.assertion.validation.AuthnStatementValidator;
+import se.swedenconnect.opensaml.sweid.saml2.authn.LevelOfAssuranceUris;
 
 /**
  * An {@link AuthnStatementValidator} that performs checks to assert that the assertion is compliant with the Swedish
@@ -43,6 +47,8 @@ import se.swedenconnect.opensaml.saml2.assertion.validation.AuthnStatementValida
  * <li>{@link #AUTHN_REQUEST_REQUESTED_AUTHNCONTEXTURIS}: Holds a collection of AuthnContext URIs that are matched
  * against the {@code AuthnContextClassRef} element of the authentication statement. If not supplied, the values are
  * read from {@link CoreValidatorParameters#AUTHN_REQUEST}.</li>
+ * <li>{@link #HOLDER_OF_KEY_AUTHN_CONTEXT_URIS}: Holds a collection of the authentication context URI:s that require
+ * the Holder-of-key profile.</li>
  * </ul>
  * 
  * @author Martin Lindström (martin@idsec.se)
@@ -56,6 +62,12 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
   public static final String AUTHN_REQUEST_REQUESTED_AUTHNCONTEXTURIS = CoreValidatorParameters.STD_PREFIX
       + ".AuthnRequestRequestedAuthnContextURIs";
 
+  /**
+   * Key for a validation context parameter. Carries a {@link Collection} holding the authentication context URI:s that
+   * require the Holder-of-key profile.
+   */
+  public static final String HOLDER_OF_KEY_AUTHN_CONTEXT_URIS = CoreValidatorParameters.STD_PREFIX + ".HoKAuthnContextURIs";
+
   /** Class logger. */
   private final Logger log = LoggerFactory.getLogger(SwedishEidAuthnStatementValidator.class);
 
@@ -64,7 +76,8 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
    * that it matches what was requested.
    */
   @Override
-  protected ValidationResult validateAuthnContext(final AuthnStatement statement, final Assertion assertion, final ValidationContext context) {
+  protected ValidationResult validateAuthnContext(final AuthnStatement statement, final Assertion assertion,
+      final ValidationContext context) {
     final ValidationResult res = super.validateAuthnContext(statement, assertion, context);
     if (res != ValidationResult.VALID) {
       return res;
@@ -75,40 +88,36 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
       return ValidationResult.INVALID;
     }
 
+    final String authnContextClassRef = statement.getAuthnContext().getAuthnContextClassRef().getURI();
     final Collection<String> requestedUris = getRequestedAuthnContextUris(context);
     if (requestedUris.isEmpty()) {
       log.debug("No RequestedAuthnContext URI was requested - will not check issued AuthnContextClassRef");
       return ValidationResult.VALID;
     }
-    return this.validateAuthnContextClassRef(
-      statement.getAuthnContext().getAuthnContextClassRef().getURI(), requestedUris, statement, assertion, context);
-  }
+    else {
+      if (!requestedUris.contains(authnContextClassRef)) {
+        final String msg = String.format("Assertion contained AuthnContextClassRef '%s', but that one was not requested (%s)",
+          authnContextClassRef, requestedUris);
+        context.setValidationFailureMessage(msg);
+        return ValidationResult.INVALID;
+      }
+    }
 
-  /**
-   * Checks the issued AuthnContextClassRef against the ones that were requested. This method assumes "exact" matching.
-   * 
-   * @param authnContextClassRef
-   *          the AuthnContextClassRef from the assertion
-   * @param requestedContextClassRefs
-   *          the requested levels
-   * @param statement
-   *          the authentication statement
-   * @param assertion
-   *          the assertion
-   * @param context
-   *          the validation context
-   * @return validation result
-   */
-  protected ValidationResult validateAuthnContextClassRef(
-      final String authnContextClassRef, final Collection<String> requestedContextClassRefs,
-      final AuthnStatement statement, final Assertion assertion, final ValidationContext context) {
-    
-    if (!requestedContextClassRefs.contains(authnContextClassRef)) {
-      final String msg = String.format("Assertion contained AuthnContextClassRef '%s', but that one was not requested (%s)", 
-        authnContextClassRef, requestedContextClassRefs);
-      context.setValidationFailureMessage(msg);
-      return ValidationResult.INVALID;
-    }    
+    // Check if the authnContextClassRef requires Holder-of-key ...
+    //
+    if (this.getHolderOfKeyAuthnContextUris(context).contains(authnContextClassRef)) {
+      final boolean hokActive = Optional
+        .ofNullable(context.getDynamicParameters().get(AssertionValidator.HOK_PROFILE_ACTIVE))
+        .map(Boolean.class::cast)
+        .orElse(false);
+      if (!hokActive) {
+        final String msg = String.format(
+          "Assertion contained AuthnContextClassRef '%s', but Holder-of-key was not used", authnContextClassRef);
+        context.setValidationFailureMessage(msg);
+        return ValidationResult.INVALID;
+      }
+    }
+
     return ValidationResult.VALID;
   }
 
@@ -139,6 +148,21 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
       }
     }
     return uris != null ? uris : Collections.emptyList();
+  }
+
+  /**
+   * Gets the authentication context URI:s that require that the Holder-of-key profile is used (according to the Swedish
+   * eID Framework).
+   * 
+   * @return a list of URI:s
+   */
+  @SuppressWarnings("unchecked")
+  protected Collection<String> getHolderOfKeyAuthnContextUris(final ValidationContext context) {
+    return Optional.ofNullable(context.getStaticParameters().get(HOLDER_OF_KEY_AUTHN_CONTEXT_URIS))
+      .map(Collection.class::cast)
+      .orElse(Arrays.asList(
+        LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4,
+        LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT));
   }
 
 }
