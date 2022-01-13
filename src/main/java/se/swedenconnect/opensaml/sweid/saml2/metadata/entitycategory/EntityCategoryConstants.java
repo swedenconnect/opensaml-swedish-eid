@@ -43,7 +43,7 @@ public class EntityCategoryConstants {
   public static final String SERVICE_CONTRACT_CATEGORY_PREFIX = "http://id.swedenconnect.se/contract/";
 
   /** The prefix for General categories. */
-  public static final String GENERAL_CATEGORY_PREFIX = "http://id.swedenconnect.se/general-ec";
+  public static final String GENERAL_CATEGORY_PREFIX = "http://id.swedenconnect.se/general-ec/";
 
   /**
    * Service entity category: User authentication according to assurance level 2 and attribute release according to the
