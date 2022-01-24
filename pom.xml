@@ -7,7 +7,7 @@
   <groupId>se.swedenconnect.opensaml</groupId>
   <artifactId>opensaml-swedish-eid</artifactId>
   <packaging>jar</packaging>
-  <version>1.2.1-SNAPSHOT</version>
+  <version>1.2.1</version>
 
   <name>Sweden Connect :: Swedish eID OpenSAML extensions</name>
   <description>OpenSAML 4.X extension library for the Swedish eID Framework</description>
@@ -49,7 +49,7 @@
     <!-- Versions on dependencies -->
     <opensaml.min.version>4.1.0</opensaml.min.version>
     
-    <jackson.version>2.10.1</jackson.version>
+    <jackson.version>2.13.1</jackson.version>
     <nimbus.version>9.4.1</nimbus.version>
 
     <slf4j.version>1.7.30</slf4j.version>
@@ -96,7 +96,7 @@
     <dependency>
       <groupId>se.swedenconnect.opensaml</groupId>
       <artifactId>opensaml-addons</artifactId>
-      <version>[1.2.0,)</version>
+      <version>[1.2.2,)</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>    

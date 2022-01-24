@@ -45,6 +45,6 @@ Include the following snippet in your Maven POM to add opensaml-swedish-eid as a
 ```
 ------
 
-Copyright &copy; 2016-2021, [Sweden Connect](https://swedenconnect.se). Licensed under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
+Copyright &copy; 2016-2022, [Sweden Connect](https://swedenconnect.se). Licensed under version 2.0 of the [Apache License](http://www.apache.org/licenses/LICENSE-2.0).
 
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2022 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -154,6 +154,8 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
    * Gets the authentication context URI:s that require that the Holder-of-key profile is used (according to the Swedish
    * eID Framework).
    * 
+   * @param context
+   *          the validation context
    * @return a list of URI:s
    */
   @SuppressWarnings("unchecked")
