@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2022 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,7 +113,7 @@ public class SADFactory {
    */
   public String createJwt(final SAD sad) throws IOException, SignatureException {
 
-    final String encodedSad = Base64.getUrlEncoder().encodeToString(sad.toJsonBytes());
+    final String encodedSad = Base64.getUrlEncoder().withoutPadding().encodeToString(sad.toJsonBytes());
 
     // Create JWT and sign ...
     //
