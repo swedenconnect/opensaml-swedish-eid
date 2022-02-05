@@ -171,7 +171,7 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
 
     // We require the bearer method ...
     //
-    final boolean hokProfileActive = Optional.ofNullable(context.getStaticParameters().get(HOK_PROFILE_ACTIVE))
+    final boolean hokProfileActive = Optional.ofNullable(context.getDynamicParameters().get(HOK_PROFILE_ACTIVE))
       .map(Boolean.class::cast).orElse(Boolean.FALSE);
     
     if (!hokProfileActive) {
