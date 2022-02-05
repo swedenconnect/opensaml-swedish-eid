@@ -96,7 +96,8 @@
     <dependency>
       <groupId>se.swedenconnect.opensaml</groupId>
       <artifactId>opensaml-addons</artifactId>
-      <version>[1.2.2,)</version>
+      <!-- <version>[1.2.2,)</version> -->
+      <version>1.2.3-SNAPSHOT</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>    
