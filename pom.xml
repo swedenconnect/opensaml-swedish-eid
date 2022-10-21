@@ -50,7 +50,7 @@
     <opensaml.min.version>4.1.0</opensaml.min.version>
     
     <jackson.version>2.13.1</jackson.version>
-    <nimbus.version>9.4.1</nimbus.version>
+    <nimbus.version>9.25.4</nimbus.version>
 
     <slf4j.version>1.7.30</slf4j.version>
     <junit.version>4.13.2</junit.version>
@@ -293,7 +293,7 @@
             <id>enforce</id>
             <configuration>
               <rules>
-                <dependencyConvergence />
+                <dependencyConvergence/>
               </rules>
             </configuration>
             <goals>
