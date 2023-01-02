@@ -7,7 +7,7 @@
   <groupId>se.swedenconnect.opensaml</groupId>
   <artifactId>opensaml-swedish-eid</artifactId>
   <packaging>jar</packaging>
-  <version>1.2.2</version>
+  <version>1.2.3</version>
 
   <name>Sweden Connect :: Swedish eID OpenSAML extensions</name>
   <description>OpenSAML 4.X extension library for the Swedish eID Framework</description>
@@ -47,12 +47,12 @@
     <java.version>11</java.version>
 
     <!-- Versions on dependencies -->
-    <opensaml.min.version>4.1.0</opensaml.min.version>
+    <opensaml.min.version>4.2.0</opensaml.min.version>
     
-    <jackson.version>2.13.1</jackson.version>
-    <nimbus.version>9.4.1</nimbus.version>
+    <jackson.version>2.14.1</jackson.version>
+    <nimbus.version>9.26</nimbus.version>
 
-    <slf4j.version>1.7.30</slf4j.version>
+    <slf4j.version>1.7.36</slf4j.version>
     <junit.version>4.13.2</junit.version>
 
   </properties>
@@ -81,14 +81,66 @@
     </repository>
   </distributionManagement>
 
+  <dependencyManagement>
+  
+    <dependencies>
+    
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>${slf4j.version}</version>
+        <type>jar</type>
+        <scope>compile</scope>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.cryptacular</groupId>
+        <artifactId>cryptacular</artifactId>
+        <version>1.2.5</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk18on</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      
+      <dependency>
+        <groupId>org.apache.santuario</groupId>
+        <artifactId>xmlsec</artifactId>
+        <version>2.3.2</version>
+        <exclusions>
+          <!-- Version included has reported vulnerabilities -->
+          <exclusion>
+            <groupId>com.fasterxml.woodstox</groupId>
+            <artifactId>woodstox-core</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      
+      <dependency>
+        <groupId>com.fasterxml.woodstox</groupId>
+        <artifactId>woodstox-core</artifactId>
+        <version>6.4.0</version>
+      </dependency>
+    
+    </dependencies>
+  
+  </dependencyManagement>
+
 
   <dependencies>
+  
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>  
 
     <!-- OpenSAML -->
     <dependency>
       <groupId>se.swedenconnect.opensaml</groupId>
       <artifactId>opensaml-security-ext</artifactId>
-      <version>[3.1.0,)</version>
+      <version>[3.1.2,)</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>
@@ -96,75 +148,11 @@
     <dependency>
       <groupId>se.swedenconnect.opensaml</groupId>
       <artifactId>opensaml-addons</artifactId>
-      <version>[1.2.2,)</version>
+      <version>[1.2.5,)</version>
       <type>jar</type>
       <scope>compile</scope>
     </dependency>    
         
-    <dependency>
-      <groupId>org.opensaml</groupId>
-      <artifactId>opensaml-core</artifactId>
-      <version>[${opensaml.min.version},)</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.opensaml</groupId>
-      <artifactId>opensaml-saml-api</artifactId>
-      <version>[${opensaml.min.version},)</version>
-      <exclusions>
-        <!-- Older versions than other OpenSAML deps ... -->
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>commons-codec</groupId>
-          <artifactId>commons-codec</artifactId>
-        </exclusion>        
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.opensaml</groupId>
-      <artifactId>opensaml-saml-impl</artifactId>
-      <version>[${opensaml.min.version},)</version>
-      <exclusions>
-        <!-- Older versions than other OpenSAML deps ... -->
-        <exclusion>
-          <groupId>commons-codec</groupId>
-          <artifactId>commons-codec</artifactId>
-        </exclusion>
-        <exclusion>
-          <groupId>org.apache.httpcomponents</groupId>
-          <artifactId>httpcore</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.opensaml</groupId>
-      <artifactId>opensaml-security-api</artifactId>
-      <version>[${opensaml.min.version},)</version>
-      <exclusions>
-        <exclusion>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-core</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-
-    <dependency>
-      <groupId>org.opensaml</groupId>
-      <artifactId>opensaml-xmlsec-api</artifactId>
-      <version>[${opensaml.min.version},)</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.opensaml</groupId>
-      <artifactId>opensaml-xmlsec-impl</artifactId>
-      <version>[${opensaml.min.version},)</version>
-    </dependency>
-
     <!-- JSON support -->   
     <dependency>
       <groupId>com.nimbusds</groupId>
@@ -206,7 +194,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>[5.0.0.RELEASE,)</version>
+      <version>[5.3.0, 6.0.0)</version>
       <scope>test</scope>
       <type>jar</type>
     </dependency>
@@ -214,7 +202,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-beans</artifactId>
-      <version>[5.0.0.RELEASE,)</version>
+      <version>[5.3.0, 6.0.0)</version>
       <scope>test</scope>
       <type>jar</type>
     </dependency>
@@ -238,7 +226,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
-      <version>[5.0.0.RELEASE,)</version>
+      <version>[5.3.0, 6.0.0)</version>
       <scope>test</scope>
       <type>jar</type>
     </dependency>
@@ -311,7 +299,7 @@
           <doctitle>OpenSAML 4.X extension library for the Swedish eID Framework - ${project.version}</doctitle>
           <windowtitle>OpenSAML 4.X extension library for the Swedish eID Framework - ${project.version}</windowtitle>
           <links>
-            <link>https://build.shibboleth.net/nexus/content/sites/site/java-opensaml/4.1.1/apidocs/</link>
+            <link>https://build.shibboleth.net/nexus/content/sites/site/java-opensaml/4.2.0/apidocs/</link>
             <link>https://build.shibboleth.net/nexus/content/sites/site/java-support/8.2.1/apidocs/</link>
             <link>https://docs.swedenconnect.se/opensaml-security-ext/javadoc/latest/</link>
             <link>https://docs.swedenconnect.se/opensaml-addons/apidoc/</link>
