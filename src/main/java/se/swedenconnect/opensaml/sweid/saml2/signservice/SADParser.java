@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.security.cert.X509Certificate;
 import java.text.ParseException;
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Base64;
@@ -73,11 +74,9 @@ public class SADParser {
    * <b>Note:</b> The parse method does not peform any validation. Use the {@link SADValidator} class for this purpose.
    * </p>
    * 
-   * @param sadJwt
-   *          the signed JWT holding the SAD
+   * @param sadJwt the signed JWT holding the SAD
    * @return the SAD object
-   * @throws IOException
-   *           for parsing errors
+   * @throws IOException for parsing errors
    */
   public static SAD parse(final String sadJwt) throws IOException {
     try {
@@ -94,8 +93,7 @@ public class SADParser {
    * Returns a SAD validator initialized with a set of certificates that are to be used for JWT signature validation.
    * These certificates are the IdP signing certificates obtained from the IdP metadata entry.
    * 
-   * @param validationCertificates
-   *          certificate(s) to be used when verifying the JWT signature
+   * @param validationCertificates certificate(s) to be used when verifying the JWT signature
    * @return a SADValidator instance
    */
   public static SADValidator getValidator(final X509Certificate... validationCertificates) {
@@ -106,8 +104,7 @@ public class SADParser {
    * Returns a SAD validator initialized with a {@link MetadataProvider} instance. During JWT signature validation the
    * IdP signature certificate will be obtained from the IdP metadata entry held by the metadata provider.
    * 
-   * @param metadataProvider
-   *          metadata provider
+   * @param metadataProvider metadata provider
    * @return a SADValidator instance
    */
   public static SADValidator getValidator(final MetadataProvider metadataProvider) {
@@ -118,8 +115,7 @@ public class SADParser {
    * Returns a SAD validator initialized with the IdP {@link EntityDescriptor} (metadata) from which the IdP signing
    * key/certificate will be read (needed for JWT signature validation).
    * 
-   * @param idpMetadata
-   *          the IdP metadata
+   * @param idpMetadata the IdP metadata
    * @return a SADValidator instance
    */
   public static SADValidator getValidator(final EntityDescriptor idpMetadata) {
@@ -133,6 +129,9 @@ public class SADParser {
    */
   public static class SADValidator {
 
+    /** Default allowed clock skew. */
+    public static final Duration DEFAULT_ALLOWED_CLOCK_SKEW = Duration.ofSeconds(15);
+
     /** Logger instance. */
     private Logger logger = LoggerFactory.getLogger(SADValidator.class);
 
@@ -144,12 +143,14 @@ public class SADParser {
 
     private static final JWSVerifierFactory verifierFactory = new DefaultJWSVerifierFactory();
 
+    /** Allowed clock skew. */
+    private Duration allowedClockSkew = DEFAULT_ALLOWED_CLOCK_SKEW;
+
     /**
      * Constructor initializing the validator with a set of certificates that are to be used for JWT signature
      * validation. These certificates are the IdP signing certificates obtained from the IdP metadata entry.
      * 
-     * @param certificates
-     *          certificate(s) to be used when verifying the JWT signature
+     * @param certificates certificate(s) to be used when verifying the JWT signature
      */
     public SADValidator(final X509Certificate... certificates) {
       this.validationCertificates = Arrays.asList(certificates);
@@ -160,8 +161,7 @@ public class SADParser {
      * validation the IdP signature certificate will be obtained from the IdP metadata entry held by the metadata
      * provider.
      * 
-     * @param metadataProvider
-     *          metadata provider
+     * @param metadataProvider metadata provider
      */
     public SADValidator(final MetadataProvider metadataProvider) {
       this.metadataProvider = metadataProvider;
@@ -171,8 +171,7 @@ public class SADParser {
      * Creates a SAD validator initialized with the IdP {@link EntityDescriptor} (metadata) from which the IdP signing
      * key/certificate will be read (needed for JWT signature validation).
      * 
-     * @param idpMetadata
-     *          the IdP metadata
+     * @param idpMetadata the IdP metadata
      */
     public SADValidator(final EntityDescriptor idpMetadata) {
       try {
@@ -187,16 +186,12 @@ public class SADParser {
      * A method that validates the SAD issued in an {@code Assertion} based on the {@code AuthnRequest} containing a
      * {@code SADRequest}.
      * 
-     * @param authnRequest
-     *          the AuthnRequest holding the SADRequest
-     * @param assertion
-     *          the Assertion holding the sad attribute (as a encoded JWT)
+     * @param authnRequest the AuthnRequest holding the SADRequest
+     * @param assertion the Assertion holding the sad attribute (as a encoded JWT)
      * @return a SAD object, or null if no SAD was requested (and issued)
-     * @throws SADValidationException
-     *           for SAD validation errors
-     * @throws IllegalArgumentException
-     *           if the supplied AuthnRequest does not contain a SADRequest extension, or is invalid by other means
-     *           (e.g., missing LoA)
+     * @throws SADValidationException for SAD validation errors
+     * @throws IllegalArgumentException if the supplied AuthnRequest does not contain a SADRequest extension, or is
+     *           invalid by other means (e.g., missing LoA)
      * @see #validate(String, String, String, String, String, String, int, String)
      */
     public SAD validate(final AuthnRequest authnRequest, final Assertion assertion) throws SADValidationException,
@@ -208,12 +203,12 @@ public class SADParser {
       //
       final SADRequest sadRequest = authnRequest.getExtensions() != null
           ? authnRequest.getExtensions()
-            .getUnknownXMLObjects()
-            .stream()
-            .filter(SADRequest.class::isInstance)
-            .map(SADRequest.class::cast)
-            .findFirst()
-            .orElse(null)
+              .getUnknownXMLObjects()
+              .stream()
+              .filter(SADRequest.class::isInstance)
+              .map(SADRequest.class::cast)
+              .findFirst()
+              .orElse(null)
           : null;
 
       if (sadRequest == null) {
@@ -225,7 +220,8 @@ public class SADParser {
       // Next, locate the SAD attribute.
       //
       if (assertion.getAttributeStatements().isEmpty()) {
-        final String msg = String.format("Assertion '%s' does not contain any attributes (and thus no SAD)", assertion.getID());
+        final String msg =
+            String.format("Assertion '%s' does not contain any attributes (and thus no SAD)", assertion.getID());
         logger.info(msg);
         throw new SADValidationException(ErrorCode.NO_SAD_ATTRIBUTE, msg);
       }
@@ -263,10 +259,12 @@ public class SADParser {
         logger.info(msg);
         throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
       }
-      final Attribute subjectAttribute = AttributeUtils.getAttribute(sad.getSeElnSadext().getAttributeName(), attributes);
+      final Attribute subjectAttribute =
+          AttributeUtils.getAttribute(sad.getSeElnSadext().getAttributeName(), attributes);
       if (subjectAttribute == null) {
-        final String msg = String.format("Assertion '%s' does not contain a '%s' attribute - this is listed as the subject attribute in the SAD",
-          assertion.getID(), sad.getSeElnSadext().getAttributeName());
+        final String msg = String.format(
+            "Assertion '%s' does not contain a '%s' attribute - this is listed as the subject attribute in the SAD",
+            assertion.getID(), sad.getSeElnSadext().getAttributeName());
         logger.info(msg);
         throw new SADValidationException(ErrorCode.MISSING_SUBJECT_ATTRIBUTE, msg);
       }
@@ -288,13 +286,13 @@ public class SADParser {
       // Now, validate!
       //
       return this.validate(signedJwt, sad, now,
-        assertion.getIssuer().getValue(), /* The IdP entityID = issuer of the SAD. */
-        sadRequest.getRequesterID(), /* The requester ID = expected recipient ID of the SAD. */
-        AttributeUtils.getAttributeStringValue(subjectAttribute), /* The expected subject name. */
-        loa, /* The expected LoA. */
-        sadRequest.getID(), /* The expected in-response-to ID. */
-        sadRequest.getDocCount().intValue(), /* The expected number of documents indicated in the SAD. */
-        sadRequest.getSignRequestID()); /* The SignRequest ID. */
+          assertion.getIssuer().getValue(), /* The IdP entityID = issuer of the SAD. */
+          sadRequest.getRequesterID(), /* The requester ID = expected recipient ID of the SAD. */
+          AttributeUtils.getAttributeStringValue(subjectAttribute), /* The expected subject name. */
+          loa, /* The expected LoA. */
+          sadRequest.getID(), /* The expected in-response-to ID. */
+          sadRequest.getDocCount().intValue(), /* The expected number of documents indicated in the SAD. */
+          sadRequest.getSignRequestID()); /* The SignRequest ID. */
     }
 
     /**
@@ -308,28 +306,22 @@ public class SADParser {
      * and the correct attribute value be located from the assertion.
      * </p>
      * 
-     * @param sadJwt
-     *          the encoded SAD JWT (found in the sad attribute of a received assertion)
-     * @param idpEntityID
-     *          the entityID of the issuing IdP (the issuer of the received assertion holding the sad attribute)
-     * @param expectedRecipientEntityID
-     *          the entityID of the recipient (the signature service SP that issued the SADRequest)
-     * @param expectedSubject
-     *          the expected subject name (user ID). See note above
-     * @param expectedLoa
-     *          the expected level of assurance to be found in the SAD (should be the LoA found in the assertion)
-     * @param sadRequestID
-     *          the ID of the SADRequest extension that was sent to the IdP
-     * @param expectedNoDocs
-     *          expected number of documents (from the DocCount element of the SADRequest)
-     * @param signRequestID
-     *          ID for the SignRequest that was included in the SADRequest
+     * @param sadJwt the encoded SAD JWT (found in the sad attribute of a received assertion)
+     * @param idpEntityID the entityID of the issuing IdP (the issuer of the received assertion holding the sad
+     *          attribute)
+     * @param expectedRecipientEntityID the entityID of the recipient (the signature service SP that issued the
+     *          SADRequest)
+     * @param expectedSubject the expected subject name (user ID). See note above
+     * @param expectedLoa the expected level of assurance to be found in the SAD (should be the LoA found in the
+     *          assertion)
+     * @param sadRequestID the ID of the SADRequest extension that was sent to the IdP
+     * @param expectedNoDocs expected number of documents (from the DocCount element of the SADRequest)
+     * @param signRequestID ID for the SignRequest that was included in the SADRequest
      * @return a SAD object
-     * @throws SADValidationException
-     *           for validation errors
+     * @throws SADValidationException for validation errors
      */
     public SAD validate(final String sadJwt, final String idpEntityID, final String expectedRecipientEntityID,
-        final String expectedSubject, final String expectedLoa, final String sadRequestID, final int expectedNoDocs, 
+        final String expectedSubject, final String expectedLoa, final String sadRequestID, final int expectedNoDocs,
         final String signRequestID) throws SADValidationException {
 
       final long now = System.currentTimeMillis() / 1000;
@@ -345,7 +337,7 @@ public class SADParser {
         final SAD sad = SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), Charset.forName("UTF-8")));
 
         return this.validate(signedJwt, sad, now, idpEntityID, expectedRecipientEntityID, expectedSubject, expectedLoa,
-          sadRequestID, expectedNoDocs, signRequestID);
+            sadRequestID, expectedNoDocs, signRequestID);
       }
       catch (ParseException | IOException e) {
         throw new SADValidationException(ErrorCode.JWT_PARSE_ERROR, "Failed to parse SAD JWT", e);
@@ -355,29 +347,21 @@ public class SADParser {
     /**
      * Validates the supplied SAD JWT.
      * 
-     * @param signedJwt
-     *          the SAD JWT
-     * @param sad
-     *          the SAD (parsed for pre-checks)
-     * @param now
-     *          the current time (seconds since 1970-01-01)
-     * @param idpEntityID
-     *          the entityID of the issuing IdP (the issuer of the received assertion holding the sad attribute)
-     * @param expectedRecipientEntityID
-     *          the entityID of the recipient (the signature service SP that issued the SADRequest)
-     * @param expectedSubject
-     *          the expected subject name (user ID). See note above
-     * @param expectedLoa
-     *          the expected level of assurance to be found in the SAD (should be the LoA found in the assertion)
-     * @param sadRequestID
-     *          the ID of the SADRequest extension that was sent to the IdP
-     * @param expectedNoDocs
-     *          expected number of documents (from the DocCount element of the SADRequest
-     * @param signRequestID
-     *          ID for the SignRequest that was included in the SADRequest
+     * @param signedJwt the SAD JWT
+     * @param sad the SAD (parsed for pre-checks)
+     * @param now the current time (seconds since 1970-01-01)
+     * @param idpEntityID the entityID of the issuing IdP (the issuer of the received assertion holding the sad
+     *          attribute)
+     * @param expectedRecipientEntityID the entityID of the recipient (the signature service SP that issued the
+     *          SADRequest)
+     * @param expectedSubject the expected subject name (user ID). See note above
+     * @param expectedLoa the expected level of assurance to be found in the SAD (should be the LoA found in the
+     *          assertion)
+     * @param sadRequestID the ID of the SADRequest extension that was sent to the IdP
+     * @param expectedNoDocs expected number of documents (from the DocCount element of the SADRequest
+     * @param signRequestID ID for the SignRequest that was included in the SADRequest
      * @return a SAD object
-     * @throws SADValidationException
-     *           for validation errors
+     * @throws SADValidationException for validation errors
      */
     private SAD validate(final SignedJWT signedJwt, final SAD sad, final long now, final String idpEntityID,
         final String expectedRecipientEntityID, final String expectedSubject, final String expectedLoa,
@@ -408,7 +392,8 @@ public class SADParser {
       // Make sure that this SAD was issued for "me".
       //
       if (!Objects.equals(expectedRecipientEntityID, sad.getAudience())) {
-        final String msg = String.format("SAD contains audience '%s' - expected '%s'", sad.getAudience(), expectedRecipientEntityID);
+        final String msg =
+            String.format("SAD contains audience '%s' - expected '%s'", sad.getAudience(), expectedRecipientEntityID);
         logger.info(msg);
         throw new SADValidationException(ErrorCode.VALIDATION_BAD_AUDIENCE, msg);
       }
@@ -420,15 +405,17 @@ public class SADParser {
         logger.info(msg);
         throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
       }
-      if (sad.getExpiry() < now) {
+      
+      if (sad.getExpiry() < now - this.allowedClockSkew.getSeconds()) {
         final String msg = String.format("SAD has expired - expiration: '%s', current time: '%s'",
-          sad.getExpiryDateTime(), Instant.ofEpochSecond(now));
+            sad.getExpiryDateTime(), Instant.ofEpochSecond(now));
         logger.info(msg);
         throw new SADValidationException(ErrorCode.SAD_EXPIRED, msg);
       }
-      if (sad.getIssuedAt() > now) {
+      
+      if (sad.getIssuedAt() > now + this.allowedClockSkew.getSeconds()) {
         final String msg = String.format("SAD is not yet valid - issue-time: '%s', current time: '%s'",
-          sad.getIssuedAtDateTime(), Instant.ofEpochSecond(now));
+            sad.getIssuedAtDateTime(), Instant.ofEpochSecond(now));
         logger.info(msg);
         throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
       }
@@ -436,7 +423,8 @@ public class SADParser {
       // Assert that we received a SAD for the expected subject ID (userID).
       //
       if (!Objects.equals(expectedSubject, sad.getSubject())) {
-        final String msg = String.format("SAD contains subject '%s' - expected '%s'", sad.getSubject(), expectedSubject);
+        final String msg =
+            String.format("SAD contains subject '%s' - expected '%s'", sad.getSubject(), expectedSubject);
         logger.info(msg);
         throw new SADValidationException(ErrorCode.VALIDATION_BAD_SUBJECT, msg);
       }
@@ -452,8 +440,9 @@ public class SADParser {
       // Assert that the SAD was issued based on the given SAD request.
       //
       if (!Objects.equals(sadRequestID, sad.getSeElnSadext().getInResponseTo())) {
-        final String msg = String.format("SAD contains in-response-to (irt) '%s' - expected SAD to belong to SADRequest with ID '%s'",
-          sad.getSeElnSadext().getInResponseTo(), sadRequestID);
+        final String msg =
+            String.format("SAD contains in-response-to (irt) '%s' - expected SAD to belong to SADRequest with ID '%s'",
+                sad.getSeElnSadext().getInResponseTo(), sadRequestID);
         logger.info(msg);
         throw new SADValidationException(ErrorCode.VALIDATION_BAD_IRT, msg);
       }
@@ -461,7 +450,8 @@ public class SADParser {
       // Assert that the SAD was issued under the LoA that we expects (should be the same as found in the assertion).
       //
       if (!Objects.equals(expectedLoa, sad.getSeElnSadext().getLoa())) {
-        final String msg = String.format("SAD contains LoA '%s' - expected '%s'", sad.getSeElnSadext().getLoa(), expectedLoa);
+        final String msg =
+            String.format("SAD contains LoA '%s' - expected '%s'", sad.getSeElnSadext().getLoa(), expectedLoa);
         logger.info(msg);
         throw new SADValidationException(ErrorCode.VALIDATION_BAD_LOA, msg);
       }
@@ -469,8 +459,8 @@ public class SADParser {
       // Assert the the number of documents indicated in the SAD corresponds with the number given in the SADRequest.
       //
       if (!Objects.equals(Integer.valueOf(expectedNoDocs), sad.getSeElnSadext().getNumberOfDocuments())) {
-        final String msg = String.format("SAD indicated '%s' number of documents - expected '%d'", 
-          sad.getSeElnSadext().getNumberOfDocuments(), expectedNoDocs);
+        final String msg = String.format("SAD indicated '%s' number of documents - expected '%d'",
+            sad.getSeElnSadext().getNumberOfDocuments(), expectedNoDocs);
         logger.info(msg);
         throw new SADValidationException(ErrorCode.VALIDATION_BAD_DOCS, msg);
       }
@@ -479,7 +469,7 @@ public class SADParser {
       //
       if (!Objects.equals(signRequestID, sad.getSeElnSadext().getRequestID())) {
         final String msg = String.format("SAD contains SignRequest ID (reqid) '%s' - expected '%s'",
-          sad.getSeElnSadext().getRequestID(), signRequestID);
+            sad.getSeElnSadext().getRequestID(), signRequestID);
         logger.info(msg);
         throw new SADValidationException(ErrorCode.VALIDATION_BAD_SIGNREQUESTID, msg);
       }
@@ -491,12 +481,9 @@ public class SADParser {
     /**
      * Verifies the signature on the supplied SAD JWT.
      * 
-     * @param sadJwt
-     *          the SAD JWT
-     * @param idpEntityID
-     *          the entityID of the IdP that signed the JWT
-     * @throws SADValidationException
-     *           for signature validation errors
+     * @param sadJwt the SAD JWT
+     * @param idpEntityID the entityID of the IdP that signed the JWT
+     * @throws SADValidationException for signature validation errors
      */
     public void verifyJwtSignature(final String sadJwt, final String idpEntityID) throws SADValidationException {
       try {
@@ -510,12 +497,9 @@ public class SADParser {
     /**
      * Verifies the signature on the supplied SAD JWT.
      * 
-     * @param sadJwt
-     *          the SAD JWT
-     * @param idpEntityID
-     *          the entityID of the IdP that signed the JWT
-     * @throws SADValidationException
-     *           for signature validation errors
+     * @param sadJwt the SAD JWT
+     * @param idpEntityID the entityID of the IdP that signed the JWT
+     * @throws SADValidationException for signature validation errors
      */
     private void verifyJwtSignature(final SignedJWT signedJwt, final String idpEntityID) throws SADValidationException {
       try {
@@ -524,14 +508,15 @@ public class SADParser {
         final List<X509Certificate> idpCerts = this.getValidationCertificates(idpEntityID);
         if (idpCerts.isEmpty()) {
           throw new SADValidationException(ErrorCode.SIGNATURE_VALIDATION_ERROR,
-            "No suitable IdP signature certificate was found - can not verify SAD JWT signature");
+              "No suitable IdP signature certificate was found - can not verify SAD JWT signature");
         }
         logger.debug("Verifying SAD JWT signature. Will try {} IdP key(s) ...", idpCerts.size());
 
         boolean verificationSuccess = false;
         for (X509Certificate idpCert : idpCerts) {
           try {
-            final JWSVerifier verifier = verifierFactory.createJWSVerifier(signedJwt.getHeader(), idpCert.getPublicKey());
+            final JWSVerifier verifier =
+                verifierFactory.createJWSVerifier(signedJwt.getHeader(), idpCert.getPublicKey());
             if (verifier.verify(signedJwt.getHeader(), signedJwt.getSigningInput(), signedJwt.getSignature())) {
               logger.debug("SAD JWT signature successfully verified");
               verificationSuccess = true;
@@ -545,22 +530,21 @@ public class SADParser {
         }
         if (!verificationSuccess) {
           throw new SADValidationException(ErrorCode.SIGNATURE_VALIDATION_ERROR,
-            "Signature on SAD JWT could not be validated using any of the IdP certificates found");
+              "Signature on SAD JWT could not be validated using any of the IdP certificates found");
         }
       }
       catch (ResolverException e) {
-        throw new SADValidationException(ErrorCode.SIGNATURE_VALIDATION_ERROR, "Failed to find validation certificate", e);
+        throw new SADValidationException(ErrorCode.SIGNATURE_VALIDATION_ERROR, "Failed to find validation certificate",
+            e);
       }
     }
 
     /**
      * Returns a list of possible IdP validation certificates to use when verifying the SAD signature.
      * 
-     * @param idpEntityID
-     *          the IdP entityID
+     * @param idpEntityID the IdP entityID
      * @return a list of certificates
-     * @throws ResolverException
-     *           for metadata resolver errors
+     * @throws ResolverException for metadata resolver errors
      */
     private List<X509Certificate> getValidationCertificates(final String idpEntityID) throws ResolverException {
       if (this.validationCertificates != null && !this.validationCertificates.isEmpty()) {
@@ -569,9 +553,10 @@ public class SADParser {
       else if (this.metadataProvider != null) {
         final IDPSSODescriptor metadata = Optional.ofNullable(this.metadataProvider.getEntityDescriptor(idpEntityID))
             .map(e -> e.getIDPSSODescriptor(SAMLConstants.SAML20P_NS)).orElse(null);
-        
+
         if (metadata == null) {
-          logger.warn("No metadata found for IdP '{}' - cannot find key to use when verifying SAD JWT signature", idpEntityID);
+          logger.warn("No metadata found for IdP '{}' - cannot find key to use when verifying SAD JWT signature",
+              idpEntityID);
           return Collections.emptyList();
         }
         List<X509Credential> creds = EntityDescriptorUtils.getMetadataCertificates(metadata, UsageType.SIGNING);
@@ -585,8 +570,7 @@ public class SADParser {
     /**
      * Returns the LoA (level of assurance) URI from the supplied assertion.
      * 
-     * @param assertion
-     *          the assertion
+     * @param assertion the assertion
      * @return the LoA URI, or null
      */
     private static String getLoa(final Assertion assertion) {
@@ -595,6 +579,17 @@ public class SADParser {
       }
       catch (Exception e) {
         return null;
+      }
+    }
+
+    /**
+     * Assigned the allowed clock skew. The default is {@link #DEFAULT_ALLOWED_CLOCK_SKEW}.
+     * 
+     * @param allowedClockSkew allowed clock skew
+     */
+    public void setAllowedClockSkew(final Duration allowedClockSkew) {
+      if (allowedClockSkew != null) {
+        this.allowedClockSkew = allowedClockSkew;
       }
     }
 
