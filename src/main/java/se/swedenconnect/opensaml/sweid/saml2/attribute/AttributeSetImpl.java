@@ -35,6 +35,8 @@ import se.swedenconnect.opensaml.saml2.attribute.AttributeTemplate;
  */
 public class AttributeSetImpl implements AttributeSet {
 
+  private static final long serialVersionUID = 6392579786155678789L;
+
   /** Logging instance. */
   private static final Logger logger = LoggerFactory.getLogger(AttributeSetImpl.class);
 

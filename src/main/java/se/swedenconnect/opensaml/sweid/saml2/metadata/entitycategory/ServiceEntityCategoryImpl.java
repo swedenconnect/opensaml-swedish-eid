@@ -27,6 +27,8 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSet;
  */
 public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements ServiceEntityCategory {
 
+  private static final long serialVersionUID = -8531917204430501608L;
+
   /** The level of assurance URI of this category. */
   private List<String> loaUris;
 

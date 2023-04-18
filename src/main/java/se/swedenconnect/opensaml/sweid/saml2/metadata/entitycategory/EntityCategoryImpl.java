@@ -22,6 +22,8 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
  */
 public class EntityCategoryImpl implements EntityCategory {
 
+  private static final long serialVersionUID = 7370276371052265483L;
+
   /** The unique URI for this category. */
   protected String uri;
 
