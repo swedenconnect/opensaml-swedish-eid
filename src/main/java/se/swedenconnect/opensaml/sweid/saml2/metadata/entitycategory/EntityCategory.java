@@ -15,12 +15,14 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
+import java.io.Serializable;
+
 /**
  * Represents an Entity Category according to the Swedish eID Framework.
  * 
  * @author Martin Lindström (martin@idsec.se)
  */
-public interface EntityCategory {
+public interface EntityCategory extends Serializable {
 
   /**
    * Each entity category is assigned an unique URI. This method returns this value.
