@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADRequest;
 
 /**
  * Builder for {@link SADRequest}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
@@ -30,7 +30,7 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
   @Override
   public SADRequest buildObject() {
     return this.buildObject(SADRequest.DEFAULT_ELEMENT_NAME.getNamespaceURI(), SADRequest.DEFAULT_ELEMENT_LOCAL_NAME,
-      SADRequest.DEFAULT_ELEMENT_NAME.getPrefix());
+        SADRequest.DEFAULT_ELEMENT_NAME.getPrefix());
   }
 
   /** {@inheritDoc} */

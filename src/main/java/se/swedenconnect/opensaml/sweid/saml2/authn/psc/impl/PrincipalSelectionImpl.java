@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,25 +28,23 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
 
 /**
  * Implementation class for the {@link PrincipalSelection} interface.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class PrincipalSelectionImpl extends AbstractXMLObject implements PrincipalSelection {
-  
+
   /** MatchValue children. */
-  private final XMLObjectChildrenList<MatchValue> matchValues;  
+  private final XMLObjectChildrenList<MatchValue> matchValues;
 
   /**
    * Constructor.
-   * 
-   * @param namespaceURI
-   *          the namespace the element is in
-   * @param elementLocalName
-   *          the local name of the XML element this Object represents
-   * @param namespacePrefix
-   *          the prefix for the given namespace
-   */  
-  protected PrincipalSelectionImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+   *
+   * @param namespaceURI the namespace the element is in
+   * @param elementLocalName the local name of the XML element this Object represents
+   * @param namespacePrefix the prefix for the given namespace
+   */
+  protected PrincipalSelectionImpl(final String namespaceURI, final String elementLocalName,
+      final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.matchValues = new XMLObjectChildrenList<>(this);
   }

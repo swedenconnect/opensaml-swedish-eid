@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
 
 /**
  * A marshaller for {@link MatchValue}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class MatchValueMarshaller extends XSStringMarshaller {
@@ -32,7 +32,7 @@ public class MatchValueMarshaller extends XSStringMarshaller {
   /** {@inheritDoc} */
   @Override
   protected void marshallAttributes(final XMLObject xmlObject, final Element domElement) throws MarshallingException {
-    
+
     final MatchValue mv = (MatchValue) xmlObject;
 
     if (mv.getNameFormat() != null) {

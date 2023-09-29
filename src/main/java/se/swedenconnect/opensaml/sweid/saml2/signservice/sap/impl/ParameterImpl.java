@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,24 +21,21 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
 
 /**
  * Implementation class for {@link Parameter}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class ParameterImpl extends XSStringImpl implements Parameter {
-  
+
   /** The name attribute. */
   private String name;
-  
+
   /**
    * Constructor.
-   * 
-   * @param namespaceURI
-   *          the namespace the element is in
-   * @param elementLocalName
-   *          the local name of the XML element this Object represents
-   * @param namespacePrefix
-   *          the prefix for the given namespace
-   */  
+   *
+   * @param namespaceURI the namespace the element is in
+   * @param elementLocalName the local name of the XML element this Object represents
+   * @param namespacePrefix the prefix for the given namespace
+   */
   protected ParameterImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 Sweden Connect
+ * Copyright 2019-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.xmlsec.algorithm.AlgorithmDescriptor;
 import org.opensaml.xmlsec.algorithm.AlgorithmRegistry;
@@ -49,14 +49,14 @@ public class SignMessageDigestIssuerTest extends OpenSAMLTestBase {
 
     try {
       issuer.setDefaultDigestMethod("http://not.a.real.algo");
-      Assert.fail("Expected SecurityException");
+      Assertions.fail("Expected SecurityException");
     }
     catch (final SecurityException e) {
     }
 
     try {
       issuer.setDefaultDigestMethod(SignatureConstants.ALGO_ID_SIGNATURE_RSA_SHA256);
-      Assert.fail("Expected SecurityException");
+      Assertions.fail("Expected SecurityException");
     }
     catch (final SecurityException e) {
     }
@@ -68,16 +68,16 @@ public class SignMessageDigestIssuerTest extends OpenSAMLTestBase {
     final SignMessageDigestIssuer issuer = new SignMessageDigestIssuer();
 
     final SignMessage signMessage = SignMessageBuilder.builder()
-      .message(SignMessageDigestIssuerTest.CONTENTS)
-      .mimeType(SignMessageMimeTypeEnum.TEXT)
-      .build();
-    
+        .message(SignMessageDigestIssuerTest.CONTENTS)
+        .mimeType(SignMessageMimeTypeEnum.TEXT)
+        .build();
+
     final Attribute attr = issuer.create(signMessage.getMessage());
-    Assert.assertEquals(
-      String.format("%s;%s",
-        SignMessageDigestIssuer.DEFAULT_DIGEST_METHOD, this.hash(CONTENTS,
-          SignMessageDigestIssuer.DEFAULT_DIGEST_METHOD)),
-      AttributeUtils.getAttributeStringValue(attr));
+    Assertions.assertEquals(
+        String.format("%s;%s",
+            SignMessageDigestIssuer.DEFAULT_DIGEST_METHOD, this.hash(CONTENTS,
+                SignMessageDigestIssuer.DEFAULT_DIGEST_METHOD)),
+        AttributeUtils.getAttributeStringValue(attr));
   }
 
   private String hash(final String text, final String digestAlgorithm) throws Exception {

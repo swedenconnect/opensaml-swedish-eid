@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
 
 /**
  * Marshaller for the {@code SignMessage} element.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageMarshaller extends AbstractSAMLObjectMarshaller {
@@ -33,10 +33,10 @@ public class SignMessageMarshaller extends AbstractSAMLObjectMarshaller {
   @Override
   protected void marshallAttributes(final XMLObject xmlObject, final Element domElement) throws MarshallingException {
     final SignMessage signMessage = (SignMessage) xmlObject;
-    
+
     if (signMessage.isMustShowXSBoolean() != null) {
-      domElement.setAttributeNS(null, SignMessage.MUST_SHOW_ATTR_NAME, 
-        signMessage.isMustShowXSBoolean().getValue().toString());
+      domElement.setAttributeNS(null, SignMessage.MUST_SHOW_ATTR_NAME,
+          signMessage.isMustShowXSBoolean().getValue().toString());
     }
     if (signMessage.getDisplayEntity() != null) {
       domElement.setAttributeNS(null, SignMessage.DISPLAY_ENTITY_ATTR_NAME, signMessage.getDisplayEntity());
@@ -45,12 +45,13 @@ public class SignMessageMarshaller extends AbstractSAMLObjectMarshaller {
       domElement.setAttributeNS(null, SignMessage.MIME_TYPE_ATTR_NAME, signMessage.getMimeType());
     }
 
-    this.marshallUnknownAttributes(signMessage, domElement);    
+    this.marshallUnknownAttributes(signMessage, domElement);
   }
 
   /** {@inheritDoc} */
   @Override
-  protected void marshallElementContent(final XMLObject xmlObject, final Element domElement) throws MarshallingException {
+  protected void marshallElementContent(final XMLObject xmlObject, final Element domElement)
+      throws MarshallingException {
     super.marshallElementContent(xmlObject, domElement);
   }
 

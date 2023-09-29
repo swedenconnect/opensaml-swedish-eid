@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,20 +24,18 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
 
 /**
  * Unmarshaller for {@link Parameter}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class ParameterUnmarshaller extends XSStringUnmarshaller {
 
   @Override
-  protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {    
+  protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {
     final Parameter p = (Parameter) xmlObject;
-    
+
     if (Parameter.NAME_ATTR_NAME.equalsIgnoreCase(attribute.getLocalName())) {
       p.setName(attribute.getValue());
     }
   }
 
-  
-  
 }

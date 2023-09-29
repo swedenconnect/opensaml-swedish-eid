@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,21 +19,21 @@ import java.io.Serializable;
 
 /**
  * Represents an Entity Category according to the Swedish eID Framework.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface EntityCategory extends Serializable {
 
   /**
    * Each entity category is assigned an unique URI. This method returns this value.
-   * 
+   *
    * @return the entity category URI
    */
   String getUri();
 
   /**
    * Returns the type of entity category.
-   * 
+   *
    * @return the type of entity category
    */
   EntityCategoryType getType();

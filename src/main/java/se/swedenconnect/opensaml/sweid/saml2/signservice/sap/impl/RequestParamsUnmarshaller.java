@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,15 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.RequestParams;
 
 /**
  * Unmarshaller for {@link RequestParams}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class RequestParamsUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
   /** {@inheritDoc} */
-  protected void processChildElement(final XMLObject parentSAMLObject, final XMLObject childSAMLObject) throws UnmarshallingException {
+  @Override
+  protected void processChildElement(final XMLObject parentSAMLObject, final XMLObject childSAMLObject)
+      throws UnmarshallingException {
     final RequestParams params = (RequestParams) parentSAMLObject;
 
     if (childSAMLObject instanceof Parameter) {
@@ -40,5 +42,5 @@ public class RequestParamsUnmarshaller extends AbstractSAMLObjectUnmarshaller {
       super.processChildElement(parentSAMLObject, childSAMLObject);
     }
   }
-  
+
 }

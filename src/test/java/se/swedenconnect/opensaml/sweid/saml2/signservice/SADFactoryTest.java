@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import java.security.KeyStore;
 import java.security.PublicKey;
 import java.util.Base64;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opensaml.security.x509.impl.KeyStoreX509CredentialAdapter;
 import org.springframework.core.io.ClassPathResource;
 
@@ -36,7 +36,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SAD;
 
 /**
  * Testcases for building a SAD.
- * 
+ *
  * @author Martin Lindström (martin.lindstrom@litsec.se)
  */
 public class SADFactoryTest {
@@ -46,40 +46,40 @@ public class SADFactoryTest {
     KeyStore keyStore = OpenSAMLTestBase.loadKeyStore(new ClassPathResource("Litsec_SAML_Signing.jks").getInputStream(), "secret", "JKS");
     KeyStoreX509CredentialAdapter credential = new KeyStoreX509CredentialAdapter(keyStore, "litsec_saml_signing", "secret".toCharArray());
     PublicKey publicKey = credential.getEntityCertificate().getPublicKey();
-    
+
     SADFactory factory = new SADFactory("https://idp.svelegtest.se/idp", credential);
-    
+
     // Create the SAD ...
     //
     SAD sad = factory.getBuilder()
         .subject("196302052383")
-        .audience("http://www.example.com/sigservice")        
+        .audience("http://www.example.com/sigservice")
         .inResponseTo("_a74a068d0548a919e503e5f9ef901851")
         .loa(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3)
         .requestID("f6e7d061a23293b0053dc7b038a04dad")
         .numberOfDocuments(1)
         .buildSAD();
-        
+
     // Create the signed JWT
     //
     String jwt = factory.createJwt(sad);
-    
+
     // Decode
     //
     SignedJWT signedJwt = SignedJWT.parse(jwt);
-    
+
     String payload = signedJwt.getPayload().toBase64URL().toString();
     SAD sad2 = SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), Charset.forName("UTF-8")));
-    
+
     // Make sure the decode SAD is the same.
-    Assert.assertEquals(sad, sad2);
-    
+    Assertions.assertEquals(sad, sad2);
+
     // Verify signature ...
     //
     JWSVerifierFactory verifierFactory = new DefaultJWSVerifierFactory();
     JWSVerifier verifier = verifierFactory.createJWSVerifier(signedJwt.getHeader(), publicKey);
-    
-    Assert.assertTrue(verifier.verify(signedJwt.getHeader(), signedJwt.getSigningInput(), signedJwt.getSignature())); 
+
+    Assertions.assertTrue(verifier.verify(signedJwt.getHeader(), signedJwt.getSigningInput(), signedJwt.getSignature()));
   }
 
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import org.opensaml.core.xml.config.AbstractXMLObjectProviderInitializer;
 
 /**
  * XMLObject provider initializer for this module.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class XMLObjectProviderInitializer extends AbstractXMLObjectProviderInitializer {
@@ -30,6 +30,7 @@ public class XMLObjectProviderInitializer extends AbstractXMLObjectProviderIniti
   };
 
   /** {@inheritDoc} */
+  @Override
   protected String[] getConfigResources() {
     return configs;
   }

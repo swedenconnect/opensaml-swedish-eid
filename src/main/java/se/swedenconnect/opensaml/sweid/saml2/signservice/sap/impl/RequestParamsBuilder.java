@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.RequestParams;
 
 /**
  * Builder for {@link RequestParams}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class RequestParamsBuilder extends AbstractSAMLObjectBuilder<RequestParams> {
@@ -29,8 +29,9 @@ public class RequestParamsBuilder extends AbstractSAMLObjectBuilder<RequestParam
   /** {@inheritDoc} */
   @Override
   public RequestParams buildObject() {
-    return this.buildObject(RequestParams.DEFAULT_ELEMENT_NAME.getNamespaceURI(), RequestParams.DEFAULT_ELEMENT_LOCAL_NAME,
-      RequestParams.DEFAULT_ELEMENT_NAME.getPrefix());
+    return this.buildObject(RequestParams.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
+        RequestParams.DEFAULT_ELEMENT_LOCAL_NAME,
+        RequestParams.DEFAULT_ELEMENT_NAME.getPrefix());
   }
 
   /** {@inheritDoc} */

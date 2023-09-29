@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Sweden Connect
+ * Copyright 2021-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeConstants;
 /**
  * An extension to {@link AbstractAssertionValidationParametersBuilder} setting defaults according to the Swedish eID
  * Framework.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SwedishEidAssertionValidationParametersBuilder
@@ -37,7 +37,7 @@ public class SwedishEidAssertionValidationParametersBuilder
 
   /**
    * Utility method that returns a builder instance.
-   * 
+   *
    * @return a builder
    */
   public static SwedishEidAssertionValidationParametersBuilder builder() {
@@ -50,7 +50,8 @@ public class SwedishEidAssertionValidationParametersBuilder
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_RECIPIENT_REQUIRED, Boolean.TRUE);
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_NOT_ON_OR_AFTER_REQUIRED, Boolean.TRUE);
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_IN_RESPONSE_TO_REQUIRED, Boolean.TRUE);
-    final Boolean addressRequired = (Boolean) this.getStaticParameter(SAML2AssertionValidationParameters.SC_ADDRESS_REQUIRED);
+    final Boolean addressRequired =
+        (Boolean) this.getStaticParameter(SAML2AssertionValidationParameters.SC_ADDRESS_REQUIRED);
     if (addressRequired != null && addressRequired.booleanValue()) {
       if (this.getStaticParameter(SAML2AssertionValidationParameters.SC_VALID_ADDRESSES) == null) {
         // Nothing to compare with ...
@@ -73,8 +74,7 @@ public class SwedishEidAssertionValidationParametersBuilder
       }
     }
     this.addStaticParameterIfMissing(SwedishEidAttributeStatementValidator.SCOPED_ATTRIBUTES,
-      Collections.singletonList(AttributeConstants.ATTRIBUTE_NAME_ORG_AFFILIATION));
-    
+        Collections.singletonList(AttributeConstants.ATTRIBUTE_NAME_ORG_AFFILIATION));
 
     return super.build();
   }

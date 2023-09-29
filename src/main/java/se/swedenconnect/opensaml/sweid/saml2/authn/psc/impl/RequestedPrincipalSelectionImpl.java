@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,22 +19,20 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.RequestedPrincipalSelecti
 
 /**
  * Implementation class for the {@link RequestedPrincipalSelection} interface.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class RequestedPrincipalSelectionImpl extends PrincipalSelectionImpl implements RequestedPrincipalSelection {
 
   /**
    * Constructor.
-   * 
-   * @param namespaceURI
-   *          the namespace the element is in
-   * @param elementLocalName
-   *          the local name of the XML element this Object represents
-   * @param namespacePrefix
-   *          the prefix for the given namespace
+   *
+   * @param namespaceURI the namespace the element is in
+   * @param elementLocalName the local name of the XML element this Object represents
+   * @param namespacePrefix the prefix for the given namespace
    */
-  protected RequestedPrincipalSelectionImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  protected RequestedPrincipalSelectionImpl(final String namespaceURI, final String elementLocalName,
+      final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }
 

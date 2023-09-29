@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,15 @@ import org.opensaml.xmlsec.encryption.support.EncryptionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
-import net.shibboleth.utilities.java.support.logic.Constraint;
+import net.shibboleth.shared.component.ComponentInitializationException;
+import net.shibboleth.shared.logic.Constraint;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.EncryptedMessage;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
 import se.swedenconnect.opensaml.xmlsec.encryption.support.SAMLObjectEncrypter;
 
 /**
  * Bean for encrypting {@code SignMessage} objects.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageEncrypter {
@@ -43,11 +43,9 @@ public class SignMessageEncrypter {
 
   /**
    * Constructor.
-   * 
-   * @param encrypter
-   *          the encrypter bean
-   * @throws ComponentInitializationException
-   *           for init errors
+   *
+   * @param encrypter the encrypter bean
+   * @throws ComponentInitializationException for init errors
    */
   public SignMessageEncrypter(final SAMLObjectEncrypter encrypter) throws ComponentInitializationException {
     this.encrypter = Constraint.isNotNull(encrypter, "encrypter must not be null");
@@ -57,13 +55,10 @@ public class SignMessageEncrypter {
    * Given a sign message holding a cleartext {@code Message} element, the method encrypts the message using the default
    * encryption configuration and updates the supplied {@code signMessage} so that it holds an {@code EncryptedMessage}
    * instead.
-   * 
-   * @param signMessage
-   *          the sign message holding the message to encrypt
-   * @param entityID
-   *          the SAML entityID of the IdP that is the recipient of the message (and to whom we encrypt for)
-   * @throws EncryptionException
-   *           for errors during encryption
+   *
+   * @param signMessage the sign message holding the message to encrypt
+   * @param entityID the SAML entityID of the IdP that is the recipient of the message (and to whom we encrypt for)
+   * @throws EncryptionException for errors during encryption
    * @see #encrypt(SignMessage, String, EncryptionConfiguration)
    */
   public void encrypt(final SignMessage signMessage, final String entityID) throws EncryptionException {
@@ -74,15 +69,11 @@ public class SignMessageEncrypter {
    * Given a sign message holding a cleartext {@code Message} element, the method encrypts the message using the
    * supplied encryption configuration and updates the supplied {@code signMessage} so that it holds an
    * {@code EncryptedMessage} instead.
-   * 
-   * @param signMessage
-   *          the sign message holding the message to encrypt
-   * @param entityID
-   *          the SAML entityID of the IdP that is the recipient of the message (and to whom we encrypt for)
-   * @param configuration
-   *          the encryption configuration to use
-   * @throws EncryptionException
-   *           for errors during encryption
+   *
+   * @param signMessage the sign message holding the message to encrypt
+   * @param entityID the SAML entityID of the IdP that is the recipient of the message (and to whom we encrypt for)
+   * @param configuration the encryption configuration to use
+   * @throws EncryptionException for errors during encryption
    */
   public void encrypt(final SignMessage signMessage, final String entityID, final EncryptionConfiguration configuration)
       throws EncryptionException {
@@ -103,11 +94,13 @@ public class SignMessageEncrypter {
     }
     else if (!signMessage.getDisplayEntity().equals(entityID)) {
       throw new EncryptionException(String.format("Assigned DisplayEntity (%s) does not match supplied entityID (%s)",
-        signMessage.getDisplayEntity(), entityID));
+          signMessage.getDisplayEntity(), entityID));
     }
 
-    final EncryptedData encryptedData = this.encrypter.encrypt(signMessage.getMessage(), new SAMLObjectEncrypter.Peer(entityID), configuration);
-    final EncryptedMessage encryptedMessage = (EncryptedMessage) XMLObjectSupport.buildXMLObject(EncryptedMessage.DEFAULT_ELEMENT_NAME);
+    final EncryptedData encryptedData =
+        this.encrypter.encrypt(signMessage.getMessage(), new SAMLObjectEncrypter.Peer(entityID), configuration);
+    final EncryptedMessage encryptedMessage =
+        (EncryptedMessage) XMLObjectSupport.buildXMLObject(EncryptedMessage.DEFAULT_ELEMENT_NAME);
     encryptedMessage.setEncryptedData(encryptedData);
 
     signMessage.setMessage(null);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessageMimeType
 
 /**
  * Implementation class for the {@link SignMessage} interface.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
@@ -50,19 +50,16 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
 
   /** The encryptedMessage element. */
   private EncryptedMessage encryptedMessage;
-  
+
   /** "anyAttribute" attributes */
   private final AttributeMap unknownAttributes;
 
   /**
    * Constructor creating an SignMessage object given the namespace URI, local element name and namespace prefix.
-   * 
-   * @param namespaceURI
-   *          the namespace URI.
-   * @param elementLocalName
-   *          the element local name.
-   * @param namespacePrefix
-   *          the name space prefix.
+   *
+   * @param namespaceURI the namespace URI.
+   * @param elementLocalName the element local name.
+   * @param namespacePrefix the name space prefix.
    */
   public SignMessageImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);

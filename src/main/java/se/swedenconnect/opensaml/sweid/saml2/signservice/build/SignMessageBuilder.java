@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,14 +25,14 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessageMimeType
 
 /**
  * Creates a {@link SignMessage} instance using the builder patterns.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
 
   /**
    * Utility method that creates a builder.
-   * 
+   *
    * @return a builder
    */
   public static SignMessageBuilder builder() {
@@ -44,9 +44,8 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
    * <p>
    * If the message should be encrypted, use {@link SignMessageEncrypter} after the {@code SignMessage} has been built.
    * </p>
-   * 
-   * @param message
-   *          the message to include (in cleartext)
+   *
+   * @param message the message to include (in cleartext)
    * @return the builder
    */
   public SignMessageBuilder message(final String message) {
@@ -60,9 +59,8 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
    * Assigns the entityID of the entity responsible for displaying the sign message to the signer. When the sign message
    * is encrypted, then this entity is also the holder of the private decryption key necessary to decrypt the sign
    * message.
-   * 
-   * @param displayEntity
-   *          the entityID of the recipient
+   *
+   * @param displayEntity the entityID of the recipient
    * @return the builder
    */
   public SignMessageBuilder displayEntity(final String displayEntity) {
@@ -72,9 +70,8 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
 
   /**
    * Assigns the MIME type of the message.
-   * 
-   * @param mimeType
-   *          the MIME type
+   *
+   * @param mimeType the MIME type
    * @return the builder
    */
   public SignMessageBuilder mimeType(final SignMessageMimeTypeEnum mimeType) {
@@ -85,9 +82,8 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
   /**
    * Assigns the {@code MustShow} attribute. When this parameter is set to {@code true} then the requested signature
    * MUST NOT be created unless this message has been displayed and accepted by the signer.
-   * 
-   * @param mustShow
-   *          the must show flag
+   *
+   * @param mustShow the must show flag
    * @return the builder
    */
   public SignMessageBuilder mustShow(final Boolean mustShow) {

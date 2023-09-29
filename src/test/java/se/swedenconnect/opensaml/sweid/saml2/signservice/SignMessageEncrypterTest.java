@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-2021 Sweden Connect
+ * Copyright 2019-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,8 +19,8 @@ import java.security.KeyStore;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.saml.saml2.metadata.KeyDescriptor;
@@ -32,7 +32,7 @@ import org.opensaml.xmlsec.encryption.support.EncryptionException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import net.shibboleth.utilities.java.support.component.ComponentInitializationException;
+import net.shibboleth.shared.component.ComponentInitializationException;
 import se.swedenconnect.opensaml.saml2.metadata.build.EntityDescriptorBuilder;
 import se.swedenconnect.opensaml.saml2.metadata.build.IDPSSODescriptorBuilder;
 import se.swedenconnect.opensaml.saml2.metadata.build.KeyDescriptorBuilder;
@@ -48,7 +48,7 @@ import se.swedenconnect.opensaml.xmlsec.encryption.support.SAMLObjectEncrypter;
 
 /**
  * Test cases for {@code SignMessageEncrypter}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageEncrypterTest extends OpenSAMLTestBase {
@@ -75,13 +75,13 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
         .use(UsageType.SIGNING)
         .certificate(new ClassPathResource("Litsec_SAML_Signing.crt").getInputStream())
         .build());
-    SAMLObjectEncrypter objectEncrypter = new SAMLObjectEncrypter(this.createMetadataProvider(ed).getMetadataResolver()); 
+    SAMLObjectEncrypter objectEncrypter = new SAMLObjectEncrypter(this.createMetadataProvider(ed).getMetadataResolver());
 
     SignMessageEncrypter encrypter = new SignMessageEncrypter(objectEncrypter);
 
     encrypter.encrypt(signMessage, ENTITY_ID);
 
-    Assert.assertNotNull(signMessage.getEncryptedMessage());
+    Assertions.assertNotNull(signMessage.getEncryptedMessage());
 
     // Element e = ObjectUtils.marshall(signMessage);
     // System.out.println(SerializeSupport.prettyPrintXML(e));
@@ -89,7 +89,7 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
     String decryptedMsg = this.decrypt(signMessage, new ClassPathResource("Litsec_SAML_Encryption.jks"), "secret",
       "litsec_saml_encryption");
 
-    Assert.assertEquals(CONTENTS, decryptedMsg);
+    Assertions.assertEquals(CONTENTS, decryptedMsg);
   }
 
   @Test
@@ -112,13 +112,13 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
 
     try {
       encrypter.encrypt(signMessage, ENTITY_ID);
-      Assert.fail("Expected error - no encryption credentials found");
+      Assertions.fail("Expected error - no encryption credentials found");
     }
     catch (EncryptionException e) {
       System.out.println(e.getMessage());
     }
   }
-  
+
   @Test
   public void testUnspecified() throws Exception {
 
@@ -144,7 +144,7 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
 
     encrypter.encrypt(signMessage, ENTITY_ID);
 
-    Assert.assertNotNull(signMessage.getEncryptedMessage());
+    Assertions.assertNotNull(signMessage.getEncryptedMessage());
 
     // Element e = ObjectUtils.marshall(signMessage);
     // System.out.println(SerializeSupport.prettyPrintXML(e));
@@ -152,9 +152,9 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
     String decryptedMsg = this.decrypt(signMessage, new ClassPathResource("Litsec_SAML_Encryption.jks"), "secret",
       "litsec_saml_encryption");
 
-    Assert.assertEquals(CONTENTS, decryptedMsg);
+    Assertions.assertEquals(CONTENTS, decryptedMsg);
   }
-  
+
   @Test
   public void testCapabilitiesSimple() throws Exception {
 
@@ -171,7 +171,7 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
       .use(UsageType.ENCRYPTION)
       .certificate(new ClassPathResource("Litsec_SAML_Encryption.crt").getInputStream())
       .encryptionMethods(EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES256_GCM, EncryptionConstants.ALGO_ID_KEYTRANSPORT_RSA15)
-      .build(), 
+      .build(),
       KeyDescriptorBuilder.builder()
         .use(UsageType.SIGNING)
         .certificate(new ClassPathResource("Litsec_SAML_Signing.crt").getInputStream())
@@ -181,7 +181,7 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
 
     encrypter.encrypt(signMessage, ENTITY_ID);
 
-    Assert.assertNotNull(signMessage.getEncryptedMessage());
+    Assertions.assertNotNull(signMessage.getEncryptedMessage());
 
 //    Element e = ObjectUtils.marshall(signMessage);
 //    System.out.println(SerializeSupport.prettyPrintXML(e));
@@ -189,8 +189,8 @@ public class SignMessageEncrypterTest extends OpenSAMLTestBase {
     String decryptedMsg = this.decrypt(signMessage, new ClassPathResource("Litsec_SAML_Encryption.jks"), "secret",
       "litsec_saml_encryption");
 
-    Assert.assertEquals(CONTENTS, decryptedMsg);
-  }  
+    Assertions.assertEquals(CONTENTS, decryptedMsg);
+  }
 
   private String decrypt(SignMessage signMessage, Resource jks, String password, String alias) throws Exception {
     KeyStore keyStore = loadKeyStore(jks.getInputStream(), password, "JKS");

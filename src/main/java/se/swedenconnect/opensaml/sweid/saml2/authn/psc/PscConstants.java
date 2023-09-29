@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,16 +17,16 @@ package se.swedenconnect.opensaml.sweid.saml2.authn.psc;
 
 /**
  * Defines constants for the "Principal Selection in SAML Authentication Requests" specification.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class PscConstants {
-  
+
   /** Namespace prefix for the PSC (Principal Selection Criteria) namespace. */
   public static final String PSC_NS_PREFIX = "psc";
-  
+
   /** The namespace for the Principal Selection Criteria schema. */
-  public static final String PSC_NS = "http://id.swedenconnect.se/authn/1.0/principal-selection/ns";  
+  public static final String PSC_NS = "http://id.swedenconnect.se/authn/1.0/principal-selection/ns";
 
   private PscConstants() {
   }

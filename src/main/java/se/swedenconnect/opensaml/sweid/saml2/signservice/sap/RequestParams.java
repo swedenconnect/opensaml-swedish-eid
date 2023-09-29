@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import org.opensaml.saml.common.SAMLObject;
 
 /**
  * Representation of the {@code RequestParam} element.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface RequestParams extends SAMLObject {
@@ -36,7 +36,7 @@ public interface RequestParams extends SAMLObject {
 
   /**
    * Returns a reference to the list of parameters.
-   * 
+   *
    * @return a list of parameters
    */
   List<Parameter> getParameters();

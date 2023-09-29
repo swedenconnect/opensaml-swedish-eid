@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,12 +24,13 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADRequest;
 
 /**
  * Marshaller for {@link SADRequest}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADRequestMarshaller extends AbstractSAMLObjectMarshaller {
 
   /** {@inheritDoc} */
+  @Override
   protected void marshallAttributes(final XMLObject samlObject, final Element domElement) throws MarshallingException {
     final SADRequest sadRequest = (SADRequest) samlObject;
 
@@ -38,5 +39,5 @@ public class SADRequestMarshaller extends AbstractSAMLObjectMarshaller {
       domElement.setIdAttributeNS(null, SADRequest.ID_ATTRIB_NAME, true);
     }
   }
-  
+
 }

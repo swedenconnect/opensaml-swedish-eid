@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
 /**
  * Represents the different Entity Category types defined within the Swedish eiD Framework.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public enum EntityCategoryType {
@@ -27,7 +27,8 @@ public enum EntityCategoryType {
    * service. Meaning for a providing service: Represents the ability to deliver assertions in accordance with each
    * declared category.
    */
-  SERVICE_ENTITY(EntityCategoryConstants.SERVICE_ENTITY_CATEGORY_PREFIX, EntityCategoryConstants.SERVICE_ENTITY_CATEGORY_PREFIX_SC),
+  SERVICE_ENTITY(EntityCategoryConstants.SERVICE_ENTITY_CATEGORY_PREFIX,
+      EntityCategoryConstants.SERVICE_ENTITY_CATEGORY_PREFIX_SC),
   /**
    * Meaning for a consuming service: Represents a property of this service. Meaning for a providing service: Represents
    * the ability to deliver assertions to a consuming service that has the declared property.
@@ -42,7 +43,7 @@ public enum EntityCategoryType {
    * Declares a service contract entity category.
    */
   SERVICE_CONTRACT(EntityCategoryConstants.SERVICE_CONTRACT_CATEGORY_PREFIX),
-  
+
   /**
    * Declares a general entity category.
    */
@@ -50,9 +51,8 @@ public enum EntityCategoryType {
 
   /**
    * Given an entity category URI, the method returns the type of entity category.
-   * 
-   * @param uri
-   *          entity category URI
+   *
+   * @param uri entity category URI
    * @return the entity category type, or null if no match is found
    */
   public static EntityCategoryType getType(final String uri) {
@@ -71,11 +71,9 @@ public enum EntityCategoryType {
 
   /**
    * Predicate that tells if the supplied entity category URI is of the supplied entity category type.
-   * 
-   * @param uri
-   *          entity category URI
-   * @param type
-   *          the entity category type to test for
+   *
+   * @param uri entity category URI
+   * @param type the entity category type to test for
    * @return if the supplied URI is of the given type true is returned, otherwise false
    */
   public static boolean isType(final String uri, final EntityCategoryType type) {
@@ -92,9 +90,8 @@ public enum EntityCategoryType {
 
   /**
    * Hidden constructor.
-   * 
-   * @param prefix
-   *          the URI prefix(es) for the type
+   *
+   * @param prefix the URI prefix(es) for the type
    */
   private EntityCategoryType(final String... prefix) {
     this.prefix = prefix;

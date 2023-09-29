@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
- * Representation of the Signature Activation Data (SAD) as described in the
- * "Signature Activation Protocol for Federated Signing" specification.
+ * Representation of the Signature Activation Data (SAD) as described in the "Signature Activation Protocol for
+ * Federated Signing" specification.
  *
  * @author Martin Lindström (martin@idsec.se)
  */
@@ -66,12 +66,10 @@ public class SAD {
 
   /**
    * Creates a {@code SAD} object from its JSON representation.
-   * 
-   * @param json
-   *          the JSON representation
+   *
+   * @param json the JSON representation
    * @return a {@code SAD} object
-   * @throws IOException
-   *           for parsing errors
+   * @throws IOException for parsing errors
    */
   public static SAD fromJson(final String json) throws IOException {
     return jsonMapper.readValue(json, SAD.class);
@@ -79,10 +77,9 @@ public class SAD {
 
   /**
    * Serializes the SAD object into its JSON representation.
-   * 
+   *
    * @return the JSON representation
-   * @throws IOException
-   *           for processing errors
+   * @throws IOException for processing errors
    */
   public String toJson() throws IOException {
     return jsonMapper.writeValueAsString(this);
@@ -90,10 +87,9 @@ public class SAD {
 
   /**
    * Serializes the SAD object into its JSON byte representation.
-   * 
+   *
    * @return the JSON bytes
-   * @throws IOException
-   *           for processing errors
+   * @throws IOException for processing errors
    */
   public byte[] toJsonBytes() throws IOException {
     return jsonMapper.writeValueAsBytes(this);
@@ -101,7 +97,7 @@ public class SAD {
 
   /**
    * Returns the attribute value of the signer's unique identifier attribute.
-   * 
+   *
    * @return the user ID
    */
   public String getSubject() {
@@ -110,9 +106,8 @@ public class SAD {
 
   /**
    * Assigns the attribute value of the signer's unique identifier attribute.
-   * 
-   * @param subject
-   *          the user ID
+   *
+   * @param subject the user ID
    */
   public void setSubject(final String subject) {
     this.subject = subject;
@@ -120,7 +115,7 @@ public class SAD {
 
   /**
    * Returns the entityID of the Signature Service which is the recipient of this SAD.
-   * 
+   *
    * @return the entityID of the recipient
    */
   public String getAudience() {
@@ -129,9 +124,8 @@ public class SAD {
 
   /**
    * Assigns the entityID of the Signature Service which is the recipient of this SAD.
-   * 
-   * @param audience
-   *          the entityID of the recipient
+   *
+   * @param audience the entityID of the recipient
    */
   public void setAudience(final String audience) {
     this.audience = audience;
@@ -139,7 +133,7 @@ public class SAD {
 
   /**
    * Returns the entityID of the IdP that generated this SAD.
-   * 
+   *
    * @return the IdP entityID
    */
   public String getIssuer() {
@@ -148,9 +142,8 @@ public class SAD {
 
   /**
    * Assigns the entityID of the IdP that generated this SAD.
-   * 
-   * @param issuer
-   *          the IdP entityID
+   *
+   * @param issuer the IdP entityID
    */
   public void setIssuer(final String issuer) {
     this.issuer = issuer;
@@ -158,7 +151,7 @@ public class SAD {
 
   /**
    * Returns the time when this SAD is no longer valid (epoch time/seconds since 1970-01-01).
-   * 
+   *
    * @return number of seconds since 1970-01-01
    */
   public Integer getExpiry() {
@@ -167,7 +160,7 @@ public class SAD {
 
   /**
    * Returns the time when this SAD is no longer valid as a {@link Instant} instance.
-   * 
+   *
    * @return expiration time
    */
   @JsonIgnore
@@ -177,9 +170,8 @@ public class SAD {
 
   /**
    * Assigns the time when this SAD is no longer valid (epoch time/seconds since 1970-01-01).
-   * 
-   * @param expiry
-   *          number of seconds since 1970-01-01
+   *
+   * @param expiry number of seconds since 1970-01-01
    */
   public void setExpiry(final Integer expiry) {
     this.expiry = expiry;
@@ -187,9 +179,8 @@ public class SAD {
 
   /**
    * Assigns the time when this SAD is no longer valid.
-   * 
-   * @param expiry
-   *          expiration time
+   *
+   * @param expiry expiration time
    */
   @JsonIgnore
   public void setExpiry(final Instant expiry) {
@@ -198,7 +189,7 @@ public class SAD {
 
   /**
    * Returns the time when this SAD was issued (epoch time/seconds since 1970-01-01).
-   * 
+   *
    * @return number of seconds since 1970-01-01
    */
   public Integer getIssuedAt() {
@@ -207,7 +198,7 @@ public class SAD {
 
   /**
    * Returns the time when this SAD was issued as a {@link Instant} instance.
-   * 
+   *
    * @return timestamp
    */
   @JsonIgnore
@@ -217,9 +208,8 @@ public class SAD {
 
   /**
    * Assigns the time when this SAD was issued (epoch time/seconds since 1970-01-01).
-   * 
-   * @param issuedAt
-   *          number of seconds since 1970-01-01
+   *
+   * @param issuedAt number of seconds since 1970-01-01
    */
   public void setIssuedAt(final Integer issuedAt) {
     this.issuedAt = issuedAt;
@@ -227,9 +217,8 @@ public class SAD {
 
   /**
    * Assigns the time when this SAD was issued.
-   * 
-   * @param issuedAt
-   *          issue time
+   *
+   * @param issuedAt issue time
    */
   @JsonIgnore
   public void setIssuedAt(final Instant issuedAt) {
@@ -238,7 +227,7 @@ public class SAD {
 
   /**
    * Returns the unique identifier of this JWT.
-   * 
+   *
    * @return JWT ID
    */
   public String getJwtId() {
@@ -247,9 +236,8 @@ public class SAD {
 
   /**
    * Assigns the unique identifier of this JWT.
-   * 
-   * @param jwtId
-   *          JWT ID
+   *
+   * @param jwtId JWT ID
    */
   public void setJwtId(final String jwtId) {
     this.jwtId = jwtId;
@@ -257,7 +245,7 @@ public class SAD {
 
   /**
    * Returns the SAD extension claim.
-   * 
+   *
    * @return SAD extension claim
    */
   public Extension getSeElnSadext() {
@@ -266,9 +254,8 @@ public class SAD {
 
   /**
    * Assigns the SAD extension claim.
-   * 
-   * @param seElnSadext
-   *          SAD extension claim
+   *
+   * @param seElnSadext SAD extension claim
    */
   public void setSeElnSadext(final Extension seElnSadext) {
     this.seElnSadext = seElnSadext;
@@ -278,7 +265,7 @@ public class SAD {
   @Override
   public String toString() {
     return String.format("sub='%s', aud='%s', iss='%s', exp='%s', iss='%s', jti='%s', seElnSadext=[%s]",
-      this.subject, this.audience, this.issuer, this.expiry, this.issuedAt, this.jwtId, this.seElnSadext);
+        this.subject, this.audience, this.issuer, this.expiry, this.issuedAt, this.jwtId, this.seElnSadext);
   }
 
   /** {@inheritDoc} */
@@ -369,8 +356,8 @@ public class SAD {
   }
 
   /**
-   * Represents the SAD Extension claim as described in section 3.2.1.2 of the
-   * "Signature Activation Protocol for Federated Signing" specification.
+   * Represents the SAD Extension claim as described in section 3.2.1.2 of the "Signature Activation Protocol for
+   * Federated Signing" specification.
    *
    * @author Martin Lindström (martin@idsec.se)
    */
@@ -428,8 +415,7 @@ public class SAD {
     /**
      * Assigns the version of this claim.
      *
-     * @param version
-     *          the version
+     * @param version the version
      */
     public void setVersion(final String version) {
       this.version = version;
@@ -447,8 +433,7 @@ public class SAD {
     /**
      * Assigns the ID of the {@code SADRequest} message that requested this SAD.
      *
-     * @param inResponseTo
-     *          ID of corresponding {@code SADRequest}
+     * @param inResponseTo ID of corresponding {@code SADRequest}
      */
     public void setInResponseTo(final String inResponseTo) {
       this.inResponseTo = inResponseTo;
@@ -466,8 +451,7 @@ public class SAD {
     /**
      * Assigns the URI identifier (attribute name) of the attribute specifying the user's unique identifier value.
      *
-     * @param attributeName
-     *          attribute name for the user ID attribute value
+     * @param attributeName attribute name for the user ID attribute value
      */
     public void setAttributeName(final String attributeName) {
       this.attributeName = attributeName;
@@ -485,8 +469,7 @@ public class SAD {
     /**
      * Assigns the URI identifier of the level of assurance (LoA) used to authenticate the signer.
      *
-     * @param loa
-     *          LoA URI
+     * @param loa LoA URI
      */
     public void setLoa(final String loa) {
       this.loa = loa;
@@ -504,8 +487,7 @@ public class SAD {
     /**
      * Assigns the ID of the Sign Request associated with this SAD.
      *
-     * @param requestID
-     *          SignRequest ID
+     * @param requestID SignRequest ID
      */
     public void setRequestID(final String requestID) {
       this.requestID = requestID;
@@ -523,8 +505,7 @@ public class SAD {
     /**
      * Assigns the number of documents to be signed in the associated sign request.
      *
-     * @param numberOfDocuments
-     *          the number of documents to be signed
+     * @param numberOfDocuments the number of documents to be signed
      */
     public void setNumberOfDocuments(final Integer numberOfDocuments) {
       this.numberOfDocuments = numberOfDocuments;
@@ -534,7 +515,7 @@ public class SAD {
     @Override
     public String toString() {
       return String.format("ver='%s', irt='%s', attr='%s', loa='%s', reqid='%s', docs='%d'",
-        this.version, this.inResponseTo, this.attributeName, this.loa, this.requestID, this.numberOfDocuments);
+          this.version, this.inResponseTo, this.attributeName, this.loa, this.requestID, this.numberOfDocuments);
     }
 
     /** {@inheritDoc} */

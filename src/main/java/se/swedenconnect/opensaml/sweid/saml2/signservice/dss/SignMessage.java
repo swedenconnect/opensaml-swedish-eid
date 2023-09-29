@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -50,9 +50,9 @@ import org.opensaml.saml.common.SAMLObject;
  * <dd>An encrypted {@code <Message>} element. Either a {@code <Message>} or an {@code <EncryptedMessage>} element MUST
  * be present.</dd>
  * </dl>
- * 
+ *
  * The following schema fragment defines the {@code <SignMessage>} element and the SignMessageType complex type:
- * 
+ *
  * <pre>{@code
  * <xs:complexType name="SignMessageType">
  *   <xs:choice>
@@ -72,14 +72,14 @@ import org.opensaml.saml.common.SAMLObject;
  *   </xs:attribute>
  *   <xs:anyAttribute namespace="##other" processContents="lax"/>
  * </xs:complexType>
- * 
+ *
  * <xs:element name="Message" type="xs:base64Binary"/>
  * <xs:element name="EncryptedMessage" type="saml:EncryptedElementType"/>}
  * </pre>
  * <p>
  * See "DSS Extension for Federated Central Signing Services".
  * </p>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
@@ -89,13 +89,14 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
 
   /** Default element name. */
   QName DEFAULT_ELEMENT_NAME = new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS, DEFAULT_ELEMENT_LOCAL_NAME,
-    DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
+      DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
 
   /** Local name of the type */
   String TYPE_LOCAL_NAME = "SignMessageType";
-  
+
   /** QName of the XSI type. */
-  QName TYPE_NAME = new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS, TYPE_LOCAL_NAME, DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
+  QName TYPE_NAME =
+      new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS, TYPE_LOCAL_NAME, DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
 
   /** Attribute label for the MustShow attribute. */
   String MUST_SHOW_ATTR_NAME = "MustShow";
@@ -108,14 +109,14 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
 
   /**
    * Returns the value of the {@code MustShow} attribute.
-   * 
+   *
    * @return the {@code MustShow} attribute
    */
   Boolean isMustShow();
 
   /**
    * Returns the {@code MustShow} attribute as a {@code XSBooleanValue}.
-   * 
+   *
    * @return the {@code MustShow} attribute
    * @see #isMustShow()
    */
@@ -123,93 +124,86 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
 
   /**
    * Assigns the value of the {@code MustShow} attribute.
-   * 
-   * @param mustShow
-   *          the value to assign
+   *
+   * @param mustShow the value to assign
    */
   void setMustShow(final Boolean mustShow);
 
   /**
    * Assigns the value of the {@code MustShow} attribute.
-   * 
-   * @param mustShow
-   *          the value to assign
+   *
+   * @param mustShow the value to assign
    * @see #setMustShow(Boolean)
    */
   void setMustShow(final XSBooleanValue mustShow);
 
   /**
    * Returns the value of the {@code DisplayEntity} attribute.
-   * 
+   *
    * @return the DisplayEntity attribute
    */
   String getDisplayEntity();
 
   /**
    * Assigns the value for the {@code DisplayEntity} attribute.
-   * 
-   * @param displayEntity
-   *          the entityID to assign
+   *
+   * @param displayEntity the entityID to assign
    */
   void setDisplayEntity(final String displayEntity);
 
   /**
    * Returns the value of the {@code MimeType} attribute.
-   * 
+   *
    * @return the MimeType attribute
    */
   String getMimeType();
 
   /**
    * Returns the value of the {@code MimeType} attribute as an enum.
-   * 
+   *
    * @return the MimeType attribute
    */
   SignMessageMimeTypeEnum getMimeTypeEnum();
 
   /**
    * Assigns the {@code MimeType} attribute.
-   * 
-   * @param mimeType
-   *          the mime type to assign
+   *
+   * @param mimeType the mime type to assign
    */
   void setMimeType(final String mimeType);
 
   /**
    * Assigns the {@code MimeType} attribute.
-   * 
-   * @param mimeType
-   *          the mime type as an enum to assign
+   *
+   * @param mimeType the mime type as an enum to assign
    */
   void setMimeType(final SignMessageMimeTypeEnum mimeType);
 
   /**
    * Returns the {@code Message} element.
-   * 
+   *
    * @return the Message element
    */
   Message getMessage();
 
   /**
    * Assigns the {@code Message} element.
-   * 
-   * @param message
-   *          the message to assign
+   *
+   * @param message the message to assign
    */
   void setMessage(final Message message);
 
   /**
    * Returns the {@code EncryptedMessage} element.
-   * 
+   *
    * @return the EncryptedMessage element
    */
   EncryptedMessage getEncryptedMessage();
 
   /**
    * Assigns the {@code EncryptedMessage} element.
-   * 
-   * @param encryptedMessage
-   *          the EncryptedMessage element to assign
+   *
+   * @param encryptedMessage the EncryptedMessage element to assign
    */
   void setEncryptedMessage(final EncryptedMessage encryptedMessage);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,16 +21,16 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.EncryptedMessage;
 
 /**
  * Builder class for {@link EncryptedMessage}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class EncryptedMessageBuilder extends AbstractSAMLObjectBuilder<EncryptedMessage> {
 
   /** {@inheritDoc} */
   @Override
-  public EncryptedMessage buildObject() {    
+  public EncryptedMessage buildObject() {
     return buildObject(EncryptedMessage.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
-      EncryptedMessage.DEFAULT_ELEMENT_NAME.getLocalPart(), EncryptedMessage.DEFAULT_ELEMENT_NAME.getPrefix());
+        EncryptedMessage.DEFAULT_ELEMENT_NAME.getLocalPart(), EncryptedMessage.DEFAULT_ELEMENT_NAME.getPrefix());
   }
 
   /** {@inheritDoc} */

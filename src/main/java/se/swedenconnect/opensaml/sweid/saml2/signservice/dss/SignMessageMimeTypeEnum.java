@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.dss;
 
 /**
  * Enumeration that represents the possible values of the {@code MimeType} attribute of the {@link SignMessage} element.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public enum SignMessageMimeTypeEnum {
@@ -39,7 +39,7 @@ public enum SignMessageMimeTypeEnum {
 
   /**
    * Returns the string representation of the MIME type.
-   * 
+   *
    * @return the MIME type
    */
   public String getMimeType() {
@@ -48,9 +48,8 @@ public enum SignMessageMimeTypeEnum {
 
   /**
    * Parses the supplied MIME type into its corresponding enum value.
-   * 
-   * @param mimeType
-   *          the MIME type in string representation
+   *
+   * @param mimeType the MIME type in string representation
    * @return the enum value, or null if no match is found
    */
   public static SignMessageMimeTypeEnum parse(final String mimeType) {
@@ -64,9 +63,8 @@ public enum SignMessageMimeTypeEnum {
 
   /**
    * Constructor.
-   * 
-   * @param mimeType
-   *          the MIME type
+   *
+   * @param mimeType the MIME type
    */
   SignMessageMimeTypeEnum(final String mimeType) {
     this.mimeType = mimeType;

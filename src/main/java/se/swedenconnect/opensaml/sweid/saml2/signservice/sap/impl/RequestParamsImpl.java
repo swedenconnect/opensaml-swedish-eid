@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,25 +27,22 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.RequestParams;
 
 /**
- * Implementation class for {@link RequestParams}. 
- * 
+ * Implementation class for {@link RequestParams}.
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class RequestParamsImpl extends AbstractXMLObject implements RequestParams {
-  
+
   /** Parameter children. */
   private final XMLObjectChildrenList<Parameter> parameters;
 
   /**
    * Constructor.
-   * 
-   * @param namespaceURI
-   *          name space
-   * @param elementLocalName
-   *          local name
-   * @param namespacePrefix
-   *          prefix
-   */  
+   *
+   * @param namespaceURI name space
+   * @param elementLocalName local name
+   * @param namespacePrefix prefix
+   */
   protected RequestParamsImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.parameters = new XMLObjectChildrenList<Parameter>(this);

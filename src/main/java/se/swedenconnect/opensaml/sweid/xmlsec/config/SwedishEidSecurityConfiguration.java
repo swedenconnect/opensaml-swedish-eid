@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,10 @@ import se.swedenconnect.opensaml.xmlsec.config.SecurityConfiguration;
  * A {@link SecurityConfiguration} instance with algorithm defaults according to the Swedish eID Framework (see
  * https://docs.swedenconnect.se).
  * <p>
- * Currently the implementation equals {@link SAML2IntSecurityConfiguration} with the exception that it
- * defaults to AES-CBC before AES-GCM for compatibility reasons.
+ * Currently the implementation equals {@link SAML2IntSecurityConfiguration} with the exception that it defaults to
+ * AES-CBC before AES-GCM for compatibility reasons.
  * </p>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SwedishEidSecurityConfiguration extends SAML2IntSecurityConfiguration {
@@ -45,18 +45,19 @@ public class SwedishEidSecurityConfiguration extends SAML2IntSecurityConfigurati
   /** {@inheritDoc} */
   @Override
   protected EncryptionConfiguration createDefaultEncryptionConfiguration() {
-    final BasicEncryptionConfiguration config = (BasicEncryptionConfiguration) super.createDefaultEncryptionConfiguration();
-    
+    final BasicEncryptionConfiguration config =
+        (BasicEncryptionConfiguration) super.createDefaultEncryptionConfiguration();
+
     config.setDataEncryptionAlgorithms(Arrays.asList(
-      EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES256,
-      EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES192,
-      EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES128,      
-      EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES256_GCM,
-      EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES192_GCM,
-      EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES128_GCM,      
-      EncryptionConstants.ALGO_ID_BLOCKCIPHER_TRIPLEDES));
-    
+        EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES256,
+        EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES192,
+        EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES128,
+        EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES256_GCM,
+        EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES192_GCM,
+        EncryptionConstants.ALGO_ID_BLOCKCIPHER_AES128_GCM,
+        EncryptionConstants.ALGO_ID_BLOCKCIPHER_TRIPLEDES));
+
     return config;
   }
-  
+
 }

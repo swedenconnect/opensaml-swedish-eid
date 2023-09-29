@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,11 +23,11 @@ import org.opensaml.saml.common.SAMLObject;
 
 /**
  * Definition for the {@code PrincipalSelection} type:
- * 
+ *
  * <pre>
  * {@code
  * <xs:element name="PrincipalSelection" type="psc:PrincipalSelectionType" />
- * 
+ *
  * <xs:complexType name="PrincipalSelectionType">
  *   <xs:sequence>
  *     <xs:element maxOccurs="unbounded" name="MatchValue" type="psc:MatchValueType" minOccurs="1" />
@@ -35,7 +35,7 @@ import org.opensaml.saml.common.SAMLObject;
  * </xs:complexType>
  * }
  * </pre>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface PrincipalSelection extends SAMLObject {
@@ -57,7 +57,7 @@ public interface PrincipalSelection extends SAMLObject {
 
   /**
    * Returns a reference to the list of match values.
-   * 
+   *
    * @return a list of match values
    */
   List<MatchValue> getMatchValues();
