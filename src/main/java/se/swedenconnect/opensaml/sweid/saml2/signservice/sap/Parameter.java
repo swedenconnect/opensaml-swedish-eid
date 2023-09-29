@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import org.opensaml.saml.common.SAMLObject;
 
 /**
  * Definition of the SAP {@code ParameterType} type.
- * 
+ *
  * The following schema fragment defines the {@code <sap:SADRequest>} element:
- * 
+ *
  * <pre>
- * {@code 
+ * {@code
  * <xs:complexType name="ParameterType">
  *   <xs:simpleContent>
  *     <xs:extension base="xs:string">
@@ -35,7 +35,7 @@ import org.opensaml.saml.common.SAMLObject;
  *   </xs:simpleContent>
  * </xs:complexType>}
  * </pre>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface Parameter extends XSString, SAMLObject {
@@ -57,16 +57,15 @@ public interface Parameter extends XSString, SAMLObject {
 
   /**
    * Returns the "Name" attribute.
-   * 
+   *
    * @return the name attribute
    */
   String getName();
 
   /**
    * Assigns the name attribute.
-   * 
-   * @param name
-   *          the name attribute
+   *
+   * @param name the name attribute
    */
   void setName(final String name);
 

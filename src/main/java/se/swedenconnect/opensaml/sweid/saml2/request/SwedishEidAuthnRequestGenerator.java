@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Sweden Connect
+ * Copyright 2021-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,9 +29,9 @@ import se.swedenconnect.opensaml.saml2.core.build.ExtensionsBuilder;
 import se.swedenconnect.opensaml.saml2.metadata.EntityDescriptorUtils;
 import se.swedenconnect.opensaml.saml2.request.AuthnRequestGenerator;
 import se.swedenconnect.opensaml.saml2.request.AuthnRequestGeneratorContext;
+import se.swedenconnect.opensaml.saml2.request.AuthnRequestGeneratorContext.HokRequirement;
 import se.swedenconnect.opensaml.saml2.request.DefaultAuthnRequestGenerator;
 import se.swedenconnect.opensaml.saml2.request.RequestGenerationException;
-import se.swedenconnect.opensaml.saml2.request.AuthnRequestGeneratorContext.HokRequirement;
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
 import se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory.EntityCategoryConstants;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.SignMessageEncrypter;
@@ -39,7 +39,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
 
 /**
  * An {@link AuthnRequestGenerator} for the Swedish eID Framework.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerator {
@@ -55,13 +55,10 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
 
   /**
    * Constructor.
-   * 
-   * @param spEntityID
-   *          the SP entityID
-   * @param signCredential
-   *          the signing credential
-   * @param metadataResolver
-   *          the metadata resolver
+   *
+   * @param spEntityID the SP entityID
+   * @param signCredential the signing credential
+   * @param metadataResolver the metadata resolver
    */
   public SwedishEidAuthnRequestGenerator(final String spEntityID, final X509Credential signCredential,
       final MetadataResolver metadataResolver) {
@@ -70,13 +67,10 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
 
   /**
    * Constructor.
-   * 
-   * @param spMetadata
-   *          the SP metadata
-   * @param signCredential
-   *          the signing credential
-   * @param metadataResolver
-   *          the metadata resolver
+   *
+   * @param spMetadata the SP metadata
+   * @param signCredential the signing credential
+   * @param metadataResolver the metadata resolver
    */
   public SwedishEidAuthnRequestGenerator(final EntityDescriptor spMetadata, final X509Credential signCredential,
       final MetadataResolver metadataResolver) {
@@ -100,9 +94,9 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
 
       if (signMessage != null || principalSelection != null) {
         builder.extensions(ExtensionsBuilder.builder()
-          .extension(signMessage)
-          .extension(principalSelection)
-          .build());
+            .extension(signMessage)
+            .extension(principalSelection)
+            .build());
       }
     }
   }
@@ -112,10 +106,11 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
    */
   @Override
   protected List<String> getAssuranceCertificationUris(
-      final EntityDescriptor idpMetadata, final AuthnRequestGeneratorContext context) throws RequestGenerationException {
+      final EntityDescriptor idpMetadata, final AuthnRequestGeneratorContext context)
+      throws RequestGenerationException {
 
     final List<String> defaultUris = super.getAssuranceCertificationUris(idpMetadata, context);
-        
+
     final List<String> uris = new ArrayList<>();
     for (final String uri : defaultUris) {
       if (uri.contains("sigm")) {
@@ -139,19 +134,18 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
   protected boolean isSignatureService() {
     if (this.signServiceFlag == null) {
       this.signServiceFlag = EntityDescriptorUtils.getEntityCategories(this.getSpMetadata())
-        .stream()
-        .filter(c -> c.equals(EntityCategoryConstants.SERVICE_TYPE_CATEGORY_SIGSERVICE.getUri()))
-        .findFirst()
-        .isPresent();
+          .stream()
+          .filter(c -> c.equals(EntityCategoryConstants.SERVICE_TYPE_CATEGORY_SIGSERVICE.getUri()))
+          .findFirst()
+          .isPresent();
     }
     return this.signServiceFlag;
   }
 
   /**
    * Adds the sign message encrypter.
-   * 
-   * @param signMessageEncrypter
-   *          the encrypter to add
+   *
+   * @param signMessageEncrypter the encrypter to add
    */
   public void setSignMessageEncrypter(final SignMessageEncrypter signMessageEncrypter) {
     this.signMessageEncrypter = signMessageEncrypter;

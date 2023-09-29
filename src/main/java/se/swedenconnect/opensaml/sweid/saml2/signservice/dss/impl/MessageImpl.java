@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,28 +20,25 @@ import java.nio.charset.StandardCharsets;
 import org.opensaml.core.xml.XMLRuntimeException;
 import org.opensaml.core.xml.schema.impl.XSBase64BinaryImpl;
 
-import net.shibboleth.utilities.java.support.codec.Base64Support;
-import net.shibboleth.utilities.java.support.codec.DecodingException;
-import net.shibboleth.utilities.java.support.codec.EncodingException;
+import net.shibboleth.shared.codec.Base64Support;
+import net.shibboleth.shared.codec.DecodingException;
+import net.shibboleth.shared.codec.EncodingException;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.Message;
 
 /**
  * Implementation of the {@link Message} interface.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class MessageImpl extends XSBase64BinaryImpl implements Message {
 
   /**
    * Constructor creating an Message object given the namespace URI, local element name and namespace prefix.
-   * 
-   * @param namespaceURI
-   *          the namespace URI.
-   * @param elementLocalName
-   *          the element local name.
-   * @param namespacePrefix
-   *          the name space prefix.
-   */  
+   *
+   * @param namespaceURI the namespace URI.
+   * @param elementLocalName the element local name.
+   * @param namespacePrefix the name space prefix.
+   */
   protected MessageImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
 
 /**
  * Builder class for {@link SignMessage}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
@@ -30,10 +30,10 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
   @Override
   public SignMessage buildObject() {
     return buildObject(SignMessage.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
-      SignMessage.DEFAULT_ELEMENT_NAME.getLocalPart(), SignMessage.DEFAULT_ELEMENT_NAME.getPrefix());
+        SignMessage.DEFAULT_ELEMENT_NAME.getLocalPart(), SignMessage.DEFAULT_ELEMENT_NAME.getPrefix());
   }
 
-  /** {@inheritDoc}  */
+  /** {@inheritDoc} */
   @Override
   public SignMessage buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
     return new SignMessageImpl(namespaceURI, localName, namespacePrefix);

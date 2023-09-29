@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ import se.swedenconnect.opensaml.xmlsec.encryption.support.Pkcs11Decrypter;
 
 /**
  * A bean for decrypting encrypted messages within {@link SignMessage} objects.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageDecrypter {
@@ -57,20 +57,19 @@ public class SignMessageDecrypter {
 
   /** The decrypter. */
   private Decrypter decrypter;
-  
+
   /**
    * If using a HSM it is likely that the SunPKCS11 crypto provider is used. This provider does not have support for
    * OAEP padding. This is used commonly for XML encryption since
    * {@code http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p} is the default algorithm to use for key encryption. This
    * class has a workaround for this limitation that is enabled by setting the {@code pkcs11Workaround} flag.
    */
-  private boolean pkcs11Workaround = false;  
+  private boolean pkcs11Workaround = false;
 
   /**
    * Constructor given the credential to use to decrypt the messages (certificate or key pair)
-   * 
-   * @param decryptionCredential
-   *          decryption credential
+   *
+   * @param decryptionCredential decryption credential
    */
   public SignMessageDecrypter(final Credential decryptionCredential) {
     this.keyEncryptionKeyResolver = new StaticKeyInfoCredentialResolver(decryptionCredential);
@@ -79,9 +78,8 @@ public class SignMessageDecrypter {
   /**
    * Constructor accepting several credentials (certificates or key pairs) to be used when decrypting. This may be
    * useful after a key rollover.
-   * 
-   * @param decryptionCredentials
-   *          decryption credentials
+   *
+   * @param decryptionCredentials decryption credentials
    */
   public SignMessageDecrypter(final List<Credential> decryptionCredentials) {
     this.keyEncryptionKeyResolver = new StaticKeyInfoCredentialResolver(decryptionCredentials);
@@ -89,22 +87,19 @@ public class SignMessageDecrypter {
 
   /**
    * Constructor accepting a key encryption key resolver.
-   * 
-   * @param keyEncryptionKeyResolver
-   *          the resolver
+   *
+   * @param keyEncryptionKeyResolver the resolver
    */
   public SignMessageDecrypter(final KeyInfoCredentialResolver keyEncryptionKeyResolver) {
     this.keyEncryptionKeyResolver = keyEncryptionKeyResolver;
   }
-  
+
   /**
    * Decrypts the encrypted message of a {@link SignMessage} and returns the cleartext {@code Message}.
-   * 
-   * @param signMessage
-   *          the element holding the encrypted message
+   *
+   * @param signMessage the element holding the encrypted message
    * @return a cleartext {@code Message} element
-   * @throws DecryptionException
-   *           for decryption errors
+   * @throws DecryptionException for decryption errors
    */
   public Message decrypt(final SignMessage signMessage) throws DecryptionException {
     if (signMessage.getEncryptedMessage() == null && signMessage.getMessage() != null) {
@@ -121,7 +116,7 @@ public class SignMessageDecrypter {
 
   /**
    * Returns the decrypter to use.
-   * 
+   *
    * @return the decrypter
    */
   private Decrypter getDecrypter() {
@@ -130,7 +125,7 @@ public class SignMessageDecrypter {
       pars.setKEKKeyInfoCredentialResolver(this.keyEncryptionKeyResolver);
       pars.setEncryptedKeyResolver(this.encryptedKeyResolver);
       pars.setExcludedAlgorithms(this.blacklistedAlgorithms);
-      pars.setIncludedAlgorithms(this.whitelistedAlgorithms);      
+      pars.setIncludedAlgorithms(this.whitelistedAlgorithms);
       this.decrypter = this.pkcs11Workaround ? new Pkcs11Decrypter(pars) : new Decrypter(pars);
       this.decrypter.setRootInNewDocument(true);
     }
@@ -139,9 +134,8 @@ public class SignMessageDecrypter {
 
   /**
    * Assigns a list of black listed algorithms
-   * 
-   * @param blacklistedAlgorithms
-   *          non allowed algorithms
+   *
+   * @param blacklistedAlgorithms non allowed algorithms
    */
   public void setBlacklistedAlgorithms(final Collection<String> blacklistedAlgorithms) {
     this.blacklistedAlgorithms = blacklistedAlgorithms;
@@ -149,25 +143,23 @@ public class SignMessageDecrypter {
 
   /**
    * Assigns a list of white listed algorithms
-   * 
-   * @param whitelistedAlgorithms
-   *          white listed algorithms
+   *
+   * @param whitelistedAlgorithms white listed algorithms
    */
   public void setWhitelistedAlgorithms(final Collection<String> whitelistedAlgorithms) {
     this.whitelistedAlgorithms = whitelistedAlgorithms;
   }
-  
+
   /**
    * If using a HSM it is likely that the SunPKCS11 crypto provider is used. This provider does not have support for
    * OAEP padding. This is used commonly for XML encryption since
    * {@code http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p} is the default algorithm to use for key encryption. This
    * class has a workaround for this limitation that is enabled by setting the {@code pkcs11Workaround} flag.
-   * 
-   * @param pkcs11Workaround
-   *          whether to run in PKCS11 workaround mode
+   *
+   * @param pkcs11Workaround whether to run in PKCS11 workaround mode
    */
   public void setPkcs11Workaround(final boolean pkcs11Workaround) {
     this.pkcs11Workaround = pkcs11Workaround;
-  }  
+  }
 
 }

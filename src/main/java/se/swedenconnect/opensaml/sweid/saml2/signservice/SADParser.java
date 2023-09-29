@@ -47,7 +47,7 @@ import com.nimbusds.jose.crypto.factories.DefaultJWSVerifierFactory;
 import com.nimbusds.jose.proc.JWSVerifierFactory;
 import com.nimbusds.jwt.SignedJWT;
 
-import net.shibboleth.utilities.java.support.resolver.ResolverException;
+import net.shibboleth.shared.resolver.ResolverException;
 import se.swedenconnect.opensaml.saml2.attribute.AttributeUtils;
 import se.swedenconnect.opensaml.saml2.metadata.EntityDescriptorUtils;
 import se.swedenconnect.opensaml.saml2.metadata.provider.MetadataProvider;
@@ -59,7 +59,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADRequest;
 
 /**
  * Class for parsing and validation of SAD JWT:s.
- * 
+ *
  * @author Martin Lindström (martin.lindstrom@litsec.se)
  */
 public class SADParser {
@@ -73,7 +73,7 @@ public class SADParser {
    * <p>
    * <b>Note:</b> The parse method does not peform any validation. Use the {@link SADValidator} class for this purpose.
    * </p>
-   * 
+   *
    * @param sadJwt the signed JWT holding the SAD
    * @return the SAD object
    * @throws IOException for parsing errors
@@ -92,7 +92,7 @@ public class SADParser {
   /**
    * Returns a SAD validator initialized with a set of certificates that are to be used for JWT signature validation.
    * These certificates are the IdP signing certificates obtained from the IdP metadata entry.
-   * 
+   *
    * @param validationCertificates certificate(s) to be used when verifying the JWT signature
    * @return a SADValidator instance
    */
@@ -103,7 +103,7 @@ public class SADParser {
   /**
    * Returns a SAD validator initialized with a {@link MetadataProvider} instance. During JWT signature validation the
    * IdP signature certificate will be obtained from the IdP metadata entry held by the metadata provider.
-   * 
+   *
    * @param metadataProvider metadata provider
    * @return a SADValidator instance
    */
@@ -114,7 +114,7 @@ public class SADParser {
   /**
    * Returns a SAD validator initialized with the IdP {@link EntityDescriptor} (metadata) from which the IdP signing
    * key/certificate will be read (needed for JWT signature validation).
-   * 
+   *
    * @param idpMetadata the IdP metadata
    * @return a SADValidator instance
    */
@@ -124,7 +124,7 @@ public class SADParser {
 
   /**
    * A validator for verifying the SAD JWT.
-   * 
+   *
    * @author Martin Lindström (martin@idsec.se)
    */
   public static class SADValidator {
@@ -149,7 +149,7 @@ public class SADParser {
     /**
      * Constructor initializing the validator with a set of certificates that are to be used for JWT signature
      * validation. These certificates are the IdP signing certificates obtained from the IdP metadata entry.
-     * 
+     *
      * @param certificates certificate(s) to be used when verifying the JWT signature
      */
     public SADValidator(final X509Certificate... certificates) {
@@ -160,7 +160,7 @@ public class SADParser {
      * Constructor creating a SAD validator initialized with a {@link MetadataProvider} instance. During JWT signature
      * validation the IdP signature certificate will be obtained from the IdP metadata entry held by the metadata
      * provider.
-     * 
+     *
      * @param metadataProvider metadata provider
      */
     public SADValidator(final MetadataProvider metadataProvider) {
@@ -170,7 +170,7 @@ public class SADParser {
     /**
      * Creates a SAD validator initialized with the IdP {@link EntityDescriptor} (metadata) from which the IdP signing
      * key/certificate will be read (needed for JWT signature validation).
-     * 
+     *
      * @param idpMetadata the IdP metadata
      */
     public SADValidator(final EntityDescriptor idpMetadata) {
@@ -185,7 +185,7 @@ public class SADParser {
     /**
      * A method that validates the SAD issued in an {@code Assertion} based on the {@code AuthnRequest} containing a
      * {@code SADRequest}.
-     * 
+     *
      * @param authnRequest the AuthnRequest holding the SADRequest
      * @param assertion the Assertion holding the sad attribute (as a encoded JWT)
      * @return a SAD object, or null if no SAD was requested (and issued)
@@ -298,14 +298,14 @@ public class SADParser {
     /**
      * Validates a SAD based on expected data. If the {@code AuthnRequest} and issued {@code Assertion} is available,
      * the method {@link #validate(AuthnRequest, Assertion)} is a better option.
-     * 
+     *
      * <p>
      * Note: It is assumed that the supplied {@code expectedSubject} parameter is a attribute value read from the
      * assertion having the attribute name indicated in the 'attr' field of the SAD. If this attribute name is not known
      * in advance, the SAD needs to be parsed ({@link SADParser#parse(String)}) so that the 'attr' field can be read,
      * and the correct attribute value be located from the assertion.
      * </p>
-     * 
+     *
      * @param sadJwt the encoded SAD JWT (found in the sad attribute of a received assertion)
      * @param idpEntityID the entityID of the issuing IdP (the issuer of the received assertion holding the sad
      *          attribute)
@@ -346,7 +346,7 @@ public class SADParser {
 
     /**
      * Validates the supplied SAD JWT.
-     * 
+     *
      * @param signedJwt the SAD JWT
      * @param sad the SAD (parsed for pre-checks)
      * @param now the current time (seconds since 1970-01-01)
@@ -405,14 +405,14 @@ public class SADParser {
         logger.info(msg);
         throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
       }
-      
+
       if (sad.getExpiry() < now - this.allowedClockSkew.getSeconds()) {
         final String msg = String.format("SAD has expired - expiration: '%s', current time: '%s'",
             sad.getExpiryDateTime(), Instant.ofEpochSecond(now));
         logger.info(msg);
         throw new SADValidationException(ErrorCode.SAD_EXPIRED, msg);
       }
-      
+
       if (sad.getIssuedAt() > now + this.allowedClockSkew.getSeconds()) {
         final String msg = String.format("SAD is not yet valid - issue-time: '%s', current time: '%s'",
             sad.getIssuedAtDateTime(), Instant.ofEpochSecond(now));
@@ -480,7 +480,7 @@ public class SADParser {
 
     /**
      * Verifies the signature on the supplied SAD JWT.
-     * 
+     *
      * @param sadJwt the SAD JWT
      * @param idpEntityID the entityID of the IdP that signed the JWT
      * @throws SADValidationException for signature validation errors
@@ -496,7 +496,7 @@ public class SADParser {
 
     /**
      * Verifies the signature on the supplied SAD JWT.
-     * 
+     *
      * @param sadJwt the SAD JWT
      * @param idpEntityID the entityID of the IdP that signed the JWT
      * @throws SADValidationException for signature validation errors
@@ -541,7 +541,7 @@ public class SADParser {
 
     /**
      * Returns a list of possible IdP validation certificates to use when verifying the SAD signature.
-     * 
+     *
      * @param idpEntityID the IdP entityID
      * @return a list of certificates
      * @throws ResolverException for metadata resolver errors
@@ -569,7 +569,7 @@ public class SADParser {
 
     /**
      * Returns the LoA (level of assurance) URI from the supplied assertion.
-     * 
+     *
      * @param assertion the assertion
      * @return the LoA URI, or null
      */
@@ -584,7 +584,7 @@ public class SADParser {
 
     /**
      * Assigned the allowed clock skew. The default is {@link #DEFAULT_ALLOWED_CLOCK_SKEW}.
-     * 
+     *
      * @param allowedClockSkew allowed clock skew
      */
     public void setAllowedClockSkew(final Duration allowedClockSkew) {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,7 +31,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADVersion;
 
 /**
  * Implementation class for the {@link SADRequest} interface.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
@@ -56,13 +56,10 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /**
    * Constructor.
-   * 
-   * @param namespaceURI
-   *          the namespace the element is in
-   * @param elementLocalName
-   *          the local name of the XML element this Object represents
-   * @param namespacePrefix
-   *          the prefix for the given namespace
+   *
+   * @param namespaceURI the namespace the element is in
+   * @param elementLocalName the local name of the XML element this Object represents
+   * @param namespacePrefix the prefix for the given namespace
    */
   protected SADRequestImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
@@ -119,7 +116,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
     XSString id = null;
     if (requesterID != null) {
       id = (new XSStringBuilder()).buildObject(
-        this.getElementQName().getNamespaceURI(), REQUESTER_ID_LOCAL_NAME, this.getElementQName().getPrefix());
+          this.getElementQName().getNamespaceURI(), REQUESTER_ID_LOCAL_NAME, this.getElementQName().getPrefix());
       id.setValue(requesterID);
     }
     this.setRequesterID(id);
@@ -127,9 +124,8 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /**
    * Assigns the requester ID as a {@code XSString} string type.
-   * 
-   * @param requesterID
-   *          the requester ID
+   *
+   * @param requesterID the requester ID
    */
   public void setRequesterID(final XSString requesterID) {
     this.requesterID = this.prepareForAssignment(this.requesterID, requesterID);
@@ -147,7 +143,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
     XSString id = null;
     if (signRequestID != null) {
       id = (new XSStringBuilder()).buildObject(
-        this.getElementQName().getNamespaceURI(), SIGN_REQUEST_ID_LOCAL_NAME, this.getElementQName().getPrefix());
+          this.getElementQName().getNamespaceURI(), SIGN_REQUEST_ID_LOCAL_NAME, this.getElementQName().getPrefix());
       id.setValue(signRequestID);
     }
     this.setSignRequestID(id);
@@ -155,9 +151,8 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /**
    * Assigns the sign request as a {@code XSString} string type.
-   * 
-   * @param signRequestID
-   *          the sign request id
+   *
+   * @param signRequestID the sign request id
    */
   public void setSignRequestID(final XSString signRequestID) {
     this.signRequestID = this.prepareForAssignment(this.signRequestID, signRequestID);
@@ -175,7 +170,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
     XSInteger count = null;
     if (docCount != null) {
       count = (new XSIntegerBuilder()).buildObject(
-        this.getElementQName().getNamespaceURI(), DOC_COUNT_LOCAL_NAME, this.getElementQName().getPrefix());
+          this.getElementQName().getNamespaceURI(), DOC_COUNT_LOCAL_NAME, this.getElementQName().getPrefix());
       count.setValue(docCount);
     }
     this.setDocCount(count);
@@ -183,9 +178,8 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /**
    * Assigns the {@code DocCount} element.
-   * 
-   * @param docCount
-   *          the document count
+   *
+   * @param docCount the document count
    */
   public void setDocCount(final XSInteger docCount) {
     this.docCount = this.prepareForAssignment(this.docCount, docCount);
@@ -195,7 +189,8 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
   @Override
   public SADVersion getRequestedVersion() {
     return this.requestedVersion != null && this.requestedVersion.getValue() != null
-        ? SADVersion.valueOf(this.requestedVersion.getValue()) : SADVersion.VERSION_10;
+        ? SADVersion.valueOf(this.requestedVersion.getValue())
+        : SADVersion.VERSION_10;
   }
 
   /** {@inheritDoc} */
@@ -204,7 +199,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
     XSString ver = null;
     if (sadVersion != null) {
       ver = (new XSStringBuilder()).buildObject(
-        this.getElementQName().getNamespaceURI(), REQUESTED_VERSION_LOCAL_NAME, this.getElementQName().getPrefix());
+          this.getElementQName().getNamespaceURI(), REQUESTED_VERSION_LOCAL_NAME, this.getElementQName().getPrefix());
       ver.setValue(sadVersion.toString());
     }
     this.setRequestedVersion(ver);
@@ -212,9 +207,8 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /**
    * Assigns the requested version as a string.
-   * 
-   * @param sadVersion
-   *          the requested SAD version
+   *
+   * @param sadVersion the requested SAD version
    */
   public void setRequestedVersion(final XSString sadVersion) {
     this.requestedVersion = this.prepareForAssignment(this.requestedVersion, sadVersion);

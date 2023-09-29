@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,16 +21,16 @@ import org.opensaml.saml.saml2.core.EncryptedElementType;
 
 /**
  * XMLObject representing the {@code EncryptedMessage} element that is a child to {@link SignMessage}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface EncryptedMessage extends EncryptedElementType {
-  
+
   /** Element local name. */
   String DEFAULT_ELEMENT_LOCAL_NAME = "EncryptedMessage";
 
   /** Default element name. */
   QName DEFAULT_ELEMENT_NAME = new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS,
-    DEFAULT_ELEMENT_LOCAL_NAME, DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
+      DEFAULT_ELEMENT_LOCAL_NAME, DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
 
 }

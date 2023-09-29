@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.RequestedPrincipalSelecti
 
 /**
  * Builder for {@code RequestedPrincipalSelection} objects.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilder<RequestedPrincipalSelection> {
@@ -30,13 +30,14 @@ public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilde
   /** {@inheritDoc} */
   @Override
   public RequestedPrincipalSelection buildObject() {
-    return this.buildObject(PrincipalSelection.DEFAULT_ELEMENT_NAME.getNamespaceURI(), 
-      PrincipalSelection.DEFAULT_ELEMENT_LOCAL_NAME, PrincipalSelection.DEFAULT_ELEMENT_NAME.getPrefix());
+    return this.buildObject(PrincipalSelection.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
+        PrincipalSelection.DEFAULT_ELEMENT_LOCAL_NAME, PrincipalSelection.DEFAULT_ELEMENT_NAME.getPrefix());
   }
 
   /** {@inheritDoc} */
   @Override
-  public RequestedPrincipalSelection buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public RequestedPrincipalSelection buildObject(final String namespaceURI, final String localName,
+      final String namespacePrefix) {
     return new RequestedPrincipalSelectionImpl(namespaceURI, localName, namespacePrefix);
   }
 

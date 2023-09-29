@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,21 +15,22 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.attribute;
 
+import se.swedenconnect.opensaml.sweid.LibraryVersion;
+
 /**
  * Exception class that is used to indicate validation errors for attributes.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class AttributesValidationException extends Exception {
 
   /** For serializing. */
-  private static final long serialVersionUID = 8952696288845546888L;
+  private static final long serialVersionUID = LibraryVersion.SERIAL_VERSION_UID;
 
   /**
    * Constructor assigning an error message.
-   * 
-   * @param message
-   *          the error message.
+   *
+   * @param message the error message.
    */
   public AttributesValidationException(final String message) {
     super(message);
@@ -37,12 +38,10 @@ public class AttributesValidationException extends Exception {
 
   /**
    * Constructor assigning an error message and the underlying cause of the error.
-   * 
-   * @param message
-   *          the error message.
-   * @param cause
-   *          the underlying cause of the error.
-   */  
+   *
+   * @param message the error message.
+   * @param cause the underlying cause of the error.
+   */
   public AttributesValidationException(final String message, final Throwable cause) {
     super(message, cause);
   }

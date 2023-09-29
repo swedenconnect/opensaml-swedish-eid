@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import org.opensaml.saml.common.SAMLObject;
 
 /**
  * Definition for the {@code MatchValue} type:
- * 
+ *
  * <pre>
  * {@code
  * <xs:complexType name="MatchValueType">
@@ -37,7 +37,7 @@ import org.opensaml.saml.common.SAMLObject;
  * </xs:complexType>
  * }
  * </pre>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface MatchValue extends XSString, SAMLObject, AttributeExtensibleXMLObject {
@@ -62,31 +62,29 @@ public interface MatchValue extends XSString, SAMLObject, AttributeExtensibleXML
 
   /**
    * Returns the {@code NameFormat} attribute.
-   * 
+   *
    * @return the name format attribute
    */
   String getNameFormat();
 
   /**
    * Assigns the {@code NameFormat} attribute.
-   * 
-   * @param nameFormat
-   *          the name format
+   *
+   * @param nameFormat the name format
    */
   void setNameFormat(final String nameFormat);
 
   /**
    * Returns the {@code Name} attribute.
-   * 
+   *
    * @return the name
    */
   String getName();
 
   /**
    * Assigns the {@code Name} attribute.
-   * 
-   * @param name
-   *          the name
+   *
+   * @param name the name
    */
   void setName(final String name);
 

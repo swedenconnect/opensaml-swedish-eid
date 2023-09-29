@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,8 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import se.swedenconnect.opensaml.sweid.OpenSAMLTestBase;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.build.SignMessageBuilder;
@@ -25,24 +25,24 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessageMimeType
 
 /**
  * Test cases for {@code SignMessageBuilder}.
- *   
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SignMessageBuilderTest extends OpenSAMLTestBase {
 
   @Test
   public void testBuild() throws Exception {
-        
+
     SignMessage msg = SignMessageBuilder.builder()
       .mustShow(true)
       .displayEntity("http://www.example.com/idp")
       .mimeType(SignMessageMimeTypeEnum.TEXT)
       .message("This is the sign message")
       .build();
-    
-    Assert.assertNotNull(msg);
-    Assert.assertNull(msg.getEncryptedMessage());
-        
+
+    Assertions.assertNotNull(msg);
+    Assertions.assertNull(msg.getEncryptedMessage());
+
   }
-  
+
 }

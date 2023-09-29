@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
 
 /**
  * A builder for {@link MatchValue} objects.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
@@ -30,7 +30,7 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
   @Override
   public MatchValue buildObject() {
     return this.buildObject(MatchValue.DEFAULT_ELEMENT_NAME.getNamespaceURI(), MatchValue.DEFAULT_ELEMENT_LOCAL_NAME,
-      MatchValue.DEFAULT_ELEMENT_NAME.getPrefix());
+        MatchValue.DEFAULT_ELEMENT_NAME.getPrefix());
   }
 
   /** {@inheritDoc} */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,18 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
 /**
  * Defines constants for the "Signature Activation Protocol for Federated Signing" specification.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SAPConstants {
 
   /** Namespace prefix for the SAP namespace. */
   public static final String SAP_NS_PREFIX = "sap";
-  
+
   /** The namespace for the Signature Activation Protocol. */
   public static final String SAP_NS = "http://id.elegnamnden.se/csig/1.1/sap/ns";
-  
-  private SAPConstants() {    
+
+  private SAPConstants() {
   }
-  
+
 }

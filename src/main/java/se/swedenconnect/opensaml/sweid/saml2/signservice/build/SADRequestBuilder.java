@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,14 +28,14 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADVersion;
 
 /**
  * Builder for creating a {@link SADRequest} using the builder pattern.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Utility method that creates a builder.
-   * 
+   *
    * @return a builder
    */
   public static SADRequestBuilder builder() {
@@ -44,9 +44,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Assigns the ID attribute for the {@code SADRequest}.
-   * 
-   * @param id
-   *          the ID attribute
+   *
+   * @param id the ID attribute
    * @return the builder
    */
   public SADRequestBuilder id(final String id) {
@@ -56,9 +55,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Assigns the requester ID (entityID of the SP requesting the SAD).
-   * 
-   * @param requesterID
-   *          the entityID of the requester
+   *
+   * @param requesterID the entityID of the requester
    * @return the builder
    */
   public SADRequestBuilder requesterID(final String requesterID) {
@@ -68,9 +66,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Assigns the value of the {@code RequestID} attribute of the associated {@code SignRequest}.
-   * 
-   * @param signRequestID
-   *          the signature request ID
+   *
+   * @param signRequestID the signature request ID
    * @return the builder
    */
   public SADRequestBuilder signRequestID(final String signRequestID) {
@@ -80,9 +77,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Assigns the number of requested signatures in the associated sign request.
-   * 
-   * @param docCount
-   *          the document count
+   *
+   * @param docCount the document count
    * @return the builder
    */
   public SADRequestBuilder docCount(final Integer docCount) {
@@ -92,9 +88,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Assigns the requested version of the SAD.
-   * 
-   * @param sadVersion
-   *          the SAD version
+   *
+   * @param sadVersion the SAD version
    * @return the builder
    */
   public SADRequestBuilder requestedVersion(final SADVersion sadVersion) {
@@ -104,9 +99,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Assigns the {@code RequestParams} element.
-   * 
-   * @param requestParams
-   *          the RequestParams
+   *
+   * @param requestParams the RequestParams
    * @return the builder
    */
   public SADRequestBuilder requestParams(final RequestParams requestParams) {
@@ -122,14 +116,14 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /**
    * Builder for creating a {@link RequestParams} using the builder pattern.
-   * 
+   *
    * @author Martin Lindström (martin@idsec.se)
    */
   public static class RequestParamsBuilder extends AbstractSAMLObjectBuilder<RequestParams> {
 
     /**
      * Utility method that creates a builder.
-     * 
+     *
      * @return a builder
      */
     public static RequestParamsBuilder builder() {
@@ -138,11 +132,9 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
     /**
      * Utility method creating a {@link Parameter} object.
-     * 
-     * @param name
-     *          the parameter name
-     * @param value
-     *          the parameter value
+     *
+     * @param name the parameter name
+     * @param value the parameter value
      * @return the Parameter object
      */
     public static Parameter parameter(final String name, final String value) {
@@ -154,9 +146,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
     /**
      * Assigns the parameters to the request params.
-     * 
-     * @param parameters
-     *          a list of parameters
+     *
+     * @param parameters a list of parameters
      * @return the builder
      */
     public RequestParamsBuilder parameters(final List<Parameter> parameters) {
@@ -166,12 +157,11 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
       }
       return this;
     }
-    
+
     /**
      * Assigns the parameters to the request params.
-     * 
-     * @param parameters
-     *          a list of parameters
+     *
+     * @param parameters a list of parameters
      * @return the builder
      */
     public RequestParamsBuilder parameters(final Parameter... parameters) {

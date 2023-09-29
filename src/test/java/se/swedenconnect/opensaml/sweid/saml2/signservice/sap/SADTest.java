@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,31 +19,31 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeConstants;
 import se.swedenconnect.opensaml.sweid.saml2.authn.LevelOfAssuranceUris;
 
 /**
  * Test cases for the {@link SAD} implementation.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADTest {
 
   /**
    * Tests creating a SAD and serializing and deserializing.
-   * 
+   *
    * @throws Exception
    *           for errors
    */
   @Test
   public void testEncodeDecode() throws Exception {
-    
+
     Instant issuance = LocalDateTime.of(2018, 1, 17, 14, 22, 37, 0).toInstant(ZoneOffset.UTC);
     Instant expiry = issuance.plusSeconds(5 * 60);
-    
+
     SAD sad = new SAD();
     sad.setSubject("196302052383");
     sad.setAudience("http://www.example.com/sigservice");
@@ -59,19 +59,19 @@ public class SADTest {
     ext.setRequestID("f6e7d061a23293b0053dc7b038a04dad");
     ext.setNumberOfDocuments(1);
     sad.setSeElnSadext(ext);
-    
+
     Instant exp = sad.getExpiryDateTime();
-    Assert.assertEquals(sad.getExpiry().intValue(), (int) (exp.toEpochMilli() / 1000));
-    
+    Assertions.assertEquals(sad.getExpiry().intValue(), (int) (exp.toEpochMilli() / 1000));
+
     String json = sad.toJson();
 
     SAD sad2 = SAD.fromJson(json);
 
-    Assert.assertEquals(sad, sad2);
+    Assertions.assertEquals(sad, sad2);
 
     SAD sad3 = SAD.fromJson(json);
 
-    Assert.assertEquals(sad, sad3);
+    Assertions.assertEquals(sad, sad3);
   }
 
 }

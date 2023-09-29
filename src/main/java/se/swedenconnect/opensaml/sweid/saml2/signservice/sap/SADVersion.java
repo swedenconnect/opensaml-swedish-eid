@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
 /**
  * A type safe SAD version enumeration.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADVersion {
@@ -36,11 +36,9 @@ public class SADVersion {
 
   /**
    * Constructor.
-   * 
-   * @param major
-   *          SAD major version number
-   * @param minor
-   *          SAD minor version number
+   *
+   * @param major SAD major version number
+   * @param minor SAD minor version number
    */
   private SADVersion(final int major, final int minor) {
     this.majorVersion = major;
@@ -51,12 +49,10 @@ public class SADVersion {
 
   /**
    * Gets the SADVersion given the major and minor version number.
-   * 
-   * @param majorVersion
-   *          major version number
-   * @param minorVersion
-   *          minor version number
-   * 
+   *
+   * @param majorVersion major version number
+   * @param minorVersion minor version number
+   *
    * @return the SADVersion
    */
   public static SADVersion valueOf(final int majorVersion, final int minorVersion) {
@@ -71,10 +67,9 @@ public class SADVersion {
 
   /**
    * Gets the SADVersion for a given version string, such as "1.0".
-   * 
-   * @param version
-   *          SAD version string
-   * 
+   *
+   * @param version SAD version string
+   *
    * @return SADVersion for the given string
    */
   public static SADVersion valueOf(final String version) {
@@ -84,7 +79,7 @@ public class SADVersion {
 
   /**
    * Gets the major version of the SAD version.
-   * 
+   *
    * @return the major version of the SAD version
    */
   public int getMajorVersion() {
@@ -93,7 +88,7 @@ public class SADVersion {
 
   /**
    * Gets the minor version of the SAD version.
-   * 
+   *
    * @return the minor version of the SAD version
    */
   public int getMinorVersion() {
@@ -101,6 +96,7 @@ public class SADVersion {
   }
 
   /** {@inheritDoc} */
+  @Override
   public String toString() {
     return this.versionString;
   }

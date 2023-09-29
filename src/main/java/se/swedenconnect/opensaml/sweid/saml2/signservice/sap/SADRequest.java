@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import org.opensaml.saml.common.SAMLObject;
 
 /**
  * Definitions of the SADRequest type:
- * 
+ *
  * <p>
  * The SAD Request is provided in a {@code <sap:SADRequest>} element. The element has the following elements and
  * attributes:
@@ -29,7 +29,7 @@ import org.opensaml.saml.common.SAMLObject;
  * <dl>
  * <dt>{@code RequesterID} [Required]</dt>
  * <dd>Specifies the SAML entityID of the requesting entity. The value for this element should be the same identifier as
- * given in the {@code <saml2:Issuer>} element of the {@code <saml2p:AuthnRequest>} that encapsulates the {@code 
+ * given in the {@code <saml2:Issuer>} element of the {@code <saml2p:AuthnRequest>} that encapsulates the {@code
  * <sap:SADRequest>} extension.</dd>
  * <dt>{@code SignRequestID} [Required]</dt>
  * <dd>Specifies the value of the RequestID attribute of the associated SignRequest.</dd>
@@ -44,13 +44,13 @@ import org.opensaml.saml.common.SAMLObject;
  * <dt>{@code ID}</dt>
  * <dd>Attribute holding an unique identifier for the {@code SADRequest}.</dd>
  * </dl>
- * 
+ *
  * The following schema fragment defines the {@code <sap:SADRequest>} element:
- * 
+ *
  * <pre>
- * {@code 
+ * {@code
  * <xs:element name="SADRequest" type="sap:SADRequestType" />
- * 
+ *
  * <xs:complexType name="SADRequestType">
  *   <xs:sequence>
  *     <xs:element name="RequesterID" type="xs:string" />
@@ -68,7 +68,7 @@ import org.opensaml.saml.common.SAMLObject;
  *   <xs:attribute name="ID" type="xs:ID" use="required" />
  * </xs:complexType>}
  * </pre>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface SADRequest extends SAMLObject {
@@ -102,91 +102,85 @@ public interface SADRequest extends SAMLObject {
 
   /**
    * Returns the ID attribute of this {@code SADRequest}.
-   * 
+   *
    * @return the ID of this SAD request
    */
   String getID();
 
   /**
    * Assigns the ID of this {@code SADRequest}.
-   * 
-   * @param id
-   *          the ID of this SAD request
+   *
+   * @param id the ID of this SAD request
    */
   public void setID(final String id);
 
   /**
    * Returns the requester ID (entityID of the SP requesting the SAD).
-   * 
+   *
    * @return the entityID of the requester
    */
   String getRequesterID();
 
   /**
    * Assigns the requester ID (entityID of the SP requesting the SAD).
-   * 
-   * @param requesterID
-   *          the entityID of the requester
+   *
+   * @param requesterID the entityID of the requester
    */
   void setRequesterID(final String requesterID);
 
   /**
    * Returns the value of the {@code RequestID} attribute of the associated {@code SignRequest}.
-   * 
+   *
    * @return the signature request ID
    */
   String getSignRequestID();
 
   /**
    * Assigns the value of the {@code RequestID} attribute of the associated {@code SignRequest}.
-   * 
-   * @param signRequestID
-   *          the signature request ID
+   *
+   * @param signRequestID the signature request ID
    */
   void setSignRequestID(final String signRequestID);
 
   /**
    * Returns the number of requested signatures in the associated sign request.
-   * 
+   *
    * @return the document count
    */
   Integer getDocCount();
 
   /**
    * Assigns the number of requested signatures in the associated sign request.
-   * 
-   * @param docCount
-   *          the document count
+   *
+   * @param docCount the document count
    */
   void setDocCount(final Integer docCount);
 
   /**
    * Returns the requested version of the SAD.
-   * 
+   *
    * @return the SAD version
    */
   SADVersion getRequestedVersion();
 
   /**
    * Assigns the requested version of the SAD.
-   * 
-   * @param sadVersion
-   *          the SAD version
+   *
+   * @param sadVersion the SAD version
    */
   void setRequestedVersion(final SADVersion sadVersion);
 
   /**
    * Returns the {@code RequestParams} element.
-   * 
+   *
    * @return the RequestParams, or null
    */
   RequestParams getRequestParams();
 
   /**
    * Assigns the {@code RequestParams} element.
-   * 
-   * @param requestParams
-   *          the RequestParams
+   *
+   * @param requestParams the RequestParams
    */
   void setRequestParams(final RequestParams requestParams);
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,14 +20,14 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
 
 /**
  * A builder for {@link MatchValue} objects.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
 
   /**
    * Creates a new {@code MatchValueBuilder} instance.
-   * 
+   *
    * @return a MatchValueBuilder instance
    */
   public static MatchValueBuilder builder() {
@@ -42,9 +42,8 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
 
   /**
    * Assigns the value.
-   * 
-   * @param value
-   *          the value
+   *
+   * @param value the value
    * @return the builder
    */
   public MatchValueBuilder value(final String value) {
@@ -54,9 +53,8 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
 
   /**
    * Assigns the {@code Name} attribute of the {@code MatchValue} object.
-   * 
-   * @param name
-   *          the name
+   *
+   * @param name the name
    * @return the builder
    */
   public MatchValueBuilder name(final String name) {
@@ -66,9 +64,8 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
 
   /**
    * Assigns the {@code NameFormat} attribute of the {@code MatchValue} object.
-   * 
-   * @param nameFormat
-   *          the name format URI
+   *
+   * @param nameFormat the name format URI
    * @return the builder
    */
   public MatchValueBuilder nameFormat(final String nameFormat) {

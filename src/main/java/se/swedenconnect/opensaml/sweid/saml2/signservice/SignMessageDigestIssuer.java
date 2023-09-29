@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -56,8 +56,7 @@ public class SignMessageDigestIssuer {
   /**
    * Creates a signMessageDigest attribute using the default digest method.
    *
-   * @param message
-   *          the sign message
+   * @param message the sign message
    * @return a signMessageDigest attribute
    */
   public Attribute create(final Message message) {
@@ -68,10 +67,8 @@ public class SignMessageDigestIssuer {
    * Creates a signMessageDigest attribute using the preferred digest method of the recipient, or the default digest
    * method if none is specified in the recipient metadata.
    *
-   * @param message
-   *          the sign message
-   * @param recipient
-   *          the recipient metadata (may be null)
+   * @param message the sign message
+   * @param recipient the recipient metadata (may be null)
    * @return a signMessageDigest attribute
    */
   public Attribute create(final Message message, final EntityDescriptor recipient) {
@@ -105,20 +102,20 @@ public class SignMessageDigestIssuer {
     catch (final NoSuchAlgorithmException e) {
       throw new SecurityException(e);
     }
-    final byte[] digestValue = messageDigest.digest(message.getContent().getBytes(StandardCharsets.UTF_8));      
-    final String attributeValue = String.format("%s;%s", digestAlgorithm, Base64.getEncoder().encodeToString(digestValue));
+    final byte[] digestValue = messageDigest.digest(message.getContent().getBytes(StandardCharsets.UTF_8));
+    final String attributeValue =
+        String.format("%s;%s", digestAlgorithm, Base64.getEncoder().encodeToString(digestValue));
 
     return AttributeConstants.ATTRIBUTE_TEMPLATE_SIGNMESSAGE_DIGEST.createBuilder()
-      .value(attributeValue)
-      .build();
+        .value(attributeValue)
+        .build();
   }
 
   /**
    * The recipient may specify the digest algorithm it prefers by including the {@code <alg:DigestMethod>} element in
    * its metadata.
    *
-   * @param metadata
-   *          the recipient's metadata
+   * @param metadata the recipient's metadata
    * @return the preferred digest algorithm, or null if none is specified
    */
   public static String getDigestPreference(final EntityDescriptor metadata) {
@@ -159,8 +156,7 @@ public class SignMessageDigestIssuer {
   /**
    * Assigns the default digest method to use.
    *
-   * @param defaultDigestMethod
-   *          the algorithm URI for the default digest method
+   * @param defaultDigestMethod the algorithm URI for the default digest method
    */
   public void setDefaultDigestMethod(final String defaultDigestMethod) {
     final AlgorithmRegistry registry = AlgorithmSupport.getGlobalAlgorithmRegistry();

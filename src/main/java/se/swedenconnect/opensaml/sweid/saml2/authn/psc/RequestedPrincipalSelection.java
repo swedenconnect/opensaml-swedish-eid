@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,11 +19,11 @@ import javax.xml.namespace.QName;
 
 /**
  * Definition for the {@code RequestedPrincipalSelection} type:
- * 
+ *
  * <pre>
  * {@code
  * <xs:element name="RequestedPrincipalSelection" type="psc:RequestedPrincipalSelectionType" />
- * 
+ *
  * <xs:complexType name="RequestedPrincipalSelectionType">
  *   <xs:complexContent>
  *     <xs:extension base="psc:PrincipalSelectionType" />
@@ -31,7 +31,7 @@ import javax.xml.namespace.QName;
  * </xs:complexType>
  * }
  * </pre>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface RequestedPrincipalSelection extends PrincipalSelection {

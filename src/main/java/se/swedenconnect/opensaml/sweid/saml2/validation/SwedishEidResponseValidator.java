@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,26 +32,23 @@ import se.swedenconnect.opensaml.saml2.response.validation.ResponseValidator;
  * <p>
  * Supports the following {@link ValidationContext} static parameters as described in {@link ResponseValidator}.
  * </p>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SwedishEidResponseValidator extends ResponseValidator {
 
   /** Class logger. */
-  private final Logger log = LoggerFactory.getLogger(SwedishEidResponseValidator.class);
+  private static final Logger log = LoggerFactory.getLogger(SwedishEidResponseValidator.class);
 
   /**
    * Constructor.
-   * 
-   * @param trustEngine
-   *          the trust used to validate the object's signature
-   * @param signaturePrevalidator
-   *          the signature pre-validator used to pre-validate the object's signature
-   * @throws IllegalArgumentException
-   *           if {@code null} values are supplied
+   *
+   * @param trustEngine the trust used to validate the object's signature
+   * @param signaturePrevalidator the signature pre-validator used to pre-validate the object's signature
+   * @throws IllegalArgumentException if {@code null} values are supplied
    */
-  public SwedishEidResponseValidator(final SignatureTrustEngine trustEngine, final SignaturePrevalidator signaturePrevalidator)
-      throws IllegalArgumentException {
+  public SwedishEidResponseValidator(final SignatureTrustEngine trustEngine,
+      final SignaturePrevalidator signaturePrevalidator) throws IllegalArgumentException {
     super(trustEngine, signaturePrevalidator);
     if (trustEngine == null) {
       throw new IllegalArgumentException("trustEngine must not be null");
@@ -68,7 +65,8 @@ public class SwedishEidResponseValidator extends ResponseValidator {
   @Override
   protected ValidationResult validateSignature(final Response token, final ValidationContext context) {
 
-    final Boolean signatureRequired = (Boolean) context.getStaticParameters().get(SAML2AssertionValidationParameters.SIGNATURE_REQUIRED);
+    final Boolean signatureRequired =
+        (Boolean) context.getStaticParameters().get(SAML2AssertionValidationParameters.SIGNATURE_REQUIRED);
     if (signatureRequired != null && !signatureRequired.booleanValue()) {
       log.warn("The flag SAML2AssertionValidationParameters.SIGNATURE_REQUIRED is false - signature "
           + "validation MUST be performed according to the Swedish eID Framework - Setting flag to true");
@@ -76,7 +74,8 @@ public class SwedishEidResponseValidator extends ResponseValidator {
 
     // Validate params and requirements.
     if (!token.isSigned()) {
-      context.setValidationFailureMessage(String.format("%s was required to be signed, but was not", this.getObjectName()));
+      context.getValidationFailureMessages().add(
+          String.format("%s was required to be signed, but was not", this.getObjectName()));
       return ValidationResult.INVALID;
     }
     return this.performSignatureValidation(token, context);
@@ -94,24 +93,24 @@ public class SwedishEidResponseValidator extends ResponseValidator {
     }
     if (StatusCode.SUCCESS.equals(response.getStatus().getStatusCode().getValue())) {
       if (response.getEncryptedAssertions().isEmpty()) {
-        context.setValidationFailureMessage("Response does not contain EncryptedAssertion");
+        context.getValidationFailureMessages().add("Response does not contain EncryptedAssertion");
         return ValidationResult.INVALID;
       }
       if (response.getEncryptedAssertions().size() > 1) {
         String msg = "Response contains more than one EncryptedAssertion";
         if (isStrictValidation(context)) {
-          context.setValidationFailureMessage(msg);
+          context.getValidationFailureMessages().add(msg);
           return ValidationResult.INVALID;
         }
-        log.warn(msg);
+        log.info(msg);
       }
       if (!response.getAssertions().isEmpty()) {
         String msg = "Response contains non encrypted Assertion(s)";
         if (isStrictValidation(context)) {
-          context.setValidationFailureMessage(msg);
+          context.getValidationFailureMessages().add(msg);
           return ValidationResult.INVALID;
         }
-        log.warn(msg);
+        log.info(msg);
       }
     }
     return ValidationResult.VALID;

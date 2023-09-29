@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Litsec AB
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,8 +22,8 @@ import java.util.stream.Collectors;
 
 /**
  * Implementation of the {@link EntityCategoryRegistry} interface.
- * 
- * @author Martin Lindström (martin.lindstrom@litsec.se)
+ *
+ * @author Martin Lindström (martin@idsec.se)
  */
 public class EntityCategoryRegistryImpl implements EntityCategoryRegistry {
 
@@ -32,9 +32,8 @@ public class EntityCategoryRegistryImpl implements EntityCategoryRegistry {
 
   /**
    * Constructor.
-   * 
-   * @param entityCategories
-   *          registered entity categories
+   *
+   * @param entityCategories registered entity categories
    */
   public EntityCategoryRegistryImpl(List<EntityCategory> entityCategories) {
     this.entityCategories = entityCategories;
@@ -58,9 +57,9 @@ public class EntityCategoryRegistryImpl implements EntityCategoryRegistry {
   @Override
   public List<ServiceEntityCategory> getServiceEntityCategories() {
     return this.entityCategories.stream()
-      .filter(e -> EntityCategoryType.SERVICE_ENTITY.equals(e.getType()))
-      .map(ServiceEntityCategory.class::cast)
-      .collect(Collectors.toList());
+        .filter(e -> EntityCategoryType.SERVICE_ENTITY.equals(e.getType()))
+        .map(ServiceEntityCategory.class::cast)
+        .collect(Collectors.toList());
   }
 
 }

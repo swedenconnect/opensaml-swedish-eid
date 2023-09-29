@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Sweden Connect
+ * Copyright 2021-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
 
 /**
  * An extension to {@code AuthnRequestGeneratorContext} with added functionality for the Swedish eID Framework.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface SwedishEidAuthnRequestGeneratorContext extends AuthnRequestGeneratorContext {
@@ -37,7 +37,7 @@ public interface SwedishEidAuthnRequestGeneratorContext extends AuthnRequestGene
    * <p>
    * The default implementation does not create a {@code SignMessage} extension.
    * </p>
-   * 
+   *
    * @return the builder function
    */
   default SignMessageBuilderFunction getSignMessageBuilderFunction() {
@@ -49,7 +49,7 @@ public interface SwedishEidAuthnRequestGeneratorContext extends AuthnRequestGene
    * <p>
    * The default implementation does not create a {@code PrincipalSelection} extension.
    * </p>
-   * 
+   *
    * @return the builder function
    */
   default PrincipalSelectionBuilderFunction getPrincipalSelectionBuilderFunction() {

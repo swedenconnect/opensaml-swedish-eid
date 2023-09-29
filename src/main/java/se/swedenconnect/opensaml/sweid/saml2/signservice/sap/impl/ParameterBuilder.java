@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
 
 /**
  * Builder for {@link Parameter}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class ParameterBuilder extends AbstractSAMLObjectBuilder<Parameter> {
@@ -30,7 +30,7 @@ public class ParameterBuilder extends AbstractSAMLObjectBuilder<Parameter> {
   @Override
   public Parameter buildObject() {
     return this.buildObject(Parameter.DEFAULT_ELEMENT_NAME.getNamespaceURI(), Parameter.DEFAULT_ELEMENT_LOCAL_NAME,
-      Parameter.DEFAULT_ELEMENT_NAME.getPrefix());
+        Parameter.DEFAULT_ELEMENT_NAME.getPrefix());
   }
 
   /** {@inheritDoc} */

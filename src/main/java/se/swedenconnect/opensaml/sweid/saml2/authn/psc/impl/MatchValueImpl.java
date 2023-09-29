@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,30 +22,27 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
 
 /**
  * Implementation class for {@link MatchValue}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class MatchValueImpl extends XSStringImpl implements MatchValue {
-  
+
   /** The NameFormat attribute. */
   private String nameFormat;
-  
+
   /** The Name attribute. */
   private String name;
-  
+
   /** "anyAttribute" attributes */
   private final AttributeMap unknownAttributes;
 
   /**
    * Constructor.
-   * 
-   * @param namespaceURI
-   *          the namespace the element is in
-   * @param elementLocalName
-   *          the local name of the XML element this Object represents
-   * @param namespacePrefix
-   *          the prefix for the given namespace
-   */  
+   *
+   * @param namespaceURI the namespace the element is in
+   * @param elementLocalName the local name of the XML element this Object represents
+   * @param namespacePrefix the prefix for the given namespace
+   */
   public MatchValueImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.unknownAttributes = new AttributeMap(this);

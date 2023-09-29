@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,14 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
 
 /**
  * Unmarshaller for {@link MatchValue}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class MatchValueUnmarshaller extends XSStringUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {    
+  protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {
     final MatchValue mv = (MatchValue) xmlObject;
     if (MatchValue.NAME_FORMAT_ATTR_NAME.equalsIgnoreCase(attribute.getLocalName())) {
       mv.setNameFormat(attribute.getValue());
@@ -43,5 +43,5 @@ public class MatchValueUnmarshaller extends XSStringUnmarshaller {
       this.processUnknownAttribute(mv, attribute);
     }
   }
-  
+
 }

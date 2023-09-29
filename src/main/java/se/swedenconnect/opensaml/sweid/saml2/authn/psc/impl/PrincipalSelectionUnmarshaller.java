@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,14 +24,15 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
 
 /**
  * An unmarshaller for {@link PrincipalSelection}.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class PrincipalSelectionUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processChildElement(final XMLObject parentXMLObject, final XMLObject childXMLObject) throws UnmarshallingException {
+  protected void processChildElement(final XMLObject parentXMLObject, final XMLObject childXMLObject)
+      throws UnmarshallingException {
     final PrincipalSelection ps = (PrincipalSelection) parentXMLObject;
     if (childXMLObject instanceof MatchValue) {
       ps.getMatchValues().add((MatchValue) childXMLObject);

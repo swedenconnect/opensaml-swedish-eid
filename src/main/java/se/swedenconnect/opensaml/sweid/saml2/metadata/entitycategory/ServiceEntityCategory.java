@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSet;
 
 /**
  * Represents a "Service Entity Category".
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public interface ServiceEntityCategory extends EntityCategory {
@@ -33,9 +33,9 @@ public interface ServiceEntityCategory extends EntityCategory {
    * capability to satisfy the security requirements of the Service Provider. An Identity Provider declaring this
    * Service Entity Category MUST be able to provide this level of assurance.
    * </p>
-   * 
-   * @return the URI:s representing the Level of Assurance, or null if no level of assurance is associated with
-   *         the category
+   *
+   * @return the URI:s representing the Level of Assurance, or null if no level of assurance is associated with the
+   *           category
    */
   List<String> getLevelOfAssuranceUris();
 
@@ -46,7 +46,7 @@ public interface ServiceEntityCategory extends EntityCategory {
    * attribute set have the capability to satisfy the minimum attribute requirements of the Service Provider. An
    * Identity Provider declaring this Service Entity Category MUST be able to provide these attributes.
    * </p>
-   * 
+   *
    * @return the attribute set
    */
   AttributeSet getAttributeSet();

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,17 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 import java.util.Collections;
 import java.util.List;
 
+import se.swedenconnect.opensaml.sweid.LibraryVersion;
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSet;
 
 /**
  * Implementation of the {@link ServiceEntityCategory} interface.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements ServiceEntityCategory {
 
-  private static final long serialVersionUID = -8531917204430501608L;
+  private static final long serialVersionUID = LibraryVersion.SERIAL_VERSION_UID;
 
   /** The level of assurance URI of this category. */
   private List<String> loaUris;
@@ -44,13 +45,10 @@ public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements Ser
 
   /**
    * Constructor assigning the URI, Level of Assurance URI:s and the attribute set.
-   * 
-   * @param uri
-   *          the unique URI
-   * @param loaUris
-   *          the Level of Assurance URI:s
-   * @param attributeSet
-   *          the attribute set
+   *
+   * @param uri the unique URI
+   * @param loaUris the Level of Assurance URI:s
+   * @param attributeSet the attribute set
    */
   public ServiceEntityCategoryImpl(final String uri, final List<String> loaUris, final AttributeSet attributeSet) {
     super(uri, EntityCategoryType.SERVICE_ENTITY);
@@ -78,9 +76,8 @@ public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements Ser
 
   /**
    * Sets the Level of Assurance URI:s associated with this service entity category.
-   * 
-   * @param loaUris
-   *          the LoA URI:s
+   *
+   * @param loaUris the LoA URI:s
    */
   public void setLevelOfAssuranceUris(final List<String> loaUris) {
     this.loaUris = loaUris;
@@ -94,9 +91,8 @@ public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements Ser
 
   /**
    * Assigns the attribute set tied to this service entity category.
-   * 
-   * @param attributeSet
-   *          the attribute set to assign
+   *
+   * @param attributeSet the attribute set to assign
    */
   public void setAttributeProfile(final AttributeSet attributeSet) {
     this.attributeSet = attributeSet;

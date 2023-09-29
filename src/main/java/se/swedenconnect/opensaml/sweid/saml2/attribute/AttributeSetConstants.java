@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import se.swedenconnect.opensaml.saml2.attribute.AttributeTemplate;
 
 /**
  * Defines all Attribute Set defined in section 2 of "Attribute Specification for the Swedish eID Framework".
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class AttributeSetConstants {
@@ -33,7 +33,7 @@ public class AttributeSetConstants {
    * </p>
    */
   public static final AttributeSet ATTRIBUTE_SET_PSEUDONYM_IDENTITY = new AttributeSetImpl("ELN-AP-Pseudonym-01",
-    "http://id.elegnamnden.se/ap/1.0/pseudonym-01", "Pseudonym Identity", null, null);
+      "http://id.elegnamnden.se/ap/1.0/pseudonym-01", "Pseudonym Identity", null, null);
 
   /**
    * Natural Personal Identity without Civic Registration Number - The “Personal Identity without Civic Registration
@@ -45,13 +45,13 @@ public class AttributeSetConstants {
    * </p>
    */
   public static final AttributeSet ATTRIBUTE_SET_NATURAL_PERSON_NO_PERSONAL_ID = new AttributeSetImpl(
-    "ELN-AP-NaturalPerson-01", "http://id.elegnamnden.se/ap/1.0/natural-person-01",
-    "Natural Personal Identity without Civic Registration Number",
-    new AttributeTemplate[] {
-        AttributeConstants.ATTRIBUTE_TEMPLATE_DISPLAY_NAME,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_SN,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_GIVEN_NAME },
-    null);
+      "ELN-AP-NaturalPerson-01", "http://id.elegnamnden.se/ap/1.0/natural-person-01",
+      "Natural Personal Identity without Civic Registration Number",
+      new AttributeTemplate[] {
+          AttributeConstants.ATTRIBUTE_TEMPLATE_DISPLAY_NAME,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_SN,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_GIVEN_NAME },
+      null);
 
   /**
    * Natural Personal Identity with Civic Registration Number - The “Personal Identity with Civic Registration Number”
@@ -63,16 +63,16 @@ public class AttributeSetConstants {
    * </p>
    */
   public static final AttributeSet ATTRIBUTE_SET_NATURAL_PERSON_WITH_PERSONAL_ID = new AttributeSetImpl(
-    "ELN-AP-Pnr-01", "http://id.elegnamnden.se/ap/1.0/pnr-01",
-    "Natural Personal Identity with Civic Registration Number",
-    new AttributeTemplate[] {
-        AttributeConstants.ATTRIBUTE_TEMPLATE_PERSONAL_IDENTITY_NUMBER,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_SN,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_GIVEN_NAME,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_DISPLAY_NAME },
-    new AttributeTemplate[] {
-        AttributeConstants.ATTRIBUTE_TEMPLATE_DATE_OF_BIRTH
-    });
+      "ELN-AP-Pnr-01", "http://id.elegnamnden.se/ap/1.0/pnr-01",
+      "Natural Personal Identity with Civic Registration Number",
+      new AttributeTemplate[] {
+          AttributeConstants.ATTRIBUTE_TEMPLATE_PERSONAL_IDENTITY_NUMBER,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_SN,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_GIVEN_NAME,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_DISPLAY_NAME },
+      new AttributeTemplate[] {
+          AttributeConstants.ATTRIBUTE_TEMPLATE_DATE_OF_BIRTH
+      });
 
   /**
    * Organizational Identity for Natural Persons - The “Organizational Identity for Natural Persons” attribute set
@@ -86,15 +86,15 @@ public class AttributeSetConstants {
    * </p>
    */
   public static final AttributeSet ATTRIBUTE_SET_ORGANIZATIONAL_IDENTITY_FOR_NATURAL_PERSONS = new AttributeSetImpl(
-    "ELN-AP-OrgPerson-01", "http://id.elegnamnden.se/ap/1.0/org-person-01",
-    "Organizational Identity for Natural Persons",
-    new AttributeTemplate[] {
-        AttributeConstants.ATTRIBUTE_TEMPLATE_DISPLAY_NAME,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_ORG_AFFILIATION,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_O },
-    new AttributeTemplate[] {
-        AttributeConstants.ATTRIBUTE_TEMPLATE_ORGANIZATION_IDENTIFIER
-    });
+      "ELN-AP-OrgPerson-01", "http://id.elegnamnden.se/ap/1.0/org-person-01",
+      "Organizational Identity for Natural Persons",
+      new AttributeTemplate[] {
+          AttributeConstants.ATTRIBUTE_TEMPLATE_DISPLAY_NAME,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_ORG_AFFILIATION,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_O },
+      new AttributeTemplate[] {
+          AttributeConstants.ATTRIBUTE_TEMPLATE_ORGANIZATION_IDENTIFIER
+      });
 
   /**
    * eIDAS Natural Person Attribute Set - The “eIDAS Natural Person Attribute Set” provides personal identity
@@ -105,24 +105,24 @@ public class AttributeSetConstants {
    * </p>
    */
   public static final AttributeSet ATTRIBUTE_SET_EIDAS_NATURAL_PERSON = new AttributeSetImpl(
-    "ELN-AP-eIDAS-NatPer-01", "http://id.elegnamnden.se/ap/1.0/eidas-natural-person-01",
-    "eIDAS Natural Person Attribute Set", new AttributeTemplate[] {
-        AttributeConstants.ATTRIBUTE_TEMPLATE_PRID,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_PRID_PERSISTENCE,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_EIDAS_PERSON_IDENTIFIER,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_DATE_OF_BIRTH,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_SN,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_GIVEN_NAME,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_TRANSACTION_IDENTIFIER,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_C },
-    new AttributeTemplate[] {
-        AttributeConstants.ATTRIBUTE_TEMPLATE_BIRTH_NAME,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_PLACE_OF_BIRTH,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_EIDAS_NATURAL_PERSON_ADDRESS,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_GENDER,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_MAPPED_PERSONAL_IDENTITY_NUMBER,
-        AttributeConstants.ATTRIBUTE_TEMPLATE_PERSONAL_IDENTITY_NUMBER_BINDING
-    });
+      "ELN-AP-eIDAS-NatPer-01", "http://id.elegnamnden.se/ap/1.0/eidas-natural-person-01",
+      "eIDAS Natural Person Attribute Set", new AttributeTemplate[] {
+          AttributeConstants.ATTRIBUTE_TEMPLATE_PRID,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_PRID_PERSISTENCE,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_EIDAS_PERSON_IDENTIFIER,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_DATE_OF_BIRTH,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_SN,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_GIVEN_NAME,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_TRANSACTION_IDENTIFIER,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_C },
+      new AttributeTemplate[] {
+          AttributeConstants.ATTRIBUTE_TEMPLATE_BIRTH_NAME,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_PLACE_OF_BIRTH,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_EIDAS_NATURAL_PERSON_ADDRESS,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_GENDER,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_MAPPED_PERSONAL_IDENTITY_NUMBER,
+          AttributeConstants.ATTRIBUTE_TEMPLATE_PERSONAL_IDENTITY_NUMBER_BINDING
+      });
 
   /*
    * Hidden constructor.

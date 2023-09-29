@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,14 +29,14 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.RequestedPrincipalSelecti
 
 /**
  * A builder for {@link RequestedPrincipalSelection} objects.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilder<RequestedPrincipalSelection> {
 
   /**
    * Creates a new {@code RequestedPrincipalSelectionBuilder} instance.
-   * 
+   *
    * @return a RequestedPrincipalSelectionBuilder instance
    */
   public static RequestedPrincipalSelectionBuilder builder() {
@@ -51,9 +51,8 @@ public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilde
 
   /**
    * Assigns the match values.
-   * 
-   * @param matchValues
-   *          a list of match values
+   *
+   * @param matchValues a list of match values
    * @return the builder
    */
   public RequestedPrincipalSelectionBuilder matchValues(final List<MatchValue> matchValues) {
@@ -74,9 +73,8 @@ public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilde
 
   /**
    * Assigns the match values.
-   * 
-   * @param matchValues
-   *          the match values
+   *
+   * @param matchValues the match values
    * @return the builder
    */
   public RequestedPrincipalSelectionBuilder matchValues(final MatchValue... matchValues) {

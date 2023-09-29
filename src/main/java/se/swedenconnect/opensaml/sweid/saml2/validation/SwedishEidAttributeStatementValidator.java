@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributesValidationExcep
 
 /**
  * Validator for {@link AttributeStatement}s.
- * 
+ *
  * <p>
  * Supports the following {@link ValidationContext} static parameters:
  * </p>
@@ -54,12 +54,12 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributesValidationExcep
  * <li>{@link #SCOPED_ATTRIBUTES}: Optional. Carries a {@link Collection} of strings holding attribute names of
  * requested attributes.</li>
  * </ul>
- * 
+ *
  * <p>
  * Note that the two above parameters may be combined. If no parameter for requested attributes is passed, no validation
  * will be performed.
  * </p>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SwedishEidAttributeStatementValidator extends AbstractAttributeStatementValidator {
@@ -82,14 +82,15 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
   public static final String SCOPED_ATTRIBUTES = CoreValidatorParameters.STD_PREFIX + ".ScopedAttributes";
 
   /** Class logger. */
-  private final Logger log = LoggerFactory.getLogger(SwedishEidAttributeStatementValidator.class);
+  private static final Logger log = LoggerFactory.getLogger(SwedishEidAttributeStatementValidator.class);
 
   /** {@inheritDoc} */
   @Override
-  public ValidationResult validate(final Statement statement, final Assertion assertion, final ValidationContext context)
+  public ValidationResult validate(final Statement statement, final Assertion assertion,
+      final ValidationContext context)
       throws AssertionValidationException {
 
-    ValidationResult result = super.validate(statement, assertion, context);
+    final ValidationResult result = super.validate(statement, assertion, context);
     if (result != ValidationResult.VALID) {
       return result;
     }
@@ -97,7 +98,7 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
     final AttributeStatement attributeStatement = (AttributeStatement) statement;
     final List<Attribute> attributes =
         Optional.ofNullable(AttributeStatement.class.cast(statement).getAttributes())
-          .orElse(Collections.emptyList());
+            .orElse(Collections.emptyList());
 
     return this.validateScopedAttributes(attributes, attributeStatement, assertion, context);
   }
@@ -108,28 +109,29 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
    * parameter {@link SwedishEidAttributeStatementValidator#REQUIRED_ATTRIBUTES}.
    */
   @Override
-  protected ValidationResult validateRequiredAttributes(final List<Attribute> attributes, final AttributeStatement statement,
-      final Assertion assertion, ValidationContext context) {
+  protected ValidationResult validateRequiredAttributes(final List<Attribute> attributes,
+      final AttributeStatement statement,
+      final Assertion assertion, final ValidationContext context) {
 
     final AttributeSet attributeSet = (AttributeSet) context.getStaticParameters().get(REQUIRED_ATTRIBUTE_SET);
     if (attributeSet != null) {
       try {
         attributeSet.validateAttributes(assertion, null);
       }
-      catch (AttributesValidationException e) {
+      catch (final AttributesValidationException e) {
         log.info("Required attributes check failed: {}", e.getMessage());
-        context.setValidationFailureMessage(e.getMessage());
+        context.getValidationFailureMessages().add(e.getMessage());
         return ValidationResult.INVALID;
       }
     }
 
     final Collection<String> requiredAttributes = this.getRequiredAttributes(context);
     if (requiredAttributes != null) {
-      for (String attr : requiredAttributes) {
+      for (final String attr : requiredAttributes) {
         if (!attributes.stream().filter(a -> attr.equals(a.getName())).findAny().isPresent()) {
           final String msg = String.format("Required attribute '%s' was not part of the attribute statement", attr);
           log.info("Required attributes check failed: {}", msg);
-          context.setValidationFailureMessage(msg);
+          context.getValidationFailureMessages().add(msg);
           return ValidationResult.INVALID;
         }
       }
@@ -144,9 +146,8 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
 
   /**
    * Returns the required attributes.
-   * 
-   * @param context
-   *          the validation context
+   *
+   * @param context the validation context
    * @return a collection of attribute names (never {@code null})
    */
   protected Collection<String> getRequiredAttributes(final ValidationContext context) {
@@ -157,27 +158,25 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
 
   /**
    * Validates that the issuing IdP has been authorized to issue scoped attributes.
-   * 
-   * @param attributes
-   *          a list of the attributes
-   * @param statement
-   *          the statement
-   * @param assertion
-   *          the assertion
-   * @param context
-   *          the validation context
+   *
+   * @param attributes a list of the attributes
+   * @param statement the statement
+   * @param assertion the assertion
+   * @param context the validation context
    * @return a validation result
    */
-  protected ValidationResult validateScopedAttributes(final List<Attribute> attributes, final AttributeStatement statement,
-      final Assertion assertion, ValidationContext context) {
-    
+  protected ValidationResult validateScopedAttributes(final List<Attribute> attributes,
+      final AttributeStatement statement,
+      final Assertion assertion, final ValidationContext context) {
+
     @SuppressWarnings("unchecked")
-    final Collection<String> scopedAttributes = (Collection<String>) context.getStaticParameters().get(SCOPED_ATTRIBUTES);
+    final Collection<String> scopedAttributes =
+        (Collection<String>) context.getStaticParameters().get(SCOPED_ATTRIBUTES);
     if (scopedAttributes == null || scopedAttributes.isEmpty()) {
       // Nothing to check
       return ValidationResult.VALID;
     }
-    
+
     final List<Attribute> attributesToCheck = attributes.stream()
         .filter(a -> a.getName() != null && scopedAttributes.contains(a.getName()))
         .collect(Collectors.toList());
@@ -185,31 +184,31 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
       // No attributes to check ...
       return ValidationResult.VALID;
     }
-    
+
     // For the check we need the IdP metadata ...
     //
     final EntityDescriptor idpMetadata =
         (EntityDescriptor) context.getStaticParameters().get(CoreValidatorParameters.IDP_METADATA);
     if (idpMetadata == null) {
       final String msg = String.format("Could not check scoped attributes. '%s' parameter is missing",
-        CoreValidatorParameters.IDP_METADATA);
+          CoreValidatorParameters.IDP_METADATA);
       log.debug(msg);
-      context.setValidationFailureMessage(msg);
+      context.getValidationFailureMessages().add(msg);
       return ValidationResult.INDETERMINATE;
     }
-    
+
     final List<XMLObject> authorizedScopes = ScopeUtils.getScopeExtensions(idpMetadata);
     for (final Attribute scopedAttribute : attributesToCheck) {
       if (!ScopeUtils.isAuthorized(scopedAttribute, authorizedScopes)) {
         final String msg = String.format("IdP '%s' is not authorized to issue scoped attribute '%s' for domain '%s'",
-          idpMetadata.getEntityID(), scopedAttribute.getName(), 
-          ScopeUtils.getScopedDomain(AttributeUtils.getAttributeStringValue(scopedAttribute)));
+            idpMetadata.getEntityID(), scopedAttribute.getName(),
+            ScopeUtils.getScopedDomain(AttributeUtils.getAttributeStringValue(scopedAttribute)));
         log.debug(msg);
-        context.setValidationFailureMessage(msg);
+        context.getValidationFailureMessages().add(msg);
         return ValidationResult.INVALID;
       }
     }
-    
+
     return ValidationResult.VALID;
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,16 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
+import se.swedenconnect.opensaml.sweid.LibraryVersion;
+
 /**
  * Implementation of the {@link EntityCategory} interface.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class EntityCategoryImpl implements EntityCategory {
 
-  private static final long serialVersionUID = 7370276371052265483L;
+  private static final long serialVersionUID = LibraryVersion.SERIAL_VERSION_UID;
 
   /** The unique URI for this category. */
   protected String uri;
@@ -38,11 +40,9 @@ public class EntityCategoryImpl implements EntityCategory {
 
   /**
    * Constructor assigning the unique URI and the category type.
-   * 
-   * @param uri
-   *          the URI
-   * @param type
-   *          the type
+   *
+   * @param uri the URI
+   * @param type the type
    */
   public EntityCategoryImpl(final String uri, final EntityCategoryType type) {
     this.uri = uri;
@@ -57,9 +57,8 @@ public class EntityCategoryImpl implements EntityCategory {
 
   /**
    * Each entity category is assigned an unique URI. This method assigns this value.
-   * 
-   * @param uri
-   *          the URI to assign.
+   *
+   * @param uri the URI to assign.
    */
   public void setUri(final String uri) {
     this.uri = uri;
@@ -73,9 +72,8 @@ public class EntityCategoryImpl implements EntityCategory {
 
   /**
    * Assigns the type of entity category.
-   * 
-   * @param type
-   *          the type to assign.
+   *
+   * @param type the type to assign.
    */
   public void setType(final EntityCategoryType type) {
     this.type = type;

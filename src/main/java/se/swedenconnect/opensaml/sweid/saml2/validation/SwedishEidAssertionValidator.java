@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2021 Sweden Connect
+ * Copyright 2016-2023 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -44,12 +44,12 @@ import se.swedenconnect.opensaml.saml2.assertion.validation.AssertionValidator;
 
 /**
  * An assertion validator that makes checks based on what is required by the Swedish eID Framework.
- * 
+ *
  * <p>
  * Apart from the validation parameters documented for {@link AssertionValidator}, the following static parameters are
  * handled:
  * </p>
- * 
+ *
  * <ul>
  * <li>{@link SAML2AssertionValidationParameters#SC_VALID_ADDRESSES}: Optional. If the set of {@link InetAddress}
  * objects are given, the Address-attribute found in the Subject confirmation will be compared against these.</li>
@@ -57,7 +57,7 @@ import se.swedenconnect.opensaml.saml2.assertion.validation.AssertionValidator;
  * <li>{@link SAML2AssertionValidationParameters#COND_VALID_AUDIENCES}: Required. A set of valid audiences of the
  * assertion.</li>
  * </ul>
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SwedishEidAssertionValidator extends AssertionValidator {
@@ -74,32 +74,26 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
    * <li>statementValidators: {@link SwedishEidAuthnStatementValidator},
    * {@link SwedishEidAttributeStatementValidator}.</li>
    * </ul>
-   * 
-   * @param trustEngine
-   *          the trust used to validate the object's signature
-   * @param signaturePrevalidator
-   *          the signature pre-validator used to pre-validate the object's signature
+   *
+   * @param trustEngine the trust used to validate the object's signature
+   * @param signaturePrevalidator the signature pre-validator used to pre-validate the object's signature
    */
-  public SwedishEidAssertionValidator(final SignatureTrustEngine trustEngine, final SignaturePrevalidator signaturePrevalidator) {
+  public SwedishEidAssertionValidator(final SignatureTrustEngine trustEngine,
+      final SignaturePrevalidator signaturePrevalidator) {
     this(trustEngine, signaturePrevalidator,
-      Arrays.asList(new BearerSubjectConfirmationValidator(), new HolderOfKeySubjectConfirmationValidator()),
-      Arrays.asList(new AudienceRestrictionConditionValidator()),
-      Arrays.asList(new SwedishEidAuthnStatementValidator(), new SwedishEidAttributeStatementValidator()));
+        Arrays.asList(new BearerSubjectConfirmationValidator(), new HolderOfKeySubjectConfirmationValidator()),
+        Arrays.asList(new AudienceRestrictionConditionValidator()),
+        Arrays.asList(new SwedishEidAuthnStatementValidator(), new SwedishEidAttributeStatementValidator()));
   }
 
   /**
    * Constructor.
-   * 
-   * @param trustEngine
-   *          the trust used to validate the object's signature
-   * @param signaturePrevalidator
-   *          the signature pre-validator used to pre-validate the object's signature
-   * @param confirmationValidators
-   *          validators used to validate SubjectConfirmation methods within the assertion
-   * @param conditionValidators
-   *          validators used to validate the Condition elements within the assertion
-   * @param statementValidators
-   *          validators used to validate Statements within the assertion
+   *
+   * @param trustEngine the trust used to validate the object's signature
+   * @param signaturePrevalidator the signature pre-validator used to pre-validate the object's signature
+   * @param confirmationValidators validators used to validate SubjectConfirmation methods within the assertion
+   * @param conditionValidators validators used to validate the Condition elements within the assertion
+   * @param statementValidators validators used to validate Statements within the assertion
    */
   public SwedishEidAssertionValidator(
       final SignatureTrustEngine trustEngine,
@@ -120,20 +114,20 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
   protected ValidationResult validateSubject(final Assertion assertion, final ValidationContext context) {
 
     if (assertion.getSubject() == null) {
-      context.setValidationFailureMessage("Missing Subject element in Assertion");
+      context.getValidationFailureMessages().add("Missing Subject element in Assertion");
       return ValidationResult.INVALID;
     }
 
     // Assert that there is a NameID ...
     //
     if (assertion.getSubject().getNameID() == null) {
-      context.setValidationFailureMessage("Missing NameID in Subject element of Assertion");
+      context.getValidationFailureMessages().add("Missing NameID in Subject element of Assertion");
       return ValidationResult.INVALID;
     }
     // And that it holds a value ...
     //
     if (assertion.getSubject().getNameID().getValue() == null) {
-      context.setValidationFailureMessage("Missing NameID value in Subject element of Assertion");
+      context.getValidationFailureMessages().add("Missing NameID value in Subject element of Assertion");
       return ValidationResult.INVALID;
     }
     // Also check that it is persistent or transient ...
@@ -141,46 +135,49 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
     if (assertion.getSubject().getNameID().getFormat() == null) {
       final String msg = "NameID element of Assertion/@Subject is missing Format attribute";
       if (isStrictValidation(context)) {
-        context.setValidationFailureMessage(msg);
+        context.getValidationFailureMessages().add(msg);
         return ValidationResult.INVALID;
       }
       else {
-        log.warn(msg);
+        log.info(msg);
       }
     }
     else {
       final String format = assertion.getSubject().getNameID().getFormat();
       if (!(format.equals(NameID.PERSISTENT) || format.equals(NameID.TRANSIENT))) {
-        final String msg = String.format("NameID format in Subject of Assertion is not valid (%s) - '%s' or '%s' is required",
-          format, NameID.PERSISTENT, NameID.TRANSIENT);
+        final String msg =
+            String.format("NameID format in Subject of Assertion is not valid (%s) - '%s' or '%s' is required",
+                format, NameID.PERSISTENT, NameID.TRANSIENT);
         if (isStrictValidation(context)) {
-          context.setValidationFailureMessage(msg);
+          context.getValidationFailureMessages().add(msg);
           return ValidationResult.INVALID;
         }
         else {
-          log.warn(msg);
+          log.info(msg);
         }
       }
     }
 
     final List<SubjectConfirmation> confirmations = assertion.getSubject().getSubjectConfirmations();
     if (confirmations == null || confirmations.isEmpty()) {
-      context.setValidationFailureMessage("Assertion/@Subject element contains no SubjectConfirmation elements - invalid");
+      context.getValidationFailureMessages().add(
+          "Assertion/@Subject element contains no SubjectConfirmation elements - invalid");
       return ValidationResult.INVALID;
     }
 
     // We require the bearer method ...
     //
     final boolean hokProfileActive = Optional.ofNullable(context.getDynamicParameters().get(HOK_PROFILE_ACTIVE))
-      .map(Boolean.class::cast).orElse(Boolean.FALSE);
-    
+        .map(Boolean.class::cast).orElse(Boolean.FALSE);
+
     if (!hokProfileActive) {
       boolean bearerFound = confirmations.stream()
-        .filter(s -> SubjectConfirmation.METHOD_BEARER.equals(s.getMethod())).findFirst().isPresent();
+          .filter(s -> SubjectConfirmation.METHOD_BEARER.equals(s.getMethod())).findFirst().isPresent();
       if (!bearerFound) {
-        final String msg = String.format("No SubjectConfirmation with method '%s' is available under Assertion's Subject element",
-          SubjectConfirmation.METHOD_BEARER);
-        context.setValidationFailureMessage(msg);
+        final String msg =
+            String.format("No SubjectConfirmation with method '%s' is available under Assertion's Subject element",
+                SubjectConfirmation.METHOD_BEARER);
+        context.getValidationFailureMessages().add(msg);
         return ValidationResult.INVALID;
       }
     }
@@ -195,28 +192,29 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
   protected ValidationResult validateConditions(final Assertion assertion, final ValidationContext context) {
 
     if (assertion.getConditions() == null) {
-      context.setValidationFailureMessage("Missing Conditions element in Assertion");
+      context.getValidationFailureMessages().add("Missing Conditions element in Assertion");
       return ValidationResult.INVALID;
     }
 
     // Assert that the NotBefore is there ...
     //
     if (assertion.getConditions().getNotBefore() == null) {
-      context.setValidationFailureMessage("Missing NotBefore attribute of Conditions element in Assertion");
+      context.getValidationFailureMessages().add("Missing NotBefore attribute of Conditions element in Assertion");
       return ValidationResult.INVALID;
     }
 
     // ... and NotOnOrAfter ...
     //
     if (assertion.getConditions().getNotOnOrAfter() == null) {
-      context.setValidationFailureMessage("Missing NotOnOrAfter attribute of Conditions element in Assertion");
+      context.getValidationFailureMessages().add("Missing NotOnOrAfter attribute of Conditions element in Assertion");
       return ValidationResult.INVALID;
     }
 
     // The Swedish eID Framework requires the AudienceRestriction to be there ...
     //
     if (assertion.getConditions().getAudienceRestrictions().isEmpty()) {
-      context.setValidationFailureMessage("Missing AudienceRestriction element of Conditions element in Assertion");
+      context.getValidationFailureMessages().add(
+          "Missing AudienceRestriction element of Conditions element in Assertion");
       return ValidationResult.INVALID;
     }
 
@@ -231,11 +229,11 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
   protected ValidationResult validateStatements(final Assertion assertion, final ValidationContext context) {
 
     if (assertion.getAuthnStatements() == null || assertion.getAuthnStatements().isEmpty()) {
-      context.setValidationFailureMessage("No AuthnStatement in Assertion");
+      context.getValidationFailureMessages().add("No AuthnStatement in Assertion");
       return ValidationResult.INVALID;
     }
     if (assertion.getAttributeStatements() == null || assertion.getAttributeStatements().isEmpty()) {
-      context.setValidationFailureMessage("No AttributeStatement in Assertion");
+      context.getValidationFailureMessages().add("No AttributeStatement in Assertion");
       return ValidationResult.INVALID;
     }
 
