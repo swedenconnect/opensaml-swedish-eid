@@ -52,7 +52,7 @@
     <jackson.version>2.15.2</jackson.version>
     <nimbus.version>9.35</nimbus.version>
     <spring.version>6.0.12</spring.version>
-    <slf4j.version>2.0.7</slf4j.version>
+    <slf4j.version>2.0.9</slf4j.version>
     <junit.version>5.10.0</junit.version>
   </properties>
 
@@ -250,7 +250,7 @@
             <id>enforce</id>
             <configuration>
               <rules>
-                <dependencyConvergence />
+                <dependencyConvergence/>
               </rules>
             </configuration>
             <goals>
