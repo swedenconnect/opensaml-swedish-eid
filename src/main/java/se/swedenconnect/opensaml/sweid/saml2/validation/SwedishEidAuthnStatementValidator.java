@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2023 Sweden Connect
+ * Copyright 2016-2024 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 package se.swedenconnect.opensaml.sweid.saml2.validation;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
@@ -33,7 +32,6 @@ import org.slf4j.LoggerFactory;
 import se.swedenconnect.opensaml.common.validation.CoreValidatorParameters;
 import se.swedenconnect.opensaml.saml2.assertion.validation.AssertionValidator;
 import se.swedenconnect.opensaml.saml2.assertion.validation.AuthnStatementValidator;
-import se.swedenconnect.opensaml.sweid.saml2.authn.LevelOfAssuranceUris;
 
 /**
  * An {@link AuthnStatementValidator} that performs checks to assert that the assertion is compliant with the Swedish
@@ -154,8 +152,7 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
   }
 
   /**
-   * Gets the authentication context URI:s that require that the Holder-of-key profile is used (according to the Swedish
-   * eID Framework).
+   * Gets the authentication context URI:s that require that the Holder-of-key profile is used.
    *
    * @param context the validation context
    * @return a list of URI:s
@@ -164,9 +161,7 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
   protected Collection<String> getHolderOfKeyAuthnContextUris(final ValidationContext context) {
     return Optional.ofNullable(context.getStaticParameters().get(HOLDER_OF_KEY_AUTHN_CONTEXT_URIS))
         .map(Collection.class::cast)
-        .orElse(Arrays.asList(
-            LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4,
-            LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT));
+        .orElseGet(() -> Collections.emptyList());
   }
 
 }

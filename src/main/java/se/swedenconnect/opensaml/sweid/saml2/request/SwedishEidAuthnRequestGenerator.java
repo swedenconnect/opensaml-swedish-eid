@@ -1,5 +1,5 @@
 /*
- * Copyright 2021-2023 Sweden Connect
+ * Copyright 2021-2024 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.request;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
@@ -29,7 +28,6 @@ import se.swedenconnect.opensaml.saml2.core.build.ExtensionsBuilder;
 import se.swedenconnect.opensaml.saml2.metadata.EntityDescriptorUtils;
 import se.swedenconnect.opensaml.saml2.request.AuthnRequestGenerator;
 import se.swedenconnect.opensaml.saml2.request.AuthnRequestGeneratorContext;
-import se.swedenconnect.opensaml.saml2.request.AuthnRequestGeneratorContext.HokRequirement;
 import se.swedenconnect.opensaml.saml2.request.DefaultAuthnRequestGenerator;
 import se.swedenconnect.opensaml.saml2.request.RequestGenerationException;
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
@@ -101,9 +99,7 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
     }
   }
 
-  /**
-   * Filters URI:s based on HoK-status. Also removes deprecated URI:s.
-   */
+  /** {@inheritDoc} */
   @Override
   protected List<String> getAssuranceCertificationUris(
       final EntityDescriptor idpMetadata, final AuthnRequestGeneratorContext context)
@@ -111,19 +107,16 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
 
     final List<String> defaultUris = super.getAssuranceCertificationUris(idpMetadata, context);
 
-    final List<String> uris = new ArrayList<>();
-    for (final String uri : defaultUris) {
-      if (uri.contains("sigm")) {
-        log.debug("Excluding '{}' from metadata for '{}' since this URI is deprecated", uri, idpMetadata.getEntityID());
-      }
-      else if (HokRequirement.DONT_USE.equals(context.getHokRequirement()) && uri.contains("loa4")) {
-        log.debug("Excluding '{}' from metadata for '{}' since HoK is not active", uri, idpMetadata.getEntityID());
-      }
-      else {
-        uris.add(uri);
-      }
-    }
-    return uris;
+    return defaultUris.stream()
+        .filter(uri -> {
+          if (uri.contains("sigm")) {
+            log.debug("Excluding '{}' from metadata for '{}' since this URI is deprecated",
+                uri, idpMetadata.getEntityID());
+            return false;
+          }
+          return true;
+        })
+        .toList();
   }
 
   /**
