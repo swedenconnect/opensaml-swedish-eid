@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.schema.impl.XSStringImpl;
 import org.opensaml.core.xml.util.AttributeMap;
 

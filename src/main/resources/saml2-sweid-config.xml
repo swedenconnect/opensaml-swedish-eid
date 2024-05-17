@@ -3,6 +3,7 @@
   xmlns:csig="http://id.elegnamnden.se/csig/1.1/dss-ext/ns" 
   xmlns:sap="http://id.elegnamnden.se/csig/1.1/sap/ns"
   xmlns:psc="http://id.swedenconnect.se/authn/1.0/principal-selection/ns"
+  xmlns:umsg="http://id.swedenconnect.se/authn/1.0/user-message/ns"
   xmlns="http://www.opensaml.org/xmltooling-config"
   xsi:schemaLocation="http://www.opensaml.org/xmltooling-config ../../src/schema/xmltooling-config.xsd">
 
@@ -98,6 +99,20 @@
       <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueBuilder" />
       <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueMarshaller" />
       <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueUnmarshaller" />
+    </ObjectProvider>
+
+    <!-- umsg:UserMessage -->
+    <ObjectProvider qualifiedName="umsg:UserMessage">
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageBuilder" />
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageMarshaller" />
+      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageUnmarshaller" />
+    </ObjectProvider>
+
+    <!-- umsg:Message -->
+    <ObjectProvider qualifiedName="umsg:Message">
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageBuilder" />
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageMarshaller" />
+      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageUnmarshaller" />
     </ObjectProvider>
 
   </ObjectProviders>

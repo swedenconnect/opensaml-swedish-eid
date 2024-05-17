@@ -15,10 +15,11 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
-import java.util.Arrays;
-
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSetConstants;
 import se.swedenconnect.opensaml.sweid.saml2.authn.LevelOfAssuranceUris;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents the Entity Categories defined by the Swedish eID Framework.
@@ -70,17 +71,18 @@ public class EntityCategoryConstants {
    * attribute set "Natural Personal Identity with Civic Registration Number".
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA4_PNR = new ServiceEntityCategoryImpl(
-      SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/loa4-pnr", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4),
+      SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/loa4-pnr", List.of(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4),
       AttributeSetConstants.ATTRIBUTE_SET_NATURAL_PERSON_WITH_PERSONAL_ID);
 
   /**
    * Service entity category: For asserting a Swedish identity to a foreign service provider via the Swedish eIDAS Proxy
    * Service. This entity category MUST NOT be set by any entity other than Identity Provider providing identity
    * assertions to the Swedish eIDAS Proxy Service and by the Swedish eIDAS Proxy Service itself.
-   *
+   * <p>
    * Note that the Identity Providers release attributes according to the "Natural Personal Identity with Civic
    * Registration Number" attribute set. It is the responsibility of the Swedish eIDAS Proxy Service to transform these
    * attributes into eIDAS attributes.
+   * </p>
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_EIDAS_PNR_DELIVERY = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/eidas-pnr-delivery", null,
@@ -101,8 +103,8 @@ public class EntityCategoryConstants {
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA2_ORGID = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa2-orgid", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA2,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2_NONRESIDENT),
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA2,
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2_NONRESIDENT),
       AttributeSetConstants.ATTRIBUTE_SET_ORGANIZATIONAL_IDENTITY_FOR_NATURAL_PERSONS);
 
   /**
@@ -111,8 +113,8 @@ public class EntityCategoryConstants {
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA3_ORGID = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa3-orgid", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA3,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3_NONRESIDENT),
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA3,
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3_NONRESIDENT),
       AttributeSetConstants.ATTRIBUTE_SET_ORGANIZATIONAL_IDENTITY_FOR_NATURAL_PERSONS);
 
   /**
@@ -121,7 +123,7 @@ public class EntityCategoryConstants {
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA4_ORGID = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa4-orgid", Arrays.asList(
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4, LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT),
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4, LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT),
       AttributeSetConstants.ATTRIBUTE_SET_ORGANIZATIONAL_IDENTITY_FOR_NATURAL_PERSONS);
 
   /**
@@ -130,8 +132,8 @@ public class EntityCategoryConstants {
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA2_NAME = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa2-name", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA2,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2_NONRESIDENT),
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA2,
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2_NONRESIDENT),
       AttributeSetConstants.ATTRIBUTE_SET_NATURAL_PERSON_NO_PERSONAL_ID);
 
   /**
@@ -140,8 +142,8 @@ public class EntityCategoryConstants {
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA3_NAME = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa3-name", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA3,
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3_NONRESIDENT),
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA3,
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3_NONRESIDENT),
       AttributeSetConstants.ATTRIBUTE_SET_NATURAL_PERSON_NO_PERSONAL_ID);
 
   /**
@@ -150,16 +152,17 @@ public class EntityCategoryConstants {
    */
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA4_NAME = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa4-name", Arrays.asList(
-          LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4, LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT),
+      LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4, LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT),
       AttributeSetConstants.ATTRIBUTE_SET_NATURAL_PERSON_NO_PERSONAL_ID);
 
   /**
    * Service property category: For a providing service, i.e. an Identity Provider, inclusion of the mobile-auth
    * category states that the Identity Provider supports authentication using mobile devices, and that the end-user
    * interface of the Identity Provider is adapted for mobile clients.
-   *
+   * <p>
    * Note that an Identity Provider may of course support authentication for both desktop and mobile users. In these
    * cases the service must be able to display end user interfaces for both types of clients.
+   * </p>
    */
   public static final EntityCategory SERVICE_PROPERTY_CATEGORY_MOBILE_AUTH = new EntityCategoryImpl(
       SERVICE_PROPERTY_CATEGORY_PREFIX + "1.0/mobile-auth", EntityCategoryType.SERVICE_PROPERTY);
@@ -168,14 +171,16 @@ public class EntityCategoryConstants {
    * Service property category: A service property declaring that the service is adapted to support Sole Control
    * Assurance Level 2 (SCAL2) in accordance with the "Signature Activation Protocol for Federated Signing"
    * specification.
-   *
+   * <p>
    * For a providing service, i.e. an Identity Provider, inclusion of the scal2 service property states that the
    * Identity Provider will return a "SAD" in response to a {@code SADRequest} in an authentication requests from a
    * signing service.
-   *
+   * </p>
+   * <p>
    * For consuming services, Signature Services MAY include this service property if all authentication requests from
    * the particular Signature Service include a {@code SADRequest} extension. A Service Provider that is not declared as
    * a Signature Service MUST NOT include this service property in its metadata.
+   * </p>
    */
   public static final EntityCategory SERVICE_PROPERTY_CATEGORY_SCAL2 = new EntityCategoryImpl(
       SERVICE_PROPERTY_CATEGORY_PREFIX + "1.0/scal2", EntityCategoryType.SERVICE_PROPERTY);
@@ -188,7 +193,7 @@ public class EntityCategoryConstants {
       SERVICE_TYPE_CATEGORY_PREFIX + "1.0/sigservice", EntityCategoryType.SERVICE_TYPE);
 
   /**
-   * Service type category: A service type that indicates that an Service Provider is a "public sector" SP. This
+   * Service type category: A service type that indicates that a Service Provider is a "public sector" SP. This
    * category MUST be used by public sector Service Providers wishing to use eIDAS authentication so that the Swedish
    * eIDAS connector may include this information in the eIDAS authentication request.
    */
@@ -196,7 +201,7 @@ public class EntityCategoryConstants {
       SERVICE_TYPE_CATEGORY_PREFIX + "1.0/public-sector-sp", EntityCategoryType.SERVICE_TYPE);
 
   /**
-   * Service type category: A service type that indicates that an Service Provider is a "private sector" SP. This
+   * Service type category: A service type that indicates that a Service Provider is a "private sector" SP. This
    * category MUST be used by public sector Service Providers wishing to use eIDAS authentication so that the Swedish
    * eIDAS connector may include this information in the eIDAS authentication request.
    */
@@ -229,6 +234,13 @@ public class EntityCategoryConstants {
    */
   public static final EntityCategory GENERAL_CATEGORY_ACCEPTS_COORDINATION_NUMBER = new EntityCategoryImpl(
       GENERAL_CATEGORY_PREFIX + "1.0/accepts-coordination-number", EntityCategoryType.GENERAL);
+
+  /**
+   * General category: A category that indicates that a declaring IdP supports the {@code umsg:UserMessage}
+   * authentication request extension.
+   */
+  public static final EntityCategory GENERAL_CATEGORY_SUPPORTS_USER_MESSAGE = new EntityCategoryImpl(
+      GENERAL_CATEGORY_PREFIX + "1.0/supports-user-message", EntityCategoryType.GENERAL);
 
   /*
    * Hidden.
