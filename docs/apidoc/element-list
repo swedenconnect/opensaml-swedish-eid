@@ -5,6 +5,9 @@ se.swedenconnect.opensaml.sweid.saml2.authn
 se.swedenconnect.opensaml.sweid.saml2.authn.psc
 se.swedenconnect.opensaml.sweid.saml2.authn.psc.build
 se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl
+se.swedenconnect.opensaml.sweid.saml2.authn.umsg
+se.swedenconnect.opensaml.sweid.saml2.authn.umsg.build
+se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl
 se.swedenconnect.opensaml.sweid.saml2.discovery
 se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory
 se.swedenconnect.opensaml.sweid.saml2.request
