@@ -31,6 +31,7 @@ import se.swedenconnect.opensaml.saml2.request.AuthnRequestGeneratorContext;
 import se.swedenconnect.opensaml.saml2.request.DefaultAuthnRequestGenerator;
 import se.swedenconnect.opensaml.saml2.request.RequestGenerationException;
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
+import se.swedenconnect.opensaml.sweid.saml2.authn.umsg.UserMessage;
 import se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory.EntityCategoryConstants;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.SignMessageEncrypter;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
@@ -83,17 +84,20 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
   protected void addExtensions(final AuthnRequestBuilder builder, final AuthnRequestGeneratorContext context,
       final EntityDescriptor idpMetadata) throws RequestGenerationException {
 
-    if (context instanceof SwedishEidAuthnRequestGeneratorContext) {
-      final SwedishEidAuthnRequestGeneratorContext scontext = (SwedishEidAuthnRequestGeneratorContext) context;
+    if (context instanceof final SwedishEidAuthnRequestGeneratorContext scontext) {
       final SignMessage signMessage = this.isSignatureService()
           ? scontext.getSignMessageBuilderFunction().apply(idpMetadata, this.signMessageEncrypter)
           : null;
       final PrincipalSelection principalSelection = scontext.getPrincipalSelectionBuilderFunction().get();
+      final UserMessage userMessage = this.supportsUserMessage(idpMetadata)
+          ? scontext.getUserMessageBuilderFunction().apply(idpMetadata)
+          : null;
 
-      if (signMessage != null || principalSelection != null) {
+      if (signMessage != null || principalSelection != null || userMessage != null) {
         builder.extensions(ExtensionsBuilder.builder()
             .extension(signMessage)
             .extension(principalSelection)
+            .extension(userMessage)
             .build());
       }
     }
@@ -128,11 +132,20 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
     if (this.signServiceFlag == null) {
       this.signServiceFlag = EntityDescriptorUtils.getEntityCategories(this.getSpMetadata())
           .stream()
-          .filter(c -> c.equals(EntityCategoryConstants.SERVICE_TYPE_CATEGORY_SIGSERVICE.getUri()))
-          .findFirst()
-          .isPresent();
+          .anyMatch(c -> c.equals(EntityCategoryConstants.SERVICE_TYPE_CATEGORY_SIGSERVICE.getUri()));
     }
     return this.signServiceFlag;
+  }
+
+  /**
+   * Predicate that tells whether an IdP supports the {@code UserMessage} extension.
+   *
+   * @param idpMetadata the IdP metadata entry
+   * @return {@code true} if the IdP supports the extension, and {@code false} otherwise
+   */
+  protected boolean supportsUserMessage(final EntityDescriptor idpMetadata) {
+    return EntityDescriptorUtils.getEntityCategories(idpMetadata).stream()
+        .anyMatch(c -> EntityCategoryConstants.GENERAL_CATEGORY_SUPPORTS_USER_MESSAGE.getUri().equals(c));
   }
 
   /**
