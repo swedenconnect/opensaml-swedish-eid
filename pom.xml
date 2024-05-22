@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -44,14 +44,14 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <java.version>17</java.version>
-    
-    <opensaml.version>5.0.0</opensaml.version>
-    <shib.support.version>9.0.0</shib.support.version>
-    
+
+    <opensaml.version>5.1.2</opensaml.version>
+    <shib.support.version>9.1.2</shib.support.version>
+
     <jackson.version>2.17.1</jackson.version>
-    <nimbus.version>9.39</nimbus.version>
-    <bc.version>1.78</bc.version>
-    <spring.version>6.1.6</spring.version>
+    <nimbus.version>9.39.1</nimbus.version>
+    <bc.version>1.78.1</bc.version>
+    <spring.version>6.1.7</spring.version>
     <slf4j.version>2.0.13</slf4j.version>
     <junit.version>5.10.2</junit.version>
   </properties>
@@ -81,39 +81,39 @@
   </distributionManagement>
 
   <dependencyManagement>
-  
+
     <dependencies>
-    
+
       <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>${slf4j.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
         <version>1.17.0</version>
       </dependency>
-      
+
       <dependency>
         <groupId>org.apache.httpcomponents.core5</groupId>
         <artifactId>httpcore5</artifactId>
         <version>5.2.4</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-core</artifactId>
         <version>${jackson.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-databind</artifactId>
         <version>${jackson.version}</version>
       </dependency>
-      
+
       <dependency>
         <groupId>com.fasterxml.jackson.core</groupId>
         <artifactId>jackson-annotations</artifactId>
@@ -145,7 +145,7 @@
       </dependency>
 
     </dependencies>
-  
+
   </dependencyManagement>
 
 
@@ -154,9 +154,9 @@
     <dependency>
       <groupId>jakarta.annotation</groupId>
       <artifactId>jakarta.annotation-api</artifactId>
-      <version>2.1.1</version>
+      <version>3.0.0</version>
     </dependency>
-  
+
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
@@ -171,16 +171,16 @@
     <dependency>
       <groupId>se.swedenconnect.opensaml</groupId>
       <artifactId>opensaml-security-ext</artifactId>
-      <version>4.0.1</version>
+      <version>4.1.0-SNAPSHOT</version>
     </dependency>
-    
+
     <dependency>
       <groupId>se.swedenconnect.opensaml</groupId>
       <artifactId>opensaml-addons</artifactId>
-      <version>2.0.3-SNAPSHOT</version>
-    </dependency>    
-        
-    <!-- JSON support -->   
+      <version>2.1.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- JSON support -->
     <dependency>
       <groupId>com.nimbusds</groupId>
       <artifactId>nimbus-jose-jwt</artifactId>
@@ -216,27 +216,27 @@
       <version>${spring.version}</version>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-context</artifactId>
       <version>${spring.version}</version>
       <scope>test</scope>
-    </dependency>    
-    
+    </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-    
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-params</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
-    </dependency>    
+    </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -244,7 +244,7 @@
       <version>${slf4j.version}</version>
       <scope>test</scope>
     </dependency>
-     
+
   </dependencies>
 
   <build>
@@ -259,7 +259,7 @@
           <release>${java.version}</release>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -277,7 +277,7 @@
         <artifactId>maven-clean-plugin</artifactId>
         <version>3.3.1</version>
       </plugin>
-            
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
@@ -287,16 +287,16 @@
             <id>enforce</id>
             <configuration>
               <rules>
-                <dependencyConvergence />
+                <dependencyConvergence/>
               </rules>
             </configuration>
             <goals>
               <goal>enforce</goal>
             </goals>
           </execution>
-        </executions>        
+        </executions>
       </plugin>
-      
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -316,9 +316,9 @@
           <doclint>all,-missing</doclint>
         </configuration>
       </plugin>
-      
+
     </plugins>
-    
+
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>
@@ -330,8 +330,8 @@
       <testResource>
         <directory>src/test/resources</directory>
         <filtering>false</filtering>
-      </testResource>      
-    </testResources>    
+      </testResource>
+    </testResources>
 
   </build>
 
