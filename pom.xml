@@ -49,7 +49,7 @@
     <shib.support.version>9.1.2</shib.support.version>
 
     <jackson.version>2.17.1</jackson.version>
-    <nimbus.version>9.40</nimbus.version>
+    <nimbus.version>9.41</nimbus.version>
     <bc.version>1.78.1</bc.version>
     <spring.version>6.1.10</spring.version>
     <slf4j.version>2.0.13</slf4j.version>
