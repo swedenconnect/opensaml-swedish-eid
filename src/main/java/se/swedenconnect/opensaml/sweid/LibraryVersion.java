@@ -24,12 +24,12 @@ public final class LibraryVersion {
 
   private static final int MAJOR = 2;
   private static final int MINOR = 2;
-  private static final int PATCH = 1;
+  private static final int PATCH = 2;
 
   /**
    * Global serialization value for library classes.
    */
-  public static final long SERIAL_VERSION_UID = getVersion().hashCode();
+  public static final long SERIAL_VERSION_UID = (MAJOR + "." + MINOR).hashCode();
 
   /**
    * Gets the version string.
