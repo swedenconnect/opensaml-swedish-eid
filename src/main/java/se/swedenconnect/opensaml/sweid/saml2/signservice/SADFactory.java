@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2024 Sweden Connect
+ * Copyright 2016-2025 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADVersion;
 
 /**
  * A bean for building a {@code SAD} object and a signed JWT holding the SAD.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADFactory {
@@ -77,7 +77,7 @@ public class SADFactory {
 
   /**
    * Constructor.
-   * 
+   *
    * @param idpEntityID the entityID of the issuing IdP
    * @param signingCredential the IdP signature credential
    */
@@ -88,7 +88,7 @@ public class SADFactory {
 
   /**
    * Returns a builder that allows building a SAD using a cascading builder pattern.
-   * 
+   *
    * @return a SAD builder
    */
   public SADBuilder getBuilder() {
@@ -99,7 +99,7 @@ public class SADFactory {
    * Returns a builder that allows building a SAD using a cascading builder pattern. The builder returned has been
    * configured with the supplied {@code userIdAttributeName} instead of the attribute name that was configured for the
    * factory ({@link #setUserIdAttributeName(String)}).
-   * 
+   *
    * @param userIdAttributeName the user id attribute name
    * @return a SAD builder
    */
@@ -117,7 +117,7 @@ public class SADFactory {
    * <p>
    * Note: Only RSA keys are supported.
    * </p>
-   * 
+   *
    * @param sad the SAD to include in the JWT
    * @return a signed JWT (encoded)
    * @throws IOException for JSON processing errors
@@ -145,7 +145,7 @@ public class SADFactory {
 
   /**
    * Assigns the validity time for a SAD object (in seconds). The default is {@link #DEFAULT_VALIDITY_TIME}.
-   * 
+   *
    * @param seconds validity time in seconds
    */
   public void setValidityTime(final int seconds) {
@@ -158,7 +158,7 @@ public class SADFactory {
   /**
    * Assigns the attribute name for the attribute holding the user ID. Defaults to
    * {@link #DEFAULT_USER_ID_ATTRIBUTE_NAME}.
-   * 
+   *
    * @param userIdAttributeName attribute name (URI)
    */
   public void setUserIdAttributeName(final String userIdAttributeName) {
@@ -170,7 +170,7 @@ public class SADFactory {
 
   /**
    * Assigns the size of generated JWT identifiers. The default is {@link #DEFAULT_JWT_ID_SIZE}.
-   * 
+   *
    * @param jwtIdSize the size
    */
   public void setJwtIdSize(final int jwtIdSize) {
@@ -182,7 +182,7 @@ public class SADFactory {
 
   /**
    * Assigns the JWT signature algorithm. The default is {@link #DEFAULT_JWT_SIGNING_ALGORITHM}.
-   * 
+   *
    * @param jwtSigningAlgorithm JWT algorithm name
    */
   public void setJwtSigningAlgorithm(final String jwtSigningAlgorithm) {
@@ -191,7 +191,7 @@ public class SADFactory {
 
   /**
    * A builder for creating a SAD and a signed SAD JWT.
-   * 
+   *
    * @author Martin Lindström (martin@idsec.se)
    */
   public static class SADBuilder {
@@ -204,7 +204,7 @@ public class SADFactory {
 
     /**
      * Constructor.
-     * 
+     *
      * @param sadFactory the SAD factory
      */
     SADBuilder(final SADFactory sadFactory) {
@@ -217,7 +217,7 @@ public class SADFactory {
 
     /**
      * Constructor.
-     * 
+     *
      * @param sadFactory the SAD factory
      * @param userIdAttributeName the attribute name holding the user id
      */
@@ -231,7 +231,7 @@ public class SADFactory {
 
     /**
      * Builds a SAD.
-     * 
+     *
      * @return the SAD
      */
     public SAD buildSAD() {
@@ -252,7 +252,7 @@ public class SADFactory {
 
     /**
      * Builds a SAD, creates a JWT, signs it and returns its serialization.
-     * 
+     *
      * @return serialized JWT
      * @throws IOException for JSON processing errors
      * @throws SignatureException for signature errors
@@ -263,7 +263,7 @@ public class SADFactory {
 
     /**
      * Assigns the attribute value of the signer's unique identifier attribute.
-     * 
+     *
      * @param subject the user ID
      * @return the SAD builder
      */
@@ -274,7 +274,7 @@ public class SADFactory {
 
     /**
      * Assigns the entityID of the Signature Service which is the recipient of this SAD.
-     * 
+     *
      * @param audience the entityID of the recipient
      * @return the SAD builder
      */
@@ -285,7 +285,7 @@ public class SADFactory {
 
     /**
      * Assigns the unique identifier of this JWT.
-     * 
+     *
      * @param jwtId JWT ID
      * @return the SAD builder
      */
@@ -296,7 +296,7 @@ public class SADFactory {
 
     /**
      * Assigns the version of the SAD claim.
-     * 
+     *
      * @param version the version
      * @return the SAD builder
      */
@@ -307,7 +307,7 @@ public class SADFactory {
 
     /**
      * Assigns the ID of the {@code SADRequest} message that requested this SAD.
-     * 
+     *
      * @param irt ID of corresponding SADRequest
      * @return the SAD builder
      */
@@ -318,7 +318,7 @@ public class SADFactory {
 
     /**
      * Assigns the URI identifier of the level of assurance (LoA) used to authenticate the signer.
-     * 
+     *
      * @param loa LoA URI
      * @return the SAD builder
      */
@@ -329,7 +329,7 @@ public class SADFactory {
 
     /**
      * Assigns the ID of the Sign Request associated with this SAD.
-     * 
+     *
      * @param requestID SignRequest ID
      * @return the SAD builder
      */
@@ -340,7 +340,7 @@ public class SADFactory {
 
     /**
      * Assigns the number of documents to be signed in the associated sign request.
-     * 
+     *
      * @param docs the number of documents to be signed
      * @return the SAD builder
      */
