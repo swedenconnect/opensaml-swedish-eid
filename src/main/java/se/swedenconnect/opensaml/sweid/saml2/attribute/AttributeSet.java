@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2024 Sweden Connect
+ * Copyright 2016-2025 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ import se.swedenconnect.opensaml.saml2.attribute.AttributeTemplate;
 /**
  * The specification "Attribute Specification for the Swedish eID Framework" of the Swedish eID Framework defines a
  * number of "Attribute Sets". This interface represents such an attribute set.
- * 
+ *
  * @author Martin Lindström (martin@idsec.se)
  * @see AttributeSetConstants
  */
@@ -35,7 +35,7 @@ public interface AttributeSet extends Serializable {
   /**
    * Each attribute set within the Swedish eID Framework is assigned an unique profile identifier. This method
    * returns this unique value.
-   * 
+   *
    * @return the attribute set identifier
    * @see #getUri()
    */
@@ -43,7 +43,7 @@ public interface AttributeSet extends Serializable {
 
   /**
    * Each attribute set within the Swedish eID Framework is assigned an unique URI. This method returns this value.
-   * 
+   *
    * @return the attribute set URI
    * @see #getIdentifier()
    */
@@ -51,28 +51,28 @@ public interface AttributeSet extends Serializable {
 
   /**
    * Returns the friendly name for this attribute set.
-   * 
+   *
    * @return the attribute set friendly name
    */
   String getFriendlyName();
 
   /**
    * Returns the required attributes for this attribute set
-   * 
+   *
    * @return an array of required attributes for this set
    */
   AttributeTemplate[] getRequiredAttributes();
-  
+
   /**
    * Returns the recommended attributes for this attribute set
-   * 
+   *
    * @return an array of recommended attributes for this set
    */
-  AttributeTemplate[] getRecommendedAttributes();  
+  AttributeTemplate[] getRecommendedAttributes();
 
   /**
    * Validates the attributes received in the assertion against the attribute set.
-   * 
+   *
    * The validation logic is as follows:
    * <ul>
    * <li>Make sure that all the attributes that the set states as "required" are included in the assertion.</li>
@@ -80,7 +80,7 @@ public interface AttributeSet extends Serializable {
    * assertion. These requested attributes are listed in the SP metadata record as {@code <md:RequestedAttribute>}
    * elements.</li>
    * </ul>
-   * 
+   *
    * @param assertion
    *          the assertion containing the attributes to validate
    * @param explicitlyRequestedAttributes
