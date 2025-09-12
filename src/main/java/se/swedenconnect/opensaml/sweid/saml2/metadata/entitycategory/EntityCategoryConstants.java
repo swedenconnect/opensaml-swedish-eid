@@ -193,9 +193,9 @@ public class EntityCategoryConstants {
       SERVICE_TYPE_CATEGORY_PREFIX + "1.0/sigservice", EntityCategoryType.SERVICE_TYPE);
 
   /**
-   * Service type category: A service type that indicates that a Service Provider is a "public sector" SP. This
-   * category MUST be used by public sector Service Providers wishing to use eIDAS authentication so that the Swedish
-   * eIDAS connector may include this information in the eIDAS authentication request.
+   * Service type category: A service type that indicates that a Service Provider is a "public sector" SP. This category
+   * MUST be used by public sector Service Providers wishing to use eIDAS authentication so that the Swedish eIDAS
+   * connector may include this information in the eIDAS authentication request.
    */
   public static final EntityCategory SERVICE_TYPE_CATEGORY_PUBLIC_SECTOR_SP = new EntityCategoryImpl(
       SERVICE_TYPE_CATEGORY_PREFIX + "1.0/public-sector-sp", EntityCategoryType.SERVICE_TYPE);
@@ -221,6 +221,13 @@ public class EntityCategoryConstants {
    */
   public static final EntityCategory SERVICE_CONTRACT_CATEGORY_EID_CHOICE_2017 = new EntityCategoryImpl(
       SERVICE_CONTRACT_CATEGORY_PREFIX + "sc/eid-choice-2017", EntityCategoryType.SERVICE_CONTRACT);
+
+  /**
+   * Service contract category: A service contract type that indicates that the holder has signed the "Digg
+   * Authorization System" (Auktorisationssystem) contract.
+   */
+  public static final EntityCategory SERVICE_CONTRACT_CATEGORY_EID_AUTHZ_SYSTEM = new EntityCategoryImpl(
+      SERVICE_CONTRACT_CATEGORY_PREFIX + "sc/eid-authorization-system", EntityCategoryType.SERVICE_CONTRACT);
 
   /**
    * General category: A category that indicates that secure authenticator binding is requested (SP) or is supported
