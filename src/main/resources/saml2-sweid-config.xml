@@ -1,120 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<XMLTooling xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xmlns:csig="http://id.elegnamnden.se/csig/1.1/dss-ext/ns" 
-  xmlns:sap="http://id.elegnamnden.se/csig/1.1/sap/ns"
-  xmlns:psc="http://id.swedenconnect.se/authn/1.0/principal-selection/ns"
-  xmlns:umsg="http://id.swedenconnect.se/authn/1.0/user-message/ns"
-  xmlns="http://www.opensaml.org/xmltooling-config"
-  xsi:schemaLocation="http://www.opensaml.org/xmltooling-config ../../src/schema/xmltooling-config.xsd">
+<XMLTooling xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns:csig="http://id.elegnamnden.se/csig/1.1/dss-ext/ns"
+            xmlns:sap="http://id.elegnamnden.se/csig/1.1/sap/ns"
+            xmlns:psc="http://id.swedenconnect.se/authn/1.0/principal-selection/ns"
+            xmlns:umsg="http://id.swedenconnect.se/authn/1.0/user-message/ns"
+            xmlns:mdorgext="http://id.swedenconnect.se/authn/1.0/md-org-ext/ns"
+            xmlns="http://www.opensaml.org/xmltooling-config"
+            xsi:schemaLocation="http://www.opensaml.org/xmltooling-config ../../src/schema/xmltooling-config.xsd">
 
   <!-- SAML 2.0 Providers for the Swedish eID Framework -->
   <ObjectProviders>
-  
+
     <!-- SignMessage -->
     <ObjectProvider qualifiedName="csig:SignMessage">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.SignMessageBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.SignMessageMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.SignMessageUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.SignMessageBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.SignMessageMarshaller"/>
+      <UnmarshallingClass
+          className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.SignMessageUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- Message -->
     <ObjectProvider qualifiedName="csig:Message">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.MessageBuilder" />
-      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSBase64BinaryMarshaller" />
-      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSBase64BinaryUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.MessageBuilder"/>
+      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSBase64BinaryMarshaller"/>
+      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSBase64BinaryUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- EncryptedMessage -->
     <ObjectProvider qualifiedName="csig:EncryptedMessage">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.EncryptedMessageBuilder" />
-      <MarshallingClass className="org.opensaml.saml.saml2.core.impl.EncryptedElementTypeMarshaller" />
-      <UnmarshallingClass className="org.opensaml.saml.saml2.core.impl.EncryptedElementTypeUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl.EncryptedMessageBuilder"/>
+      <MarshallingClass className="org.opensaml.saml.saml2.core.impl.EncryptedElementTypeMarshaller"/>
+      <UnmarshallingClass className="org.opensaml.saml.saml2.core.impl.EncryptedElementTypeUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- sap:SADRequest -->
     <ObjectProvider qualifiedName="sap:SADRequest">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.SADRequestBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.SADRequestMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.SADRequestUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.SADRequestBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.SADRequestMarshaller"/>
+      <UnmarshallingClass
+          className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.SADRequestUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- sap:SignRequestID -->
     <ObjectProvider qualifiedName="sap:SignRequestID">
-      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSStringBuilder" />
-      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringMarshaller" />
-      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringUnmarshaller" />
+      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSStringBuilder"/>
+      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringMarshaller"/>
+      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- sap:DocCount -->
     <ObjectProvider qualifiedName="sap:DocCount">
-      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSIntegerBuilder" />
-      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSIntegerMarshaller" />
-      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSIntegerUnmarshaller" />
+      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSIntegerBuilder"/>
+      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSIntegerMarshaller"/>
+      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSIntegerUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- sap:RequestedVersion -->
     <ObjectProvider qualifiedName="sap:RequestedVersion">
-      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSStringBuilder" />
-      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringMarshaller" />
-      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringUnmarshaller" />
+      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSStringBuilder"/>
+      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringMarshaller"/>
+      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- sap:RequesterID -->
     <ObjectProvider qualifiedName="sap:RequesterID">
-      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSStringBuilder" />
-      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringMarshaller" />
-      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringUnmarshaller" />
-    </ObjectProvider>    
-    
+      <BuilderClass className="org.opensaml.core.xml.schema.impl.XSStringBuilder"/>
+      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringMarshaller"/>
+      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringUnmarshaller"/>
+    </ObjectProvider>
+
     <!-- sap:Parameter -->
     <ObjectProvider qualifiedName="sap:Parameter">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.ParameterBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.ParameterMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.ParameterUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.ParameterBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.ParameterMarshaller"/>
+      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.ParameterUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- sap:RequestParams -->
     <ObjectProvider qualifiedName="sap:RequestParams">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.RequestParamsBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.RequestParamsMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.RequestParamsUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.RequestParamsBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.RequestParamsMarshaller"/>
+      <UnmarshallingClass
+          className="se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl.RequestParamsUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- psc:PrincipalSelection -->
     <ObjectProvider qualifiedName="psc:PrincipalSelection">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionMarshaller"/>
+      <UnmarshallingClass
+          className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- psc:RequestedPrincipalSelection -->
     <ObjectProvider qualifiedName="psc:RequestedPrincipalSelection">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.RequestedPrincipalSelectionBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionUnmarshaller" />
+      <BuilderClass
+          className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.RequestedPrincipalSelectionBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionMarshaller"/>
+      <UnmarshallingClass
+          className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.PrincipalSelectionUnmarshaller"/>
     </ObjectProvider>
-    
+
     <!-- psc:MatchValue -->
     <ObjectProvider qualifiedName="psc:MatchValue">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueMarshaller"/>
+      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.MatchValueUnmarshaller"/>
     </ObjectProvider>
 
     <!-- umsg:UserMessage -->
     <ObjectProvider qualifiedName="umsg:UserMessage">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageMarshaller"/>
+      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.UserMessageUnmarshaller"/>
     </ObjectProvider>
 
     <!-- umsg:Message -->
     <ObjectProvider qualifiedName="umsg:Message">
-      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageBuilder" />
-      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageMarshaller" />
-      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageUnmarshaller" />
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageBuilder"/>
+      <MarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageMarshaller"/>
+      <UnmarshallingClass className="se.swedenconnect.opensaml.sweid.saml2.authn.umsg.impl.MessageUnmarshaller"/>
+    </ObjectProvider>
+
+    <!-- mdorgext:OrganizationNumber -->
+    <ObjectProvider qualifiedName="mdorgext:OrganizationNumber">
+      <BuilderClass className="se.swedenconnect.opensaml.sweid.saml2.metadata.ext.impl.OrganizationNumberBuilder"/>
+      <MarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringMarshaller"/>
+      <UnmarshallingClass className="org.opensaml.core.xml.schema.impl.XSStringUnmarshaller"/>
     </ObjectProvider>
 
   </ObjectProviders>
 
-</XMLTooling>  
+</XMLTooling>

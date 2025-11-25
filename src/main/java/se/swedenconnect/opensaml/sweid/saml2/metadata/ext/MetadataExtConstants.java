@@ -13,35 +13,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package se.swedenconnect.opensaml.sweid;
+package se.swedenconnect.opensaml.sweid.saml2.metadata.ext;
 
 /**
- * Internal class used for serialization across library classes.
+ * Defines contants for SAML metadata extensions.
  *
  * @author Martin Lindström
  */
-public final class LibraryVersion {
+public class MetadataExtConstants {
 
-  private static final int MAJOR = 2;
-  private static final int MINOR = 2;
-  private static final int PATCH = 8;
+  /** Namespace prefix for the mdorgext (Metadata Organization Extensions) namespace. */
+  public static final String MDORGEXT_NS_PREFIX = "mdorgext";
 
-  /**
-   * Global serialization value for library classes.
-   */
-  public static final long SERIAL_VERSION_UID = (MAJOR + "." + MINOR).hashCode();
+  /** The namespace for the OrganizationNumber schema. */
+  public static final String MDORGEXT_NS = "http://id.swedenconnect.se/authn/1.0/md-org-ext/ns";
 
-  /**
-   * Gets the version string.
-   *
-   * @return the version string
-   */
-  public static String getVersion() {
-    return MAJOR + "." + MINOR + "." + PATCH;
-  }
-
-  // Hidden
-  private LibraryVersion() {
-  }
-
+  private MetadataExtConstants() {}
 }
