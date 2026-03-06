@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 Sweden Connect
+ * Copyright 2016-2026 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,12 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.security.cert.X509Certificate;
-import java.text.ParseException;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSVerifier;
+import com.nimbusds.jose.crypto.factories.DefaultJWSVerifierFactory;
+import com.nimbusds.jose.proc.JWSVerifierFactory;
+import com.nimbusds.jwt.SignedJWT;
+import net.shibboleth.shared.resolver.ResolverException;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.saml.common.xml.SAMLConstants;
 import org.opensaml.saml.saml2.core.Assertion;
@@ -40,14 +32,6 @@ import org.opensaml.security.credential.UsageType;
 import org.opensaml.security.x509.X509Credential;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSVerifier;
-import com.nimbusds.jose.crypto.factories.DefaultJWSVerifierFactory;
-import com.nimbusds.jose.proc.JWSVerifierFactory;
-import com.nimbusds.jwt.SignedJWT;
-
-import net.shibboleth.shared.resolver.ResolverException;
 import se.swedenconnect.opensaml.saml2.attribute.AttributeUtils;
 import se.swedenconnect.opensaml.saml2.metadata.EntityDescriptorUtils;
 import se.swedenconnect.opensaml.saml2.metadata.provider.MetadataProvider;
@@ -56,6 +40,21 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeConstants;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.SADValidationException.ErrorCode;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SAD;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADRequest;
+import tools.jackson.core.JacksonException;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.cert.X509Certificate;
+import java.text.ParseException;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Class for parsing and validation of SAD JWT:s.
@@ -71,7 +70,8 @@ public class SADParser {
   /**
    * Parses the supplied (encoded) JWT and returns the contained JWT.
    * <p>
-   * <b>Note:</b> The parse method does not peform any validation. Use the {@link SADValidator} class for this purpose.
+   * <b>Note:</b> The parse method does not perform any validation. Use the {@link SADValidator} class for this
+   * purpose.
    * </p>
    *
    * @param sadJwt the signed JWT holding the SAD
@@ -82,9 +82,9 @@ public class SADParser {
     try {
       final SignedJWT signedJwt = SignedJWT.parse(sadJwt);
       final String payload = signedJwt.getPayload().toBase64URL().toString();
-      return SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), Charset.forName("UTF-8")));
+      return SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8));
     }
-    catch (ParseException e) {
+    catch (final ParseException e) {
       throw new IOException(e);
     }
   }
@@ -133,7 +133,7 @@ public class SADParser {
     public static final Duration DEFAULT_ALLOWED_CLOCK_SKEW = Duration.ofSeconds(15);
 
     /** Logger instance. */
-    private Logger logger = LoggerFactory.getLogger(SADValidator.class);
+    private static final Logger logger = LoggerFactory.getLogger(SADValidator.class);
 
     /** The certificate(s) to use when verifying the JWT signature. */
     private List<X509Certificate> validationCertificates;
@@ -177,7 +177,7 @@ public class SADParser {
       try {
         this.metadataProvider = new StaticMetadataProvider(idpMetadata);
       }
-      catch (MarshallingException e) {
+      catch (final MarshallingException e) {
         throw new SecurityException("Invalid IdP metadata", e);
       }
     }
@@ -187,11 +187,11 @@ public class SADParser {
      * {@code SADRequest}.
      *
      * @param authnRequest the AuthnRequest holding the SADRequest
-     * @param assertion the Assertion holding the sad attribute (as a encoded JWT)
+     * @param assertion the Assertion holding the sad attribute (as an encoded JWT)
      * @return a SAD object, or null if no SAD was requested (and issued)
      * @throws SADValidationException for SAD validation errors
      * @throws IllegalArgumentException if the supplied AuthnRequest does not contain a SADRequest extension, or is
-     *           invalid by other means (e.g., missing LoA)
+     *     invalid by other means (e.g., missing LoA)
      * @see #validate(String, String, String, String, String, String, int, String)
      */
     public SAD validate(final AuthnRequest authnRequest, final Assertion assertion) throws SADValidationException,
@@ -203,12 +203,12 @@ public class SADParser {
       //
       final SADRequest sadRequest = authnRequest.getExtensions() != null
           ? authnRequest.getExtensions()
-              .getUnknownXMLObjects()
-              .stream()
-              .filter(SADRequest.class::isInstance)
-              .map(SADRequest.class::cast)
-              .findFirst()
-              .orElse(null)
+          .getUnknownXMLObjects()
+          .stream()
+          .filter(SADRequest.class::isInstance)
+          .map(SADRequest.class::cast)
+          .findFirst()
+          .orElse(null)
           : null;
 
       if (sadRequest == null) {
@@ -225,7 +225,7 @@ public class SADParser {
         logger.info(msg);
         throw new SADValidationException(ErrorCode.NO_SAD_ATTRIBUTE, msg);
       }
-      final List<Attribute> attributes = assertion.getAttributeStatements().get(0).getAttributes();
+      final List<Attribute> attributes = assertion.getAttributeStatements().getFirst().getAttributes();
       final Attribute sadAttribute = AttributeUtils.getAttribute(AttributeConstants.ATTRIBUTE_NAME_SAD, attributes);
       if (sadAttribute == null) {
         final String msg = String.format("Assertion '%s' does not contain a SAD attribute", assertion.getID());
@@ -235,14 +235,14 @@ public class SADParser {
 
       // Parse the JWT and SAD.
       //
-      SignedJWT signedJwt;
-      SAD sad;
+      final SignedJWT signedJwt;
+      final SAD sad;
       try {
         signedJwt = SignedJWT.parse(AttributeUtils.getAttributeStringValue(sadAttribute));
         final String payload = signedJwt.getPayload().toBase64URL().toString();
-        sad = SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), Charset.forName("UTF-8")));
+        sad = SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8));
       }
-      catch (ParseException | IOException e) {
+      catch (final ParseException | JacksonException e) {
         throw new SADValidationException(ErrorCode.JWT_PARSE_ERROR, "Failed to parse SAD JWT", e);
       }
 
@@ -274,7 +274,7 @@ public class SADParser {
       //
       final String loa = getLoa(assertion);
       if (loa == null) {
-        String msg = String.format("Assertion '%s' does not contain a LoA URI", assertion.getID());
+        final String msg = String.format("Assertion '%s' does not contain a LoA URI", assertion.getID());
         logger.error(msg);
         throw new IllegalArgumentException(msg);
       }
@@ -291,7 +291,7 @@ public class SADParser {
           AttributeUtils.getAttributeStringValue(subjectAttribute), /* The expected subject name. */
           loa, /* The expected LoA. */
           sadRequest.getID(), /* The expected in-response-to ID. */
-          sadRequest.getDocCount().intValue(), /* The expected number of documents indicated in the SAD. */
+          sadRequest.getDocCount(), /* The expected number of documents indicated in the SAD. */
           sadRequest.getSignRequestID()); /* The SignRequest ID. */
     }
 
@@ -308,12 +308,12 @@ public class SADParser {
      *
      * @param sadJwt the encoded SAD JWT (found in the sad attribute of a received assertion)
      * @param idpEntityID the entityID of the issuing IdP (the issuer of the received assertion holding the sad
-     *          attribute)
+     *     attribute)
      * @param expectedRecipientEntityID the entityID of the recipient (the signature service SP that issued the
-     *          SADRequest)
+     *     SADRequest)
      * @param expectedSubject the expected subject name (user ID). See note above
      * @param expectedLoa the expected level of assurance to be found in the SAD (should be the LoA found in the
-     *          assertion)
+     *     assertion)
      * @param sadRequestID the ID of the SADRequest extension that was sent to the IdP
      * @param expectedNoDocs expected number of documents (from the DocCount element of the SADRequest)
      * @param signRequestID ID for the SignRequest that was included in the SADRequest
@@ -334,12 +334,12 @@ public class SADParser {
         // Next, parse the SAD.
         //
         final String payload = signedJwt.getPayload().toBase64URL().toString();
-        final SAD sad = SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), Charset.forName("UTF-8")));
+        final SAD sad = SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8));
 
         return this.validate(signedJwt, sad, now, idpEntityID, expectedRecipientEntityID, expectedSubject, expectedLoa,
             sadRequestID, expectedNoDocs, signRequestID);
       }
-      catch (ParseException | IOException e) {
+      catch (final ParseException | JacksonException e) {
         throw new SADValidationException(ErrorCode.JWT_PARSE_ERROR, "Failed to parse SAD JWT", e);
       }
     }
@@ -351,12 +351,12 @@ public class SADParser {
      * @param sad the SAD (parsed for pre-checks)
      * @param now the current time (seconds since 1970-01-01)
      * @param idpEntityID the entityID of the issuing IdP (the issuer of the received assertion holding the sad
-     *          attribute)
+     *     attribute)
      * @param expectedRecipientEntityID the entityID of the recipient (the signature service SP that issued the
-     *          SADRequest)
+     *     SADRequest)
      * @param expectedSubject the expected subject name (user ID). See note above
      * @param expectedLoa the expected level of assurance to be found in the SAD (should be the LoA found in the
-     *          assertion)
+     *     assertion)
      * @param sadRequestID the ID of the SADRequest extension that was sent to the IdP
      * @param expectedNoDocs expected number of documents (from the DocCount element of the SADRequest
      * @param signRequestID ID for the SignRequest that was included in the SADRequest
@@ -458,7 +458,7 @@ public class SADParser {
 
       // Assert the the number of documents indicated in the SAD corresponds with the number given in the SADRequest.
       //
-      if (!Objects.equals(Integer.valueOf(expectedNoDocs), sad.getSeElnSadext().getNumberOfDocuments())) {
+      if (!Objects.equals(expectedNoDocs, sad.getSeElnSadext().getNumberOfDocuments())) {
         final String msg = String.format("SAD indicated '%s' number of documents - expected '%d'",
             sad.getSeElnSadext().getNumberOfDocuments(), expectedNoDocs);
         logger.info(msg);
@@ -489,7 +489,7 @@ public class SADParser {
       try {
         this.verifyJwtSignature(SignedJWT.parse(sadJwt), idpEntityID);
       }
-      catch (ParseException e) {
+      catch (final ParseException e) {
         throw new SADValidationException(ErrorCode.JWT_PARSE_ERROR, "Failed to parse SAD JWT", e);
       }
     }
@@ -497,7 +497,7 @@ public class SADParser {
     /**
      * Verifies the signature on the supplied SAD JWT.
      *
-     * @param sadJwt the SAD JWT
+     * @param signedJwt the SAD JWT
      * @param idpEntityID the entityID of the IdP that signed the JWT
      * @throws SADValidationException for signature validation errors
      */
@@ -513,7 +513,7 @@ public class SADParser {
         logger.debug("Verifying SAD JWT signature. Will try {} IdP key(s) ...", idpCerts.size());
 
         boolean verificationSuccess = false;
-        for (X509Certificate idpCert : idpCerts) {
+        for (final X509Certificate idpCert : idpCerts) {
           try {
             final JWSVerifier verifier =
                 verifierFactory.createJWSVerifier(signedJwt.getHeader(), idpCert.getPublicKey());
@@ -523,7 +523,7 @@ public class SADParser {
               break;
             }
           }
-          catch (JOSEException e) {
+          catch (final JOSEException e) {
             logger.debug("Failed to perform signature validation of SAD JWT - {}", e.getMessage());
             logger.trace("", e);
           }
@@ -533,7 +533,7 @@ public class SADParser {
               "Signature on SAD JWT could not be validated using any of the IdP certificates found");
         }
       }
-      catch (ResolverException e) {
+      catch (final ResolverException e) {
         throw new SADValidationException(ErrorCode.SIGNATURE_VALIDATION_ERROR, "Failed to find validation certificate",
             e);
       }
@@ -559,7 +559,7 @@ public class SADParser {
               idpEntityID);
           return Collections.emptyList();
         }
-        List<X509Credential> creds = EntityDescriptorUtils.getMetadataCertificates(metadata, UsageType.SIGNING);
+        final List<X509Credential> creds = EntityDescriptorUtils.getMetadataCertificates(metadata, UsageType.SIGNING);
         return creds.stream().map(X509Credential::getEntityCertificate).collect(Collectors.toList());
       }
       else {
@@ -575,9 +575,9 @@ public class SADParser {
      */
     private static String getLoa(final Assertion assertion) {
       try {
-        return assertion.getAuthnStatements().get(0).getAuthnContext().getAuthnContextClassRef().getURI();
+        return assertion.getAuthnStatements().getFirst().getAuthnContext().getAuthnContextClassRef().getURI();
       }
-      catch (Exception e) {
+      catch (final Exception e) {
         return null;
       }
     }
