@@ -1,5 +1,5 @@
 /*
- * Copyright 2016-2025 Sweden Connect
+ * Copyright 2016-2026 Sweden Connect
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,14 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
-import java.io.IOException;
-import java.time.Instant;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+import java.time.Instant;
 
 /**
  * Representation of the Signature Activation Data (SAD) as described in the "Signature Activation Protocol for
@@ -30,7 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author Martin Lindström (martin@idsec.se)
  */
-@JsonInclude(Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class SAD {
 
   /** Subject - holding the attribute value of the signer's unique identifier attribute. */
@@ -69,9 +69,9 @@ public class SAD {
    *
    * @param json the JSON representation
    * @return a {@code SAD} object
-   * @throws IOException for parsing errors
+   * @throws JacksonException for parsing errors
    */
-  public static SAD fromJson(final String json) throws IOException {
+  public static SAD fromJson(final String json) throws JacksonException {
     return jsonMapper.readValue(json, SAD.class);
   }
 
@@ -79,9 +79,9 @@ public class SAD {
    * Serializes the SAD object into its JSON representation.
    *
    * @return the JSON representation
-   * @throws IOException for processing errors
+   * @throws JacksonException for processing errors
    */
-  public String toJson() throws IOException {
+  public String toJson() throws JacksonException {
     return jsonMapper.writeValueAsString(this);
   }
 
@@ -295,7 +295,7 @@ public class SAD {
     if (this.getClass() != obj.getClass()) {
       return false;
     }
-    SAD other = (SAD) obj;
+    final SAD other = (SAD) obj;
     if (this.audience == null) {
       if (other.audience != null) {
         return false;
@@ -345,14 +345,11 @@ public class SAD {
       return false;
     }
     if (this.subject == null) {
-      if (other.subject != null) {
-        return false;
-      }
+      return other.subject == null;
     }
-    else if (!this.subject.equals(other.subject)) {
-      return false;
+    else {
+      return this.subject.equals(other.subject);
     }
-    return true;
   }
 
   /**
@@ -361,7 +358,7 @@ public class SAD {
    *
    * @author Martin Lindström (martin@idsec.se)
    */
-  @JsonInclude(Include.NON_NULL)
+  @JsonInclude(JsonInclude.Include.NON_NULL)
   public static class Extension {
 
     /** The version of this claim, default 1.0 (Optional). */
@@ -544,7 +541,7 @@ public class SAD {
       if (this.getClass() != obj.getClass()) {
         return false;
       }
-      Extension other = (Extension) obj;
+      final Extension other = (Extension) obj;
       if (this.attributeName == null) {
         if (other.attributeName != null) {
           return false;
@@ -586,14 +583,11 @@ public class SAD {
         return false;
       }
       if (this.version == null) {
-        if (other.version != null) {
-          return false;
-        }
+        return other.version == null;
       }
-      else if (!this.version.equals(other.version)) {
-        return false;
+      else {
+        return this.version.equals(other.version);
       }
-      return true;
     }
 
   }
