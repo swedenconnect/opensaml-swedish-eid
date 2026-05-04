@@ -10,7 +10,6 @@
 
 # Intelij
 *.iml
-.idea
 out
 
 # Eclipse
