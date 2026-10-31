@@ -241,8 +241,8 @@ public class SADFactory {
         this.sad.setJwtId(RandomStringUtils.random(this.sadFactory.jwtIdSize, true, true));
       }
 
-      this.sad.setIssuedAt(Instant.now().getEpochSecond());
-      this.sad.setExpiry(this.sad.getIssuedAt() + this.sadFactory.validityTime);
+      this.sad.setIssuedAtSeconds(Instant.now().getEpochSecond());
+      this.sad.setExpirySeconds(this.sad.getIssuedAtSeconds() + this.sadFactory.validityTime);
 
       if (this.sad.getSeElnSadext().getVersion() == null) {
         this.sad.getSeElnSadext().setVersion(SADVersion.VERSION_10.toString());
