@@ -18,6 +18,8 @@
 - Attribute set validation no longer fails on assertions without an AttributeStatement, and checks all AttributeStatement elements ([#83](https://github.com/swedenconnect/opensaml-swedish-eid/issues/83)).
 - Under strict validation, assertions with more than one AuthnStatement or AttributeStatement are rejected ([#84](https://github.com/swedenconnect/opensaml-swedish-eid/issues/84)).
 - The default allowed clock skew for assertion validation is now one minute ([#85](https://github.com/swedenconnect/opensaml-swedish-eid/issues/85)).
+- `SignMessageDecrypter` now applies settings changed after the first decryption, and reports content that is not a `Message` element as a decryption error ([#102](https://github.com/swedenconnect/opensaml-swedish-eid/issues/102), [#103](https://github.com/swedenconnect/opensaml-swedish-eid/issues/103)).
+- The `MimeType` of a `SignMessage` can be cleared by assigning null ([#104](https://github.com/swedenconnect/opensaml-swedish-eid/issues/104)).
 
 ---
 

@@ -145,9 +145,7 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
   /** {@inheritDoc} */
   @Override
   public void setMimeType(final SignMessageMimeTypeEnum mimeType) {
-    if (mimeType != null) {
-      this.mimeType = this.prepareForAssignment(this.mimeType, mimeType.getMimeType());
-    }
+    this.setMimeType(mimeType != null ? mimeType.getMimeType() : null);
   }
 
   /** {@inheritDoc} */
