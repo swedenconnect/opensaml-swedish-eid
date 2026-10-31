@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.validation;
 
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -36,6 +37,12 @@ public class SwedishEidAssertionValidationParametersBuilder
     extends AbstractAssertionValidationParametersBuilder<SwedishEidAssertionValidationParametersBuilder> {
 
   /**
+   * The default allowed clock skew. The Swedish eID Framework Deployment Profile states that the clock skew should not
+   * exceed one minute.
+   */
+  public static final Duration DEFAULT_CLOCK_SKEW = Duration.ofMinutes(1);
+
+  /**
    * Utility method that returns a builder instance.
    *
    * @return a builder
@@ -47,6 +54,7 @@ public class SwedishEidAssertionValidationParametersBuilder
   /** {@inheritDoc} */
   @Override
   public ValidationContext build() {
+    this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.CLOCK_SKEW, DEFAULT_CLOCK_SKEW);
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_RECIPIENT_REQUIRED, Boolean.TRUE);
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_NOT_ON_OR_AFTER_REQUIRED, Boolean.TRUE);
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.SC_IN_RESPONSE_TO_REQUIRED, Boolean.TRUE);
@@ -79,6 +87,12 @@ public class SwedishEidAssertionValidationParametersBuilder
     return super.build();
   }
 
+  /**
+   * Assigns the names of the attributes that are "scoped". If not assigned, {@code orgAffiliation} is used.
+   *
+   * @param attributes the attribute names of scoped attributes
+   * @return the builder
+   */
   public SwedishEidAssertionValidationParametersBuilder scopedAttributes(final Collection<String> attributes) {
     return this.staticParameter(SwedishEidAttributeStatementValidator.SCOPED_ATTRIBUTES, attributes);
   }

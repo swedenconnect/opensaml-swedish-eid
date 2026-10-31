@@ -23,7 +23,6 @@ import java.util.Optional;
 
 import org.opensaml.saml.common.assertion.ValidationContext;
 import org.opensaml.saml.common.assertion.ValidationResult;
-import org.opensaml.saml.saml1.core.AttributeStatement;
 import org.opensaml.saml.saml2.assertion.ConditionValidator;
 import org.opensaml.saml.saml2.assertion.SAML2AssertionValidationParameters;
 import org.opensaml.saml.saml2.assertion.StatementValidator;
@@ -32,6 +31,7 @@ import org.opensaml.saml.saml2.assertion.impl.AudienceRestrictionConditionValida
 import org.opensaml.saml.saml2.assertion.impl.BearerSubjectConfirmationValidator;
 import org.opensaml.saml.saml2.assertion.impl.HolderOfKeySubjectConfirmationValidator;
 import org.opensaml.saml.saml2.core.Assertion;
+import org.opensaml.saml.saml2.core.AttributeStatement;
 import org.opensaml.saml.saml2.core.AuthnStatement;
 import org.opensaml.saml.saml2.core.NameID;
 import org.opensaml.saml.saml2.core.SubjectConfirmation;
@@ -222,8 +222,8 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
   }
 
   /**
-   * Overrides the default implementation with checks to ensure the the {@link AuthnStatement} and
-   * {@link AttributeStatement} elements are in place.
+   * Overrides the default implementation with checks to ensure that the assertion contains exactly one
+   * {@link AuthnStatement} and exactly one {@link AttributeStatement} element.
    */
   @Override
   protected ValidationResult validateStatements(final Assertion assertion, final ValidationContext context) {
@@ -232,9 +232,25 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
       context.getValidationFailureMessages().add("No AuthnStatement in Assertion");
       return ValidationResult.INVALID;
     }
+    if (assertion.getAuthnStatements().size() > 1) {
+      final String msg = "Assertion contains more than one AuthnStatement";
+      if (isStrictValidation(context)) {
+        context.getValidationFailureMessages().add(msg);
+        return ValidationResult.INVALID;
+      }
+      log.info(msg);
+    }
     if (assertion.getAttributeStatements() == null || assertion.getAttributeStatements().isEmpty()) {
       context.getValidationFailureMessages().add("No AttributeStatement in Assertion");
       return ValidationResult.INVALID;
+    }
+    if (assertion.getAttributeStatements().size() > 1) {
+      final String msg = "Assertion contains more than one AttributeStatement";
+      if (isStrictValidation(context)) {
+        context.getValidationFailureMessages().add(msg);
+        return ValidationResult.INVALID;
+      }
+      log.info(msg);
     }
 
     return super.validateStatements(assertion, context);

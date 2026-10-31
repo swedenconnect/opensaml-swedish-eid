@@ -91,16 +91,13 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
     final String authnContextClassRef = statement.getAuthnContext().getAuthnContextClassRef().getURI();
     final Collection<String> requestedUris = getRequestedAuthnContextUris(context);
     if (requestedUris.isEmpty()) {
-      log.debug("No RequestedAuthnContext URI was requested - will not check issued AuthnContextClassRef");
-      return ValidationResult.VALID;
+      log.debug("No RequestedAuthnContext URI was requested - will not check if issued AuthnContextClassRef was requested");
     }
-    else {
-      if (!requestedUris.contains(authnContextClassRef)) {
-        final String msg = "Assertion contained AuthnContextClassRef '%s', but that one was not requested (%s)"
-            .formatted(authnContextClassRef, requestedUris);
-        context.getValidationFailureMessages().add(msg);
-        return ValidationResult.INVALID;
-      }
+    else if (!requestedUris.contains(authnContextClassRef)) {
+      final String msg = "Assertion contained AuthnContextClassRef '%s', but that one was not requested (%s)"
+          .formatted(authnContextClassRef, requestedUris);
+      context.getValidationFailureMessages().add(msg);
+      return ValidationResult.INVALID;
     }
 
     // Check if the authnContextClassRef requires Holder-of-key ...

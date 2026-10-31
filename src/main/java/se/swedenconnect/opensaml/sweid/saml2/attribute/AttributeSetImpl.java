@@ -90,7 +90,9 @@ public class AttributeSetImpl implements AttributeSet {
     logger.trace("Validating the attributes from assertion '{}' against attribute set '{}' ({}) ...",
         assertion.getID(), this.identifier, this.uri);
 
-    List<Attribute> attributes = assertion.getAttributeStatements().get(0).getAttributes();
+    final List<Attribute> attributes = assertion.getAttributeStatements().stream()
+        .flatMap(s -> s.getAttributes().stream())
+        .toList();
 
     // Make sure that all attributes required by the attribute set was received in the assertion.
     //
