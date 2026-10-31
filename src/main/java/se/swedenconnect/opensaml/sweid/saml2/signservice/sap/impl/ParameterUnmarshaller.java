@@ -33,7 +33,7 @@ public class ParameterUnmarshaller extends XSStringUnmarshaller {
   protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {
     final Parameter p = (Parameter) xmlObject;
 
-    if (Parameter.NAME_ATTR_NAME.equalsIgnoreCase(attribute.getLocalName())) {
+    if (attribute.getNamespaceURI() == null && Parameter.NAME_ATTR_NAME.equals(attribute.getLocalName())) {
       p.setName(attribute.getValue());
     }
   }

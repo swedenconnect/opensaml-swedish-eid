@@ -15,10 +15,13 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.cert.X509Certificate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Base64;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -639,6 +642,56 @@ public class SADParserTest extends OpenSAMLTestBase {
       Assertions.assertEquals(ErrorCode.VALIDATION_BAD_SIGNREQUESTID, e.getErrorCode(),
           "Expected error code VALIDATION_BAD_SIGNREQUESTID");
     }
+  }
+
+  /**
+   * Verifies that the SAD version is checked against the requested version.
+   *
+   * @throws Exception for errors
+   */
+  @Test
+  public void testMismatchingVersion() throws Exception {
+
+    SAD sad = this.getTestSAD();
+    String jwt = this.sadFactory.createJwt(sad);
+
+    SADValidator validator = SADParser.getValidator(this.validationCertificate);
+
+    SADValidationException e = Assertions.assertThrows(SADValidationException.class,
+        () -> validator.validate(jwt, IDP_ENTITYID, SIGNSERVICE_ENTITYID, USER_ID,
+            LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3, SAD_REQUEST_ID, 1, SIGN_REQUEST_ID,
+            SADVersion.valueOf(2, 0)));
+    Assertions.assertEquals(ErrorCode.VALIDATION_BAD_VERSION, e.getErrorCode());
+  }
+
+  /**
+   * Verifies that a SAD missing a required claim is rejected even if the expected value is null.
+   *
+   * @throws Exception for errors
+   */
+  @Test
+  public void testMissingAudience() throws Exception {
+
+    SAD sad = this.getTestSAD();
+    sad.setAudience(null);
+    String jwt = this.sadFactory.createJwt(sad);
+
+    SADValidator validator = SADParser.getValidator(this.validationCertificate);
+
+    SADValidationException e = Assertions.assertThrows(SADValidationException.class,
+        () -> validator.validate(jwt, IDP_ENTITYID, null, USER_ID, LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3,
+            SAD_REQUEST_ID, 1, SIGN_REQUEST_ID));
+    Assertions.assertEquals(ErrorCode.BAD_SAD_FORMAT, e.getErrorCode());
+  }
+
+  /**
+   * Verifies that a payload that is not valid SAD JSON gives an IOException.
+   */
+  @Test
+  public void testParseBadJson() {
+    final String jwt = "eyJhbGciOiJub25lIn0." + Base64.getUrlEncoder().withoutPadding()
+        .encodeToString("{\"exp\": \"not-a-number\"}".getBytes(StandardCharsets.UTF_8)) + ".";
+    Assertions.assertThrows(IOException.class, () -> SADParser.parse(jwt));
   }
 
   private SAD getTestSAD() {
