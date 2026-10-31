@@ -1,4 +1,4 @@
-![Logo](https://raw.githubusercontent.com/swedenconnect/technical-framework/master/img/sweden-connect.png)
+![Logo](https://docs.swedenconnect.se/technical-framework/img/sweden-connect.png)
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg) ![Maven Central](https://img.shields.io/maven-central/v/se.swedenconnect.opensaml/opensaml-swedish-eid.svg)
 
@@ -48,10 +48,12 @@ The library contains support for the following functionality:
   the [Deployment Profile for the Swedish eID Framework](https://docs.swedenconnect.se/technical-framework/latest/02_-_Deployment_Profile_for_the_Swedish_eID_Framework.html)
   specification.
 
-### API Documentation
+### Documentation
 
 Java API documentation of the opensaml-swedish-eid library is found
 at [https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc](https://docs.swedenconnect.se/opensaml-swedish-eid/apidoc/index.html).
+
+[Release notes](https://docs.swedenconnect.se/opensaml-swedish-eid/release-notes.html)
 
 ### Maven
 
