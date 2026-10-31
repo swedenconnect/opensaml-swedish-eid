@@ -470,20 +470,20 @@ public class SADParser {
 
       // Make sure that the SAD is still valid.
       //
-      if (sad.getExpiry() == null || sad.getIssuedAt() == null) {
+      if (sad.getExpirySeconds() == null || sad.getIssuedAtSeconds() == null) {
         final String msg = "SAD is missing 'exp' and/or 'iat' - Invalid SAD";
         logger.info(msg);
         throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
       }
 
-      if (sad.getExpiry() < now - this.allowedClockSkew.getSeconds()) {
+      if (sad.getExpirySeconds() < now - this.allowedClockSkew.getSeconds()) {
         final String msg = String.format("SAD has expired - expiration: '%s', current time: '%s'",
             sad.getExpiryDateTime(), Instant.ofEpochSecond(now));
         logger.info(msg);
         throw new SADValidationException(ErrorCode.SAD_EXPIRED, msg);
       }
 
-      if (sad.getIssuedAt() > now + this.allowedClockSkew.getSeconds()) {
+      if (sad.getIssuedAtSeconds() > now + this.allowedClockSkew.getSeconds()) {
         final String msg = String.format("SAD is not yet valid - issue-time: '%s', current time: '%s'",
             sad.getIssuedAtDateTime(), Instant.ofEpochSecond(now));
         logger.info(msg);

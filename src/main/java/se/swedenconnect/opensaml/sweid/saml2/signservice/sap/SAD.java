@@ -161,9 +161,25 @@ public class SAD {
    * Returns the time when this SAD is no longer valid (epoch time/seconds since 1970-01-01).
    *
    * @return number of seconds since 1970-01-01
+   * @throws ArithmeticException if the value does not fit in an {@code Integer}
+   * @deprecated Use {@link #getExpirySeconds()} instead. Epoch seconds do not fit in an {@code Integer} after
+   *     2038-01-19.
    */
+  @JsonIgnore
+  @Deprecated(since = "2.3.2", forRemoval = true)
   @Nullable
-  public Long getExpiry() {
+  public Integer getExpiry() {
+    return this.expiry != null ? Math.toIntExact(this.expiry) : null;
+  }
+
+  /**
+   * Returns the time when this SAD is no longer valid (epoch time/seconds since 1970-01-01).
+   *
+   * @return number of seconds since 1970-01-01
+   */
+  @JsonIgnore
+  @Nullable
+  public Long getExpirySeconds() {
     return this.expiry;
   }
 
@@ -182,8 +198,22 @@ public class SAD {
    * Assigns the time when this SAD is no longer valid (epoch time/seconds since 1970-01-01).
    *
    * @param expiry number of seconds since 1970-01-01
+   * @deprecated Use {@link #setExpirySeconds(Long)} instead. Epoch seconds do not fit in an {@code Integer} after
+   *     2038-01-19.
    */
-  public void setExpiry(@Nullable final Long expiry) {
+  @JsonIgnore
+  @Deprecated(since = "2.3.2", forRemoval = true)
+  public void setExpiry(@Nullable final Integer expiry) {
+    this.expiry = expiry != null ? expiry.longValue() : null;
+  }
+
+  /**
+   * Assigns the time when this SAD is no longer valid (epoch time/seconds since 1970-01-01).
+   *
+   * @param expiry number of seconds since 1970-01-01
+   */
+  @JsonIgnore
+  public void setExpirySeconds(@Nullable final Long expiry) {
     this.expiry = expiry;
   }
 
@@ -201,9 +231,25 @@ public class SAD {
    * Returns the time when this SAD was issued (epoch time/seconds since 1970-01-01).
    *
    * @return number of seconds since 1970-01-01
+   * @throws ArithmeticException if the value does not fit in an {@code Integer}
+   * @deprecated Use {@link #getIssuedAtSeconds()} instead. Epoch seconds do not fit in an {@code Integer} after
+   *     2038-01-19.
    */
+  @JsonIgnore
+  @Deprecated(since = "2.3.2", forRemoval = true)
   @Nullable
-  public Long getIssuedAt() {
+  public Integer getIssuedAt() {
+    return this.issuedAt != null ? Math.toIntExact(this.issuedAt) : null;
+  }
+
+  /**
+   * Returns the time when this SAD was issued (epoch time/seconds since 1970-01-01).
+   *
+   * @return number of seconds since 1970-01-01
+   */
+  @JsonIgnore
+  @Nullable
+  public Long getIssuedAtSeconds() {
     return this.issuedAt;
   }
 
@@ -222,8 +268,22 @@ public class SAD {
    * Assigns the time when this SAD was issued (epoch time/seconds since 1970-01-01).
    *
    * @param issuedAt number of seconds since 1970-01-01
+   * @deprecated Use {@link #setIssuedAtSeconds(Long)} instead. Epoch seconds do not fit in an {@code Integer} after
+   *     2038-01-19.
    */
-  public void setIssuedAt(@Nullable final Long issuedAt) {
+  @JsonIgnore
+  @Deprecated(since = "2.3.2", forRemoval = true)
+  public void setIssuedAt(@Nullable final Integer issuedAt) {
+    this.issuedAt = issuedAt != null ? issuedAt.longValue() : null;
+  }
+
+  /**
+   * Assigns the time when this SAD was issued (epoch time/seconds since 1970-01-01).
+   *
+   * @param issuedAt number of seconds since 1970-01-01
+   */
+  @JsonIgnore
+  public void setIssuedAtSeconds(@Nullable final Long issuedAt) {
     this.issuedAt = issuedAt;
   }
 
