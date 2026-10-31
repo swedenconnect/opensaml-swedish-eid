@@ -86,8 +86,8 @@ public class SADRequestTest extends OpenSAMLTestBase {
         "  <xyz:DocCount>5</xyz:DocCount>\n" +
         "  <xyz:RequestedVersion>2.0</xyz:RequestedVersion>\n" +
         "  <xyz:RequestParams>\n" +
-        "    <xyz:Parameter Name=\"param1\">value1</xyz:Parameter>\n" +
-        "    <xyz:Parameter Name=\"param2\">value2</xyz:Parameter>\n" +
+        "    <xyz:Parameter name=\"param1\">value1</xyz:Parameter>\n" +
+        "    <xyz:Parameter name=\"param2\">value2</xyz:Parameter>\n" +
         "  </xyz:RequestParams>\n" +
         "</xyz:SADRequest>";
 

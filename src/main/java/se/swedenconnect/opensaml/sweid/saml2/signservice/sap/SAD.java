@@ -47,11 +47,11 @@ public class SAD {
 
   /** Expiry - specifying the time when this SAD is no longer valid (epoch time/seconds since 1970-01-01). */
   @JsonProperty(value = "exp", required = true)
-  private Integer expiry;
+  private Long expiry;
 
   /** Issued At - specifying the time when this SAD was issued (epoch time - seconds since 1970-01-01). */
   @JsonProperty(value = "iat", required = true)
-  private Integer issuedAt;
+  private Long issuedAt;
 
   /** Unique identifier of this JWT. */
   @JsonProperty(value = "jti", required = true)
@@ -154,7 +154,7 @@ public class SAD {
    *
    * @return number of seconds since 1970-01-01
    */
-  public Integer getExpiry() {
+  public Long getExpiry() {
     return this.expiry;
   }
 
@@ -165,7 +165,7 @@ public class SAD {
    */
   @JsonIgnore
   public Instant getExpiryDateTime() {
-    return this.expiry != null ? Instant.ofEpochMilli(this.expiry * 1000L) : null;
+    return this.expiry != null ? Instant.ofEpochSecond(this.expiry) : null;
   }
 
   /**
@@ -173,7 +173,7 @@ public class SAD {
    *
    * @param expiry number of seconds since 1970-01-01
    */
-  public void setExpiry(final Integer expiry) {
+  public void setExpiry(final Long expiry) {
     this.expiry = expiry;
   }
 
@@ -184,7 +184,7 @@ public class SAD {
    */
   @JsonIgnore
   public void setExpiry(final Instant expiry) {
-    this.expiry = expiry != null ? (int) (expiry.toEpochMilli() / 1000L) : null;
+    this.expiry = expiry != null ? expiry.getEpochSecond() : null;
   }
 
   /**
@@ -192,7 +192,7 @@ public class SAD {
    *
    * @return number of seconds since 1970-01-01
    */
-  public Integer getIssuedAt() {
+  public Long getIssuedAt() {
     return this.issuedAt;
   }
 
@@ -203,7 +203,7 @@ public class SAD {
    */
   @JsonIgnore
   public Instant getIssuedAtDateTime() {
-    return this.issuedAt != null ? Instant.ofEpochMilli(this.issuedAt * 1000L) : null;
+    return this.issuedAt != null ? Instant.ofEpochSecond(this.issuedAt) : null;
   }
 
   /**
@@ -211,7 +211,7 @@ public class SAD {
    *
    * @param issuedAt number of seconds since 1970-01-01
    */
-  public void setIssuedAt(final Integer issuedAt) {
+  public void setIssuedAt(final Long issuedAt) {
     this.issuedAt = issuedAt;
   }
 
@@ -222,7 +222,7 @@ public class SAD {
    */
   @JsonIgnore
   public void setIssuedAt(final Instant issuedAt) {
-    this.issuedAt = issuedAt != null ? (int) (issuedAt.toEpochMilli() / 1000L) : null;
+    this.issuedAt = issuedAt != null ? issuedAt.getEpochSecond() : null;
   }
 
   /**
@@ -264,7 +264,7 @@ public class SAD {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return String.format("sub='%s', aud='%s', iss='%s', exp='%s', iss='%s', jti='%s', seElnSadext=[%s]",
+    return String.format("sub='%s', aud='%s', iss='%s', exp='%s', iat='%s', jti='%s', seElnSadext=[%s]",
         this.subject, this.audience, this.issuer, this.expiry, this.issuedAt, this.jwtId, this.seElnSadext);
   }
 
@@ -402,7 +402,8 @@ public class SAD {
     /**
      * Returns the version of this claim represented as a {@link SADVersion} object.
      *
-     * @return the version
+     * @return the version (1.0 if not set)
+     * @throws IllegalArgumentException if the version is not a valid version string
      */
     @JsonIgnore
     public SADVersion getSADVersion() {

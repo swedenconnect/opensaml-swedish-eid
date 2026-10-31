@@ -79,7 +79,12 @@ public class SADRequestUnmarshaller extends AbstractSAMLObjectUnmarshaller {
         ((SADRequestImpl) sadRequest).setRequestedVersion((XSString) childSAMLObject);
       }
       else {
-        sadRequest.setRequestedVersion(SADVersion.valueOf(((XSString) childSAMLObject).getValue()));
+        try {
+          sadRequest.setRequestedVersion(SADVersion.valueOf(((XSString) childSAMLObject).getValue()));
+        }
+        catch (final IllegalArgumentException e) {
+          throw new UnmarshallingException(e.getMessage(), e);
+        }
       }
     }
     else if (childSAMLObject instanceof RequestParams) {
