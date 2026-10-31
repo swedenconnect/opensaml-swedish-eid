@@ -202,7 +202,7 @@ public class EntityCategoryConstants {
 
   /**
    * Service type category: A service type that indicates that a Service Provider is a "private sector" SP. This
-   * category MUST be used by public sector Service Providers wishing to use eIDAS authentication so that the Swedish
+   * category MUST be used by private sector Service Providers wishing to use eIDAS authentication so that the Swedish
    * eIDAS connector may include this information in the eIDAS authentication request.
    */
   public static final EntityCategory SERVICE_TYPE_CATEGORY_PRIVATE_SECTOR_SP = new EntityCategoryImpl(

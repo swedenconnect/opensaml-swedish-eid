@@ -26,6 +26,10 @@
 - The `name` attribute of a SAP `Parameter` element is now matched case sensitively, as required by the schema ([#107](https://github.com/swedenconnect/opensaml-swedish-eid/issues/107)).
 - `SignMessageDecrypter` now applies settings changed after the first decryption, and reports content that is not a `Message` element as a decryption error ([#102](https://github.com/swedenconnect/opensaml-swedish-eid/issues/102), [#103](https://github.com/swedenconnect/opensaml-swedish-eid/issues/103)).
 - The `MimeType` of a `SignMessage` can be cleared by assigning null ([#104](https://github.com/swedenconnect/opensaml-swedish-eid/issues/104)).
+- The no-argument `buildObject()` of the `RequestedPrincipalSelection` builder created a `PrincipalSelection` element ([#87](https://github.com/swedenconnect/opensaml-swedish-eid/issues/87)).
+- `MatchValue` and `UserMessage` attributes are now matched exactly and only without namespace. Attributes from other namespaces are kept as unknown attributes ([#88](https://github.com/swedenconnect/opensaml-swedish-eid/issues/88)).
+- `getServiceEntityCategories` in the entity category registry no longer throws `ClassCastException` for incorrectly typed entries ([#91](https://github.com/swedenconnect/opensaml-swedish-eid/issues/91)).
+- Added type name constants to `OrganizationNumber` ([#93](https://github.com/swedenconnect/opensaml-swedish-eid/issues/93)).
 
 ---
 

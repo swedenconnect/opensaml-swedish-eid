@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.opensaml.core.xml.util.XMLObjectSupport;
@@ -142,6 +145,31 @@ public class PrincipalSelectionTest extends OpenSAMLTestBase {
     Assertions.assertEquals(AttributeConstants.ATTRIBUTE_NAME_PERSONAL_IDENTITY_NUMBER,
         rps2.getMatchValues().get(0).getName());
     Assertions.assertEquals(AttributeConstants.ATTRIBUTE_NAME_PRID, rps2.getMatchValues().get(1).getName());
+  }
+
+  /**
+   * Tests that the no-argument builder creates a RequestedPrincipalSelection element.
+   */
+  @Test
+  public void testRequestedPrincipalSelectionBuilderElementName() {
+    final RequestedPrincipalSelection rps = 
+        new se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl.RequestedPrincipalSelectionBuilder().buildObject();
+    Assertions.assertEquals(RequestedPrincipalSelection.DEFAULT_ELEMENT_NAME, rps.getElementQName());
+  }
+
+  /**
+   * Tests that a MatchValue attribute from another namespace is not taken as the Name attribute.
+   *
+   * @throws Exception for errors
+   */
+  @Test
+  public void testUnmarshallForeignAttribute() throws Exception {
+    final String xml = "<psc:MatchValue xmlns:psc=\"http://id.swedenconnect.se/authn/1.0/principal-selection/ns\" "
+        + "xmlns:ext=\"http://www.example.com/ext\" Name=\"urn:oid:1.2.752.29.4.13\" ext:Name=\"other\">"
+        + "198906059483</psc:MatchValue>";
+    final MatchValue mv = unmarshall(new ByteArrayInputStream(xml.getBytes(StandardCharsets.UTF_8)), MatchValue.class);
+    Assertions.assertEquals(AttributeConstants.ATTRIBUTE_NAME_PERSONAL_IDENTITY_NUMBER, mv.getName());
+    Assertions.assertEquals(1, mv.getUnknownAttributes().size());
   }
 
 }

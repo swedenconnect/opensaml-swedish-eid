@@ -58,6 +58,7 @@ public class EntityCategoryRegistryImpl implements EntityCategoryRegistry {
   public List<ServiceEntityCategory> getServiceEntityCategories() {
     return this.entityCategories.stream()
         .filter(e -> EntityCategoryType.SERVICE_ENTITY.equals(e.getType()))
+        .filter(ServiceEntityCategory.class::isInstance)
         .map(ServiceEntityCategory.class::cast)
         .collect(Collectors.toList());
   }

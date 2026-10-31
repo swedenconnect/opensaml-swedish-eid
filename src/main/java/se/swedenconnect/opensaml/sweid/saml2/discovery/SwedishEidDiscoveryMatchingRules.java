@@ -25,7 +25,7 @@ import se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory.EntityCateg
 
 /**
  * A class that implements the Discovery matching rules described in section 1.3 and 1.4 in <a href=
- * "https://docs.swedenconnect.se/technical-framework/latest/ELN-0606_-_Entity_Categories_for_the_Swedish_eID_Framework.html">Entity
+ * "https://docs.swedenconnect.se/technical-framework/latest/06_-_Entity_Categories_for_the_Swedish_eID_Framework.html">Entity
  * Categories for the Swedish eID Framework</a>.
  *
  * @author Martin Lindström (martin@idsec.se)

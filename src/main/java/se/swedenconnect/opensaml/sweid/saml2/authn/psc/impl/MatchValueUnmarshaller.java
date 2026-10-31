@@ -33,10 +33,10 @@ public class MatchValueUnmarshaller extends XSStringUnmarshaller {
   @Override
   protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {
     final MatchValue mv = (MatchValue) xmlObject;
-    if (MatchValue.NAME_FORMAT_ATTR_NAME.equalsIgnoreCase(attribute.getLocalName())) {
+    if (attribute.getNamespaceURI() == null && MatchValue.NAME_FORMAT_ATTR_NAME.equals(attribute.getLocalName())) {
       mv.setNameFormat(attribute.getValue());
     }
-    else if (MatchValue.NAME_ATTR_NAME.equalsIgnoreCase(attribute.getLocalName())) {
+    else if (attribute.getNamespaceURI() == null && MatchValue.NAME_ATTR_NAME.equals(attribute.getLocalName())) {
       mv.setName(attribute.getValue());
     }
     else {
