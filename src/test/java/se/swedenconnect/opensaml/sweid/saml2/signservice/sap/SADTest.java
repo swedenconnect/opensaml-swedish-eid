@@ -45,7 +45,7 @@ public class SADTest {
     sad.setAudience("http://www.example.com/sigservice");
     sad.setIssuer("https://idp.svelegtest.se/idp");
     sad.setExpiry(expiry);
-    sad.setIssuedAt(issuance.getEpochSecond());
+    sad.setIssuedAtSeconds(issuance.getEpochSecond());
     sad.setJwtId("d4073fc74b1b9199");
     final SAD.Extension ext = new SAD.Extension();
     ext.setVersion(SADVersion.VERSION_10.toString());
@@ -57,7 +57,7 @@ public class SADTest {
     sad.setSeElnSadext(ext);
 
     final Instant exp = sad.getExpiryDateTime();
-    Assertions.assertEquals(sad.getExpiry().longValue(), exp.getEpochSecond());
+    Assertions.assertEquals(sad.getExpirySeconds().longValue(), exp.getEpochSecond());
 
     final String json = sad.toJson();
 
@@ -68,6 +68,36 @@ public class SADTest {
     final SAD sad3 = SAD.fromJson(json);
 
     Assertions.assertEquals(sad, sad3);
+  }
+
+  /**
+   * Tests that time claims after 2038 are handled, and that the JSON only holds the exp and iat claims.
+   */
+  @Test
+  @SuppressWarnings("removal")
+  public void testTimeAfter2038() {
+    final long exp = LocalDateTime.of(2040, 1, 1, 0, 0).toEpochSecond(ZoneOffset.UTC);
+    final SAD sad = SAD.fromJson("{\"exp\":" + exp + ",\"iat\":" + (exp - 300) + "}");
+    Assertions.assertEquals(exp, sad.getExpirySeconds());
+    Assertions.assertEquals(exp - 300, sad.getIssuedAtSeconds());
+    Assertions.assertThrows(ArithmeticException.class, sad::getExpiry);
+
+    final String json = sad.toJson();
+    Assertions.assertEquals("{\"exp\":" + exp + ",\"iat\":" + (exp - 300) + "}", json);
+  }
+
+  /**
+   * Tests the deprecated Integer accessors.
+   */
+  @Test
+  @SuppressWarnings("removal")
+  public void testDeprecatedAccessors() {
+    final SAD sad = new SAD();
+    sad.setExpiry(Integer.valueOf(1700000000));
+    sad.setIssuedAt(Integer.valueOf(1699999700));
+    Assertions.assertEquals(1700000000, sad.getExpiry());
+    Assertions.assertEquals(1699999700, sad.getIssuedAt());
+    Assertions.assertEquals(1700000000L, sad.getExpirySeconds());
   }
 
 }
