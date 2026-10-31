@@ -374,7 +374,7 @@ public class AttributeConstants {
    */
   public static final String ATTRIBUTE_FRIENDLY_NAME_MAPPED_PERSONAL_IDENTITY_NUMBER = "mappedPersonalIdentityNumber";
 
-  /** Attribute template for the "National civic registration number/code binding URI" attribute. */
+  /** Attribute template for the "Mapped national civic registration number" attribute. */
   public static final AttributeTemplate ATTRIBUTE_TEMPLATE_MAPPED_PERSONAL_IDENTITY_NUMBER = new AttributeTemplate(
       ATTRIBUTE_NAME_MAPPED_PERSONAL_IDENTITY_NUMBER, ATTRIBUTE_FRIENDLY_NAME_MAPPED_PERSONAL_IDENTITY_NUMBER);
 

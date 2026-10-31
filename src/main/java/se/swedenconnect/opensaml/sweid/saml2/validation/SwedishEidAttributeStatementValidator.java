@@ -51,8 +51,8 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributesValidationExcep
  * find in the assertion.</li>
  * <li>{@link #REQUIRED_ATTRIBUTES}: Optional. Holds a collection of strings that are the attribute names that we
  * require to find in the assertion.</li>
- * <li>{@link #SCOPED_ATTRIBUTES}: Optional. Carries a {@link Collection} of strings holding attribute names of
- * requested attributes.</li>
+ * <li>{@link #SCOPED_ATTRIBUTES}: Optional. Carries a {@link Collection} of strings holding the attribute names for
+ * attributes that are "scoped".</li>
  * </ul>
  *
  * <p>
@@ -71,7 +71,7 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
 
   /**
    * Key for a validation context parameter. Carries a {@link Collection} of strings holding attribute names of
-   * requested attributes.
+   * required attributes.
    */
   public static final String REQUIRED_ATTRIBUTES = CoreValidatorParameters.STD_PREFIX + ".RequiredAttributes";
 
@@ -200,9 +200,9 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
     final List<XMLObject> authorizedScopes = ScopeUtils.getScopeExtensions(idpMetadata);
     for (final Attribute scopedAttribute : attributesToCheck) {
       if (!ScopeUtils.isAuthorized(scopedAttribute, authorizedScopes)) {
-        final String msg = String.format("IdP '%s' is not authorized to issue scoped attribute '%s' for domain '%s'",
-            idpMetadata.getEntityID(), scopedAttribute.getName(),
-            ScopeUtils.getScopedDomain(AttributeUtils.getAttributeStringValue(scopedAttribute)));
+        final List<String> values = AttributeUtils.getAttributeStringValues(scopedAttribute);
+        final String msg = String.format("IdP '%s' is not authorized to issue scoped attribute '%s' with value(s) %s",
+            idpMetadata.getEntityID(), scopedAttribute.getName(), values.isEmpty() ? "<no value>" : values);
         log.debug(msg);
         context.getValidationFailureMessages().add(msg);
         return ValidationResult.INVALID;

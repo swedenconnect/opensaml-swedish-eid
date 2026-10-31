@@ -12,7 +12,12 @@
 
 **Date:** _not yet released_
 
--
+- Updated opensaml-addons to 2.2.3, which fixes the handling of scoped attributes.
+- The Holder-of-key check is now performed also when no specific AuthnContext was requested ([#81](https://github.com/swedenconnect/opensaml-swedish-eid/issues/81)).
+- Fixed a NullPointerException when a scoped attribute was rejected ([#82](https://github.com/swedenconnect/opensaml-swedish-eid/issues/82)).
+- Attribute set validation no longer fails on assertions without an AttributeStatement, and checks all AttributeStatement elements ([#83](https://github.com/swedenconnect/opensaml-swedish-eid/issues/83)).
+- Under strict validation, assertions with more than one AuthnStatement or AttributeStatement are rejected ([#84](https://github.com/swedenconnect/opensaml-swedish-eid/issues/84)).
+- The default allowed clock skew for assertion validation is now one minute ([#85](https://github.com/swedenconnect/opensaml-swedish-eid/issues/85)).
 
 ---
 
