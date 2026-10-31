@@ -11,6 +11,7 @@
 # Intelij
 *.iml
 out
+.idea/
 
 # Eclipse
 .metadata
@@ -29,3 +30,4 @@ test-output
 hs_err_pid*
 /target/
 CLAUDE.md
+.claude/
