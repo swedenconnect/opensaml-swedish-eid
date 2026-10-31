@@ -10,28 +10,47 @@
 
 ### 2.3.2
 
-**Date:** _not yet released_
+**Date:** 2026-10-31
 
-- Updated opensaml-addons to 2.2.3, which fixes the handling of scoped attributes.
-- The Holder-of-key check is now performed also when no specific AuthnContext was requested ([#81](https://github.com/swedenconnect/opensaml-swedish-eid/issues/81)).
-- Fixed a NullPointerException when a scoped attribute was rejected ([#82](https://github.com/swedenconnect/opensaml-swedish-eid/issues/82)).
-- Attribute set validation no longer fails on assertions without an AttributeStatement, and checks all AttributeStatement elements ([#83](https://github.com/swedenconnect/opensaml-swedish-eid/issues/83)).
-- Under strict validation, assertions with more than one AuthnStatement or AttributeStatement are rejected ([#84](https://github.com/swedenconnect/opensaml-swedish-eid/issues/84)).
-- The default allowed clock skew for assertion validation is now one minute ([#85](https://github.com/swedenconnect/opensaml-swedish-eid/issues/85)).
-- SAD validation now checks that the SAD version matches the requested version ([#96](https://github.com/swedenconnect/opensaml-swedish-eid/issues/96)).
-- SAD validation rejects a SAD that is missing required claims ([#97](https://github.com/swedenconnect/opensaml-swedish-eid/issues/97)).
-- `SADParser.parse` reports invalid SAD JSON as `IOException` ([#99](https://github.com/swedenconnect/opensaml-swedish-eid/issues/99)).
-- Invalid SAD version strings are now rejected, and `SADVersion` can be used in hash based collections ([#100](https://github.com/swedenconnect/opensaml-swedish-eid/issues/100), [#101](https://github.com/swedenconnect/opensaml-swedish-eid/issues/101)).
-- The SAD `exp` and `iat` claims are now stored as `Long` values, so they work after 2038. Use the new `SAD` methods `getExpirySeconds`, `setExpirySeconds`, `getIssuedAtSeconds` and `setIssuedAtSeconds`. The `Integer` versions are deprecated for removal ([#106](https://github.com/swedenconnect/opensaml-swedish-eid/issues/106)).
-- The `name` attribute of a SAP `Parameter` element is now matched case sensitively, as required by the schema ([#107](https://github.com/swedenconnect/opensaml-swedish-eid/issues/107)).
-- `SignMessageDecrypter` now applies settings changed after the first decryption, and reports content that is not a `Message` element as a decryption error ([#102](https://github.com/swedenconnect/opensaml-swedish-eid/issues/102), [#103](https://github.com/swedenconnect/opensaml-swedish-eid/issues/103)).
-- The `MimeType` of a `SignMessage` can be cleared by assigning null ([#104](https://github.com/swedenconnect/opensaml-swedish-eid/issues/104)).
-- The no-argument `buildObject()` of the `RequestedPrincipalSelection` builder created a `PrincipalSelection` element ([#87](https://github.com/swedenconnect/opensaml-swedish-eid/issues/87)).
-- `MatchValue` and `UserMessage` attributes are now matched exactly and only without namespace. Attributes from other namespaces are kept as unknown attributes ([#88](https://github.com/swedenconnect/opensaml-swedish-eid/issues/88)).
-- `getServiceEntityCategories` in the entity category registry no longer throws `ClassCastException` for incorrectly typed entries ([#91](https://github.com/swedenconnect/opensaml-swedish-eid/issues/91)).
-- Added type name constants to `OrganizationNumber` ([#93](https://github.com/swedenconnect/opensaml-swedish-eid/issues/93)).
-- The public API is now annotated with `jakarta.annotation` nullability annotations ([#94](https://github.com/swedenconnect/opensaml-swedish-eid/issues/94)).
-- Lower log levels for validation failures that are reported to the caller ([#95](https://github.com/swedenconnect/opensaml-swedish-eid/issues/95)).
+- Updated [opensaml-addons](https://github.com/swedenconnect/opensaml-addons) to 2.2.3. This fixes the scope check for scoped attributes: the last `@` character is now used when splitting a value, and each value of a multi-valued attribute (for example `orgAffiliation`) may match a different scope.
+
+- [SwedishEidAuthnStatementValidator](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/validation/SwedishEidAuthnStatementValidator.java) skipped the Holder-of-key check when the `AuthnRequest` had no `RequestedAuthnContext`. See [#81](https://github.com/swedenconnect/opensaml-swedish-eid/issues/81).
+
+- [SwedishEidAttributeStatementValidator](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/validation/SwedishEidAttributeStatementValidator.java) threw a `NullPointerException` when a scoped attribute without a string value was rejected. See [#82](https://github.com/swedenconnect/opensaml-swedish-eid/issues/82).
+
+- `validateAttributes` of [AttributeSetImpl](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/attribute/AttributeSetImpl.java) threw an `IndexOutOfBoundsException` for an assertion without an `AttributeStatement`, and only checked the first `AttributeStatement`. See [#83](https://github.com/swedenconnect/opensaml-swedish-eid/issues/83).
+
+- [SwedishEidAssertionValidator](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/validation/SwedishEidAssertionValidator.java) now rejects assertions with more than one `AuthnStatement` or `AttributeStatement` when strict validation is used. See [#84](https://github.com/swedenconnect/opensaml-swedish-eid/issues/84).
+
+- [SwedishEidAssertionValidationParametersBuilder](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/validation/SwedishEidAssertionValidationParametersBuilder.java) now sets a default allowed clock skew of one minute, as stated by the Deployment Profile. Previously OpenSAML's default of five minutes was used. See [#85](https://github.com/swedenconnect/opensaml-swedish-eid/issues/85).
+
+- The SAD validator of [SADParser](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/SADParser.java) did not check that the SAD version matches the requested version. See [#96](https://github.com/swedenconnect/opensaml-swedish-eid/issues/96).
+
+- The SAD validator of [SADParser](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/SADParser.java) accepted a SAD that was missing required claims, as long as the expected value was also missing. See [#97](https://github.com/swedenconnect/opensaml-swedish-eid/issues/97).
+
+- `parse` of [SADParser](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/SADParser.java) let JSON errors through as unchecked exceptions instead of `IOException`. See [#99](https://github.com/swedenconnect/opensaml-swedish-eid/issues/99).
+
+- [SADVersion](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/sap/SADVersion.java) did not implement `hashCode`, and invalid version strings gave runtime exceptions or were accepted (for example "1.0.5"). See [#100](https://github.com/swedenconnect/opensaml-swedish-eid/issues/100) and [#101](https://github.com/swedenconnect/opensaml-swedish-eid/issues/101).
+
+- The `exp` and `iat` claims of [SAD](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/sap/SAD.java) were stored as `Integer` and would overflow in 2038. Use the new methods `getExpirySeconds`, `setExpirySeconds`, `getIssuedAtSeconds` and `setIssuedAtSeconds`. The `Integer` methods are deprecated for removal. See [#106](https://github.com/swedenconnect/opensaml-swedish-eid/issues/106).
+
+- The `name` attribute of a SAP [Parameter](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/sap/Parameter.java) element is now matched case sensitively, as required by the schema. See [#107](https://github.com/swedenconnect/opensaml-swedish-eid/issues/107).
+
+- [SignMessageDecrypter](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/SignMessageDecrypter.java) ignored settings changed after the first decryption, and threw a `ClassCastException` when the decrypted content was not a `Message` element. See [#102](https://github.com/swedenconnect/opensaml-swedish-eid/issues/102) and [#103](https://github.com/swedenconnect/opensaml-swedish-eid/issues/103).
+
+- The `MimeType` of a [SignMessage](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/signservice/dss/SignMessage.java) could not be cleared by assigning a null enum value. See [#104](https://github.com/swedenconnect/opensaml-swedish-eid/issues/104).
+
+- `buildObject()` of [RequestedPrincipalSelectionBuilder](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/authn/psc/impl/RequestedPrincipalSelectionBuilder.java) created a `PrincipalSelection` element. See [#87](https://github.com/swedenconnect/opensaml-swedish-eid/issues/87).
+
+- The attributes of [MatchValue](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/authn/psc/MatchValue.java) and [UserMessage](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/authn/umsg/UserMessage.java) were matched ignoring case and namespace, so an attribute from another namespace could replace the real value. See [#88](https://github.com/swedenconnect/opensaml-swedish-eid/issues/88).
+
+- `getServiceEntityCategories` of [EntityCategoryRegistryImpl](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/metadata/entitycategory/EntityCategoryRegistryImpl.java) could throw a `ClassCastException`. See [#91](https://github.com/swedenconnect/opensaml-swedish-eid/issues/91).
+
+- Added type name constants to [OrganizationNumber](https://github.com/swedenconnect/opensaml-swedish-eid/blob/main/src/main/java/se/swedenconnect/opensaml/sweid/saml2/metadata/ext/OrganizationNumber.java). See [#93](https://github.com/swedenconnect/opensaml-swedish-eid/issues/93).
+
+- The public API is now annotated with `jakarta.annotation` nullability annotations. See [#94](https://github.com/swedenconnect/opensaml-swedish-eid/issues/94).
+
+- Lower log levels for validation failures that are reported to the caller. See [#95](https://github.com/swedenconnect/opensaml-swedish-eid/issues/95).
 
 ---
 
