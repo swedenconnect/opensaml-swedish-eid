@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.build;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import se.swedenconnect.opensaml.common.builder.AbstractSAMLObjectBuilder;
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
 
@@ -30,11 +33,13 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
    *
    * @return a MatchValueBuilder instance
    */
+  @Nonnull
   public static MatchValueBuilder builder() {
     return new MatchValueBuilder();
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected Class<MatchValue> getObjectType() {
     return MatchValue.class;
@@ -46,7 +51,8 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
    * @param value the value
    * @return the builder
    */
-  public MatchValueBuilder value(final String value) {
+  @Nonnull
+  public MatchValueBuilder value(@Nullable final String value) {
     this.object().setValue(value);
     return this;
   }
@@ -57,7 +63,8 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
    * @param name the name
    * @return the builder
    */
-  public MatchValueBuilder name(final String name) {
+  @Nonnull
+  public MatchValueBuilder name(@Nullable final String name) {
     this.object().setName(name);
     return this;
   }
@@ -68,7 +75,8 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
    * @param nameFormat the name format URI
    * @return the builder
    */
-  public MatchValueBuilder nameFormat(final String nameFormat) {
+  @Nonnull
+  public MatchValueBuilder nameFormat(@Nullable final String nameFormat) {
     this.object().setNameFormat(nameFormat);
     return this;
   }

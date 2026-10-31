@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.saml.common.AbstractSAMLObjectMarshaller;
@@ -31,7 +32,8 @@ public class SADRequestMarshaller extends AbstractSAMLObjectMarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void marshallAttributes(final XMLObject samlObject, final Element domElement) throws MarshallingException {
+  protected void marshallAttributes(@Nonnull final XMLObject samlObject, @Nonnull final Element domElement)
+      throws MarshallingException {
     final SADRequest sadRequest = (SADRequest) samlObject;
 
     if (sadRequest.getID() != null) {

@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.validation;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.saml.common.assertion.ValidationContext;
 import org.opensaml.saml.common.assertion.ValidationResult;
 import org.opensaml.saml.saml2.assertion.SAML2AssertionValidationParameters;
@@ -47,8 +48,8 @@ public class SwedishEidResponseValidator extends ResponseValidator {
    * @param signaturePrevalidator the signature pre-validator used to pre-validate the object's signature
    * @throws IllegalArgumentException if {@code null} values are supplied
    */
-  public SwedishEidResponseValidator(final SignatureTrustEngine trustEngine,
-      final SignaturePrevalidator signaturePrevalidator) throws IllegalArgumentException {
+  public SwedishEidResponseValidator(@Nonnull final SignatureTrustEngine trustEngine,
+      @Nonnull final SignaturePrevalidator signaturePrevalidator) throws IllegalArgumentException {
     super(trustEngine, signaturePrevalidator);
     if (trustEngine == null) {
       throw new IllegalArgumentException("trustEngine must not be null");
@@ -62,8 +63,10 @@ public class SwedishEidResponseValidator extends ResponseValidator {
    * Overrides the default signature validation by enforcing signature validation because a Response message MUST be
    * signed according to the Swedish eID Framework.
    */
+  @Nonnull
   @Override
-  protected ValidationResult validateSignature(final Response token, final ValidationContext context) {
+  protected ValidationResult validateSignature(@Nonnull final Response token,
+      @Nonnull final ValidationContext context) {
 
     final Boolean signatureRequired =
         (Boolean) context.getStaticParameters().get(SAML2AssertionValidationParameters.SIGNATURE_REQUIRED);
@@ -85,8 +88,10 @@ public class SwedishEidResponseValidator extends ResponseValidator {
    * Checks according to {@link ResponseValidator#validateAssertions(Response, ValidationContext)} and extends the check
    * to validate that assertion is encrypted.
    */
+  @Nonnull
   @Override
-  public ValidationResult validateAssertions(final Response response, final ValidationContext context) {
+  public ValidationResult validateAssertions(@Nonnull final Response response,
+      @Nonnull final ValidationContext context) {
     ValidationResult result = super.validateAssertions(response, context);
     if (!result.equals(ValidationResult.VALID)) {
       return result;

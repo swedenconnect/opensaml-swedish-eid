@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.dss;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.schema.XSBase64Binary;
 
 /**
@@ -27,9 +29,11 @@ import org.opensaml.core.xml.schema.XSBase64Binary;
 public interface Message extends XSBase64Binary {
 
   /** Element local name. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "Message";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS,
       DEFAULT_ELEMENT_LOCAL_NAME, DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
 
@@ -38,6 +42,7 @@ public interface Message extends XSBase64Binary {
    *
    * @return the message content
    */
+  @Nullable
   String getContent();
 
   /**
@@ -46,6 +51,6 @@ public interface Message extends XSBase64Binary {
    *
    * @param messageContent content of the Message element
    */
-  void setContent(final String messageContent);
+  void setContent(@Nullable final String messageContent);
 
 }

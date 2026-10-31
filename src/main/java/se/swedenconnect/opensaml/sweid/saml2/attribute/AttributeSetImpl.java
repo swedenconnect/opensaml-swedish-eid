@@ -20,6 +20,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.metadata.RequestedAttribute;
@@ -70,8 +72,9 @@ public class AttributeSetImpl implements AttributeSet {
    * @param requiredAttributes the required attributes for this attribute set
    * @param recommendedAttributes the recommended attributes for this attribute set
    */
-  public AttributeSetImpl(final String identifier, final String uri, final String friendlyName,
-      final AttributeTemplate[] requiredAttributes, final AttributeTemplate[] recommendedAttributes) {
+  public AttributeSetImpl(@Nonnull final String identifier, @Nonnull final String uri,
+      @Nonnull final String friendlyName, @Nullable final AttributeTemplate[] requiredAttributes,
+      @Nullable final AttributeTemplate[] recommendedAttributes) {
     this.setIdentifier(identifier);
     this.setUri(uri);
     this.setFriendlyName(friendlyName);
@@ -83,8 +86,8 @@ public class AttributeSetImpl implements AttributeSet {
    * {@inheritDoc}
    */
   @Override
-  public void validateAttributes(final Assertion assertion,
-      final List<RequestedAttribute> explicitlyRequestedAttributes)
+  public void validateAttributes(@Nonnull final Assertion assertion,
+      @Nullable final List<RequestedAttribute> explicitlyRequestedAttributes)
       throws AttributesValidationException {
 
     logger.trace("Validating the attributes from assertion '{}' against attribute set '{}' ({}) ...",
@@ -104,7 +107,7 @@ public class AttributeSetImpl implements AttributeSet {
             "Attribute '%s' (%s) is required according to the attribute set '%s' (%s) but is not included in assertion '%s'",
             requiredAttribute.getName(), requiredAttribute.getFriendlyName(), this.identifier, this.uri,
             assertion.getID());
-        logger.error(msg);
+        logger.debug(msg);
         throw new AttributesValidationException(msg);
       }
     }
@@ -121,7 +124,7 @@ public class AttributeSetImpl implements AttributeSet {
             String msg = String.format(
                 "Attribute '%s' (%s) is listed a RequestedAttribute with isRequired=true in SP metadata, but does not appear in assertion '%s'",
                 ra.getName(), ra.getFriendlyName(), assertion.getID());
-            logger.error(msg);
+            logger.debug(msg);
             throw new AttributesValidationException(msg);
           }
           else {
@@ -144,6 +147,7 @@ public class AttributeSetImpl implements AttributeSet {
   /**
    * {@inheritDoc}
    */
+  @Nonnull
   @Override
   public String getIdentifier() {
     return this.identifier;
@@ -152,6 +156,7 @@ public class AttributeSetImpl implements AttributeSet {
   /**
    * {@inheritDoc}
    */
+  @Nonnull
   @Override
   public String getUri() {
     return this.uri;
@@ -160,6 +165,7 @@ public class AttributeSetImpl implements AttributeSet {
   /**
    * {@inheritDoc}
    */
+  @Nonnull
   @Override
   public String getFriendlyName() {
     return this.friendlyName;
@@ -168,6 +174,7 @@ public class AttributeSetImpl implements AttributeSet {
   /**
    * {@inheritDoc}
    */
+  @Nonnull
   @Override
   public AttributeTemplate[] getRequiredAttributes() {
     return this.requiredAttributes != null ? this.requiredAttributes.toArray(new AttributeTemplate[] {})
@@ -177,6 +184,7 @@ public class AttributeSetImpl implements AttributeSet {
   /**
    * {@inheritDoc}
    */
+  @Nonnull
   @Override
   public AttributeTemplate[] getRecommendedAttributes() {
     return this.recommendedAttributes != null ? this.recommendedAttributes.toArray(new AttributeTemplate[] {})
@@ -189,7 +197,7 @@ public class AttributeSetImpl implements AttributeSet {
    *
    * @param identifier the identifier to assign
    */
-  public void setIdentifier(final String identifier) {
+  public void setIdentifier(@Nonnull final String identifier) {
     this.identifier = identifier;
   }
 
@@ -199,7 +207,7 @@ public class AttributeSetImpl implements AttributeSet {
    *
    * @param uri the URI to assign
    */
-  public void setUri(final String uri) {
+  public void setUri(@Nonnull final String uri) {
     this.uri = uri;
   }
 
@@ -208,7 +216,7 @@ public class AttributeSetImpl implements AttributeSet {
    *
    * @param friendlyName the friendlyName to set
    */
-  public void setFriendlyName(final String friendlyName) {
+  public void setFriendlyName(@Nonnull final String friendlyName) {
     this.friendlyName = friendlyName;
   }
 
@@ -217,7 +225,7 @@ public class AttributeSetImpl implements AttributeSet {
    *
    * @param requiredAttributes the attributes to assign
    */
-  public void setRequiredAttributes(final AttributeTemplate[] requiredAttributes) {
+  public void setRequiredAttributes(@Nullable final AttributeTemplate[] requiredAttributes) {
     this.requiredAttributes = requiredAttributes != null ? Arrays.asList(requiredAttributes) : Collections.emptyList();
   }
 
@@ -226,7 +234,7 @@ public class AttributeSetImpl implements AttributeSet {
    *
    * @param recommendedAttributes the attributes to assign
    */
-  public void setRecommendedAttributes(final AttributeTemplate[] recommendedAttributes) {
+  public void setRecommendedAttributes(@Nullable final AttributeTemplate[] recommendedAttributes) {
     this.recommendedAttributes =
         recommendedAttributes != null ? Arrays.asList(recommendedAttributes) : Collections.emptyList();
   }

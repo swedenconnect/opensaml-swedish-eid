@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * Holds constants defined in "DSS Extension for Federated Central Signing Services".
  *
@@ -23,9 +25,11 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.dss;
 public class DssExtensionsConstants {
 
   /** Namespace prefix for the DSS extension for the Swedish eID Framework. */
+  @Nonnull
   public static final String SWEID_DSS_EXT_PREFIX = "csig";
 
   /** The namespace for the DSS extension for the Swedish eID Framework. */
+  @Nonnull
   public static final String SWEID_DSS_EXT_NS = "http://id.elegnamnden.se/csig/1.1/dss-ext/ns";
 
   private DssExtensionsConstants() {

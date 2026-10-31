@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc;
 
+import jakarta.annotation.Nonnull;
+
 import javax.xml.namespace.QName;
 
 /**
@@ -37,15 +39,19 @@ import javax.xml.namespace.QName;
 public interface RequestedPrincipalSelection extends PrincipalSelection {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "RequestedPrincipalSelection";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(PscConstants.PSC_NS, DEFAULT_ELEMENT_LOCAL_NAME, PscConstants.PSC_NS_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "RequestedPrincipalSelectionType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME = new QName(PscConstants.PSC_NS, TYPE_LOCAL_NAME, PscConstants.PSC_NS_PREFIX);
 
 }

@@ -18,6 +18,9 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 import java.util.Collections;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import se.swedenconnect.opensaml.sweid.LibraryVersion;
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSet;
 
@@ -50,25 +53,29 @@ public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements Ser
    * @param loaUris the Level of Assurance URI:s
    * @param attributeSet the attribute set
    */
-  public ServiceEntityCategoryImpl(final String uri, final List<String> loaUris, final AttributeSet attributeSet) {
+  public ServiceEntityCategoryImpl(@Nonnull final String uri, @Nullable final List<String> loaUris,
+      @Nonnull final AttributeSet attributeSet) {
     super(uri, EntityCategoryType.SERVICE_ENTITY);
     this.loaUris = loaUris;
     this.attributeSet = attributeSet;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public String getUri() {
     return this.uri;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public EntityCategoryType getType() {
     return EntityCategoryType.SERVICE_ENTITY;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public List<String> getLevelOfAssuranceUris() {
     return this.loaUris != null ? this.loaUris : Collections.emptyList();
@@ -79,11 +86,12 @@ public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements Ser
    *
    * @param loaUris the LoA URI:s
    */
-  public void setLevelOfAssuranceUris(final List<String> loaUris) {
+  public void setLevelOfAssuranceUris(@Nullable final List<String> loaUris) {
     this.loaUris = loaUris;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public AttributeSet getAttributeSet() {
     return this.attributeSet;
@@ -94,7 +102,7 @@ public class ServiceEntityCategoryImpl extends EntityCategoryImpl implements Ser
    *
    * @param attributeSet the attribute set to assign
    */
-  public void setAttributeProfile(final AttributeSet attributeSet) {
+  public void setAttributeProfile(@Nonnull final AttributeSet attributeSet) {
     this.attributeSet = attributeSet;
   }
 

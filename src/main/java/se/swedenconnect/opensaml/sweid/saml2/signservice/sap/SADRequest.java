@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.SAMLObject;
 
 /**
@@ -74,30 +76,39 @@ import org.opensaml.saml.common.SAMLObject;
 public interface SADRequest extends SAMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "SADRequest";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(SAPConstants.SAP_NS, DEFAULT_ELEMENT_LOCAL_NAME, SAPConstants.SAP_NS_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "SADRequestType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME = new QName(SAPConstants.SAP_NS, TYPE_LOCAL_NAME, SAPConstants.SAP_NS_PREFIX);
 
   /** Name of the RequesterID element. */
+  @Nonnull
   String REQUESTER_ID_LOCAL_NAME = "RequesterID";
 
   /** Name of the SignRequestID element. */
+  @Nonnull
   String SIGN_REQUEST_ID_LOCAL_NAME = "SignRequestID";
 
   /** Name of the DocCount element. */
+  @Nonnull
   String DOC_COUNT_LOCAL_NAME = "DocCount";
 
   /** Name of the RequestedVersion element. */
+  @Nonnull
   String REQUESTED_VERSION_LOCAL_NAME = "RequestedVersion";
 
   /** ID attribute name. */
+  @Nonnull
   public static final String ID_ATTRIB_NAME = "ID";
 
   /**
@@ -105,6 +116,7 @@ public interface SADRequest extends SAMLObject {
    *
    * @return the ID of this SAD request
    */
+  @Nullable
   String getID();
 
   /**
@@ -112,13 +124,14 @@ public interface SADRequest extends SAMLObject {
    *
    * @param id the ID of this SAD request
    */
-  public void setID(final String id);
+  public void setID(@Nullable final String id);
 
   /**
    * Returns the requester ID (entityID of the SP requesting the SAD).
    *
    * @return the entityID of the requester
    */
+  @Nullable
   String getRequesterID();
 
   /**
@@ -126,13 +139,14 @@ public interface SADRequest extends SAMLObject {
    *
    * @param requesterID the entityID of the requester
    */
-  void setRequesterID(final String requesterID);
+  void setRequesterID(@Nullable final String requesterID);
 
   /**
    * Returns the value of the {@code RequestID} attribute of the associated {@code SignRequest}.
    *
    * @return the signature request ID
    */
+  @Nullable
   String getSignRequestID();
 
   /**
@@ -140,13 +154,14 @@ public interface SADRequest extends SAMLObject {
    *
    * @param signRequestID the signature request ID
    */
-  void setSignRequestID(final String signRequestID);
+  void setSignRequestID(@Nullable final String signRequestID);
 
   /**
    * Returns the number of requested signatures in the associated sign request.
    *
    * @return the document count
    */
+  @Nullable
   Integer getDocCount();
 
   /**
@@ -154,7 +169,7 @@ public interface SADRequest extends SAMLObject {
    *
    * @param docCount the document count
    */
-  void setDocCount(final Integer docCount);
+  void setDocCount(@Nullable final Integer docCount);
 
   /**
    * Returns the requested version of the SAD.
@@ -162,6 +177,7 @@ public interface SADRequest extends SAMLObject {
    * @return the SAD version (1.0 if not set)
    * @throws IllegalArgumentException if the version is not a valid version string
    */
+  @Nonnull
   SADVersion getRequestedVersion();
 
   /**
@@ -169,13 +185,14 @@ public interface SADRequest extends SAMLObject {
    *
    * @param sadVersion the SAD version
    */
-  void setRequestedVersion(final SADVersion sadVersion);
+  void setRequestedVersion(@Nullable final SADVersion sadVersion);
 
   /**
    * Returns the {@code RequestParams} element.
    *
    * @return the RequestParams, or null
    */
+  @Nullable
   RequestParams getRequestParams();
 
   /**
@@ -183,6 +200,6 @@ public interface SADRequest extends SAMLObject {
    *
    * @param requestParams the RequestParams
    */
-  void setRequestParams(final RequestParams requestParams);
+  void setRequestParams(@Nullable final RequestParams requestParams);
 
 }

@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.saml.common.assertion.ValidationContext;
 import org.opensaml.saml.common.assertion.ValidationResult;
 import org.opensaml.saml.saml2.core.Assertion;
@@ -57,6 +58,7 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
    * Key for a validation context parameter. Carries a {@link Collection} holding the requested AuthnContext URIs
    * included in the {@code AuthnRequest}.
    */
+  @Nonnull
   public static final String AUTHN_REQUEST_REQUESTED_AUTHNCONTEXTURIS = CoreValidatorParameters.STD_PREFIX
       + ".AuthnRequestRequestedAuthnContextURIs";
 
@@ -64,6 +66,7 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
    * Key for a validation context parameter. Carries a {@link Collection} holding the authentication context URI:s that
    * require the Holder-of-key profile.
    */
+  @Nonnull
   public static final String HOLDER_OF_KEY_AUTHN_CONTEXT_URIS =
       CoreValidatorParameters.STD_PREFIX + ".HoKAuthnContextURIs";
 
@@ -74,9 +77,10 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
    * Overrides default implementation with checks that assert that a {@code AuthnContextClassRef} URI was received, and
    * that it matches what was requested.
    */
+  @Nonnull
   @Override
-  protected ValidationResult validateAuthnContext(final AuthnStatement statement, final Assertion assertion,
-      final ValidationContext context) {
+  protected ValidationResult validateAuthnContext(@Nonnull final AuthnStatement statement,
+      @Nonnull final Assertion assertion, @Nonnull final ValidationContext context) {
     final ValidationResult res = super.validateAuthnContext(statement, assertion, context);
     if (res != ValidationResult.VALID) {
       return res;
@@ -126,8 +130,9 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
    * @param context the validation context
    * @return a collection of URIs.
    */
+  @Nonnull
   @SuppressWarnings("unchecked")
-  protected static Collection<String> getRequestedAuthnContextUris(final ValidationContext context) {
+  protected static Collection<String> getRequestedAuthnContextUris(@Nonnull final ValidationContext context) {
     Collection<String> uris =
         (Collection<String>) context.getStaticParameters().get(AUTHN_REQUEST_REQUESTED_AUTHNCONTEXTURIS);
     if (uris == null || uris.isEmpty()) {
@@ -154,8 +159,9 @@ public class SwedishEidAuthnStatementValidator extends AuthnStatementValidator {
    * @param context the validation context
    * @return a list of URI:s
    */
+  @Nonnull
   @SuppressWarnings("unchecked")
-  protected Collection<String> getHolderOfKeyAuthnContextUris(final ValidationContext context) {
+  protected Collection<String> getHolderOfKeyAuthnContextUris(@Nonnull final ValidationContext context) {
     return Optional.ofNullable(context.getStaticParameters().get(HOLDER_OF_KEY_AUTHN_CONTEXT_URIS))
         .map(Collection.class::cast)
         .orElseGet(() -> Collections.emptyList());

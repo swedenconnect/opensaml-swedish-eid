@@ -18,6 +18,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.build;
 import java.util.Arrays;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.util.XMLObjectSupport;
 
 import se.swedenconnect.opensaml.common.builder.AbstractSAMLObjectBuilder;
@@ -38,6 +40,7 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
    *
    * @return a builder
    */
+  @Nonnull
   public static SADRequestBuilder builder() {
     return new SADRequestBuilder();
   }
@@ -48,7 +51,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
    * @param id the ID attribute
    * @return the builder
    */
-  public SADRequestBuilder id(final String id) {
+  @Nonnull
+  public SADRequestBuilder id(@Nullable final String id) {
     this.object().setID(id);
     return this;
   }
@@ -59,7 +63,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
    * @param requesterID the entityID of the requester
    * @return the builder
    */
-  public SADRequestBuilder requesterID(final String requesterID) {
+  @Nonnull
+  public SADRequestBuilder requesterID(@Nullable final String requesterID) {
     this.object().setRequesterID(requesterID);
     return this;
   }
@@ -70,7 +75,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
    * @param signRequestID the signature request ID
    * @return the builder
    */
-  public SADRequestBuilder signRequestID(final String signRequestID) {
+  @Nonnull
+  public SADRequestBuilder signRequestID(@Nullable final String signRequestID) {
     this.object().setSignRequestID(signRequestID);
     return this;
   }
@@ -81,7 +87,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
    * @param docCount the document count
    * @return the builder
    */
-  public SADRequestBuilder docCount(final Integer docCount) {
+  @Nonnull
+  public SADRequestBuilder docCount(@Nullable final Integer docCount) {
     this.object().setDocCount(docCount);
     return this;
   }
@@ -92,7 +99,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
    * @param sadVersion the SAD version
    * @return the builder
    */
-  public SADRequestBuilder requestedVersion(final SADVersion sadVersion) {
+  @Nonnull
+  public SADRequestBuilder requestedVersion(@Nullable final SADVersion sadVersion) {
     this.object().setRequestedVersion(sadVersion);
     return this;
   }
@@ -103,12 +111,14 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
    * @param requestParams the RequestParams
    * @return the builder
    */
-  public SADRequestBuilder requestParams(final RequestParams requestParams) {
+  @Nonnull
+  public SADRequestBuilder requestParams(@Nullable final RequestParams requestParams) {
     this.object().setRequestParams(requestParams);
     return this;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected Class<SADRequest> getObjectType() {
     return SADRequest.class;
@@ -126,6 +136,7 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
      *
      * @return a builder
      */
+    @Nonnull
     public static RequestParamsBuilder builder() {
       return new RequestParamsBuilder();
     }
@@ -137,7 +148,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
      * @param value the parameter value
      * @return the Parameter object
      */
-    public static Parameter parameter(final String name, final String value) {
+    @Nonnull
+    public static Parameter parameter(@Nullable final String name, @Nullable final String value) {
       Parameter p = (Parameter) XMLObjectSupport.buildXMLObject(Parameter.DEFAULT_ELEMENT_NAME);
       p.setName(name);
       p.setValue(value);
@@ -150,7 +162,8 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
      * @param parameters a list of parameters
      * @return the builder
      */
-    public RequestParamsBuilder parameters(final List<Parameter> parameters) {
+    @Nonnull
+    public RequestParamsBuilder parameters(@Nullable final List<Parameter> parameters) {
       this.object().getParameters().clear();
       if (parameters != null) {
         this.object().getParameters().addAll(parameters);
@@ -164,11 +177,13 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
      * @param parameters a list of parameters
      * @return the builder
      */
-    public RequestParamsBuilder parameters(final Parameter... parameters) {
+    @Nonnull
+    public RequestParamsBuilder parameters(@Nullable final Parameter... parameters) {
       return this.parameters(parameters != null ? Arrays.asList(parameters) : null);
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     protected Class<RequestParams> getObjectType() {
       return RequestParams.class;

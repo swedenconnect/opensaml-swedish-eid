@@ -18,6 +18,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.ObjectMapper;
 
@@ -71,7 +73,8 @@ public class SAD {
    * @return a {@code SAD} object
    * @throws JacksonException for parsing errors
    */
-  public static SAD fromJson(final String json) throws JacksonException {
+  @Nonnull
+  public static SAD fromJson(@Nonnull final String json) throws JacksonException {
     return jsonMapper.readValue(json, SAD.class);
   }
 
@@ -81,6 +84,7 @@ public class SAD {
    * @return the JSON representation
    * @throws JacksonException for processing errors
    */
+  @Nonnull
   public String toJson() throws JacksonException {
     return jsonMapper.writeValueAsString(this);
   }
@@ -91,6 +95,7 @@ public class SAD {
    * @return the JSON bytes
    * @throws IOException for processing errors
    */
+  @Nonnull
   public byte[] toJsonBytes() throws IOException {
     return jsonMapper.writeValueAsBytes(this);
   }
@@ -100,6 +105,7 @@ public class SAD {
    *
    * @return the user ID
    */
+  @Nullable
   public String getSubject() {
     return this.subject;
   }
@@ -109,7 +115,7 @@ public class SAD {
    *
    * @param subject the user ID
    */
-  public void setSubject(final String subject) {
+  public void setSubject(@Nullable final String subject) {
     this.subject = subject;
   }
 
@@ -118,6 +124,7 @@ public class SAD {
    *
    * @return the entityID of the recipient
    */
+  @Nullable
   public String getAudience() {
     return this.audience;
   }
@@ -127,7 +134,7 @@ public class SAD {
    *
    * @param audience the entityID of the recipient
    */
-  public void setAudience(final String audience) {
+  public void setAudience(@Nullable final String audience) {
     this.audience = audience;
   }
 
@@ -136,6 +143,7 @@ public class SAD {
    *
    * @return the IdP entityID
    */
+  @Nullable
   public String getIssuer() {
     return this.issuer;
   }
@@ -145,7 +153,7 @@ public class SAD {
    *
    * @param issuer the IdP entityID
    */
-  public void setIssuer(final String issuer) {
+  public void setIssuer(@Nullable final String issuer) {
     this.issuer = issuer;
   }
 
@@ -159,6 +167,7 @@ public class SAD {
    */
   @JsonIgnore
   @Deprecated(since = "2.3.2", forRemoval = true)
+  @Nullable
   public Integer getExpiry() {
     return this.expiry != null ? Math.toIntExact(this.expiry) : null;
   }
@@ -169,6 +178,7 @@ public class SAD {
    * @return number of seconds since 1970-01-01
    */
   @JsonIgnore
+  @Nullable
   public Long getExpirySeconds() {
     return this.expiry;
   }
@@ -179,6 +189,7 @@ public class SAD {
    * @return expiration time
    */
   @JsonIgnore
+  @Nullable
   public Instant getExpiryDateTime() {
     return this.expiry != null ? Instant.ofEpochSecond(this.expiry) : null;
   }
@@ -192,7 +203,7 @@ public class SAD {
    */
   @JsonIgnore
   @Deprecated(since = "2.3.2", forRemoval = true)
-  public void setExpiry(final Integer expiry) {
+  public void setExpiry(@Nullable final Integer expiry) {
     this.expiry = expiry != null ? expiry.longValue() : null;
   }
 
@@ -202,7 +213,7 @@ public class SAD {
    * @param expiry number of seconds since 1970-01-01
    */
   @JsonIgnore
-  public void setExpirySeconds(final Long expiry) {
+  public void setExpirySeconds(@Nullable final Long expiry) {
     this.expiry = expiry;
   }
 
@@ -212,7 +223,7 @@ public class SAD {
    * @param expiry expiration time
    */
   @JsonIgnore
-  public void setExpiry(final Instant expiry) {
+  public void setExpiry(@Nullable final Instant expiry) {
     this.expiry = expiry != null ? expiry.getEpochSecond() : null;
   }
 
@@ -226,6 +237,7 @@ public class SAD {
    */
   @JsonIgnore
   @Deprecated(since = "2.3.2", forRemoval = true)
+  @Nullable
   public Integer getIssuedAt() {
     return this.issuedAt != null ? Math.toIntExact(this.issuedAt) : null;
   }
@@ -236,6 +248,7 @@ public class SAD {
    * @return number of seconds since 1970-01-01
    */
   @JsonIgnore
+  @Nullable
   public Long getIssuedAtSeconds() {
     return this.issuedAt;
   }
@@ -246,6 +259,7 @@ public class SAD {
    * @return timestamp
    */
   @JsonIgnore
+  @Nullable
   public Instant getIssuedAtDateTime() {
     return this.issuedAt != null ? Instant.ofEpochSecond(this.issuedAt) : null;
   }
@@ -259,7 +273,7 @@ public class SAD {
    */
   @JsonIgnore
   @Deprecated(since = "2.3.2", forRemoval = true)
-  public void setIssuedAt(final Integer issuedAt) {
+  public void setIssuedAt(@Nullable final Integer issuedAt) {
     this.issuedAt = issuedAt != null ? issuedAt.longValue() : null;
   }
 
@@ -269,7 +283,7 @@ public class SAD {
    * @param issuedAt number of seconds since 1970-01-01
    */
   @JsonIgnore
-  public void setIssuedAtSeconds(final Long issuedAt) {
+  public void setIssuedAtSeconds(@Nullable final Long issuedAt) {
     this.issuedAt = issuedAt;
   }
 
@@ -279,7 +293,7 @@ public class SAD {
    * @param issuedAt issue time
    */
   @JsonIgnore
-  public void setIssuedAt(final Instant issuedAt) {
+  public void setIssuedAt(@Nullable final Instant issuedAt) {
     this.issuedAt = issuedAt != null ? issuedAt.getEpochSecond() : null;
   }
 
@@ -288,6 +302,7 @@ public class SAD {
    *
    * @return JWT ID
    */
+  @Nullable
   public String getJwtId() {
     return this.jwtId;
   }
@@ -297,7 +312,7 @@ public class SAD {
    *
    * @param jwtId JWT ID
    */
-  public void setJwtId(final String jwtId) {
+  public void setJwtId(@Nullable final String jwtId) {
     this.jwtId = jwtId;
   }
 
@@ -306,6 +321,7 @@ public class SAD {
    *
    * @return SAD extension claim
    */
+  @Nullable
   public Extension getSeElnSadext() {
     return this.seElnSadext;
   }
@@ -315,11 +331,12 @@ public class SAD {
    *
    * @param seElnSadext SAD extension claim
    */
-  public void setSeElnSadext(final Extension seElnSadext) {
+  public void setSeElnSadext(@Nullable final Extension seElnSadext) {
     this.seElnSadext = seElnSadext;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public String toString() {
     return String.format("sub='%s', aud='%s', iss='%s', exp='%s', iat='%s', jti='%s', seElnSadext=[%s]",
@@ -343,7 +360,7 @@ public class SAD {
 
   /** {@inheritDoc} */
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(@Nullable final Object obj) {
     if (this == obj) {
       return true;
     }
@@ -453,6 +470,7 @@ public class SAD {
      *
      * @return the version
      */
+    @Nullable
     public String getVersion() {
       return this.version;
     }
@@ -464,6 +482,7 @@ public class SAD {
      * @throws IllegalArgumentException if the version is not a valid version string
      */
     @JsonIgnore
+    @Nonnull
     public SADVersion getSADVersion() {
       return this.version != null ? SADVersion.valueOf(this.version) : SADVersion.VERSION_10;
     }
@@ -473,7 +492,7 @@ public class SAD {
      *
      * @param version the version
      */
-    public void setVersion(final String version) {
+    public void setVersion(@Nullable final String version) {
       this.version = version;
     }
 
@@ -482,6 +501,7 @@ public class SAD {
      *
      * @return ID of corresponding {@code SADRequest}
      */
+    @Nullable
     public String getInResponseTo() {
       return this.inResponseTo;
     }
@@ -491,7 +511,7 @@ public class SAD {
      *
      * @param inResponseTo ID of corresponding {@code SADRequest}
      */
-    public void setInResponseTo(final String inResponseTo) {
+    public void setInResponseTo(@Nullable final String inResponseTo) {
       this.inResponseTo = inResponseTo;
     }
 
@@ -500,6 +520,7 @@ public class SAD {
      *
      * @return attribute name for the user ID attribute value
      */
+    @Nullable
     public String getAttributeName() {
       return this.attributeName;
     }
@@ -509,7 +530,7 @@ public class SAD {
      *
      * @param attributeName attribute name for the user ID attribute value
      */
-    public void setAttributeName(final String attributeName) {
+    public void setAttributeName(@Nullable final String attributeName) {
       this.attributeName = attributeName;
     }
 
@@ -518,6 +539,7 @@ public class SAD {
      *
      * @return LoA URI
      */
+    @Nullable
     public String getLoa() {
       return this.loa;
     }
@@ -527,7 +549,7 @@ public class SAD {
      *
      * @param loa LoA URI
      */
-    public void setLoa(final String loa) {
+    public void setLoa(@Nullable final String loa) {
       this.loa = loa;
     }
 
@@ -536,6 +558,7 @@ public class SAD {
      *
      * @return SignRequest ID
      */
+    @Nullable
     public String getRequestID() {
       return this.requestID;
     }
@@ -545,7 +568,7 @@ public class SAD {
      *
      * @param requestID SignRequest ID
      */
-    public void setRequestID(final String requestID) {
+    public void setRequestID(@Nullable final String requestID) {
       this.requestID = requestID;
     }
 
@@ -554,6 +577,7 @@ public class SAD {
      *
      * @return the number of documents to be signed
      */
+    @Nullable
     public Integer getNumberOfDocuments() {
       return this.numberOfDocuments;
     }
@@ -563,11 +587,12 @@ public class SAD {
      *
      * @param numberOfDocuments the number of documents to be signed
      */
-    public void setNumberOfDocuments(final Integer numberOfDocuments) {
+    public void setNumberOfDocuments(@Nullable final Integer numberOfDocuments) {
       this.numberOfDocuments = numberOfDocuments;
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public String toString() {
       return String.format("ver='%s', irt='%s', attr='%s', loa='%s', reqid='%s', docs='%d'",
@@ -590,7 +615,7 @@ public class SAD {
 
     /** {@inheritDoc} */
     @Override
-    public boolean equals(final Object obj) {
+    public boolean equals(@Nullable final Object obj) {
       if (this == obj) {
         return true;
       }

@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.authn.psc;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AttributeExtensibleXMLObject;
 import org.opensaml.core.xml.schema.XSString;
 import org.opensaml.saml.common.SAMLObject;
@@ -43,21 +45,27 @@ import org.opensaml.saml.common.SAMLObject;
 public interface MatchValue extends XSString, SAMLObject, AttributeExtensibleXMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "MatchValue";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(PscConstants.PSC_NS, DEFAULT_ELEMENT_LOCAL_NAME, PscConstants.PSC_NS_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "MatchValueType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME = new QName(PscConstants.PSC_NS, TYPE_LOCAL_NAME, PscConstants.PSC_NS_PREFIX);
 
   /** Attribute label for the NameFormat attribute. */
+  @Nonnull
   String NAME_FORMAT_ATTR_NAME = "NameFormat";
 
   /** Attribute label for the Name attribute. */
+  @Nonnull
   String NAME_ATTR_NAME = "Name";
 
   /**
@@ -65,6 +73,7 @@ public interface MatchValue extends XSString, SAMLObject, AttributeExtensibleXML
    *
    * @return the name format attribute
    */
+  @Nullable
   String getNameFormat();
 
   /**
@@ -72,13 +81,14 @@ public interface MatchValue extends XSString, SAMLObject, AttributeExtensibleXML
    *
    * @param nameFormat the name format
    */
-  void setNameFormat(final String nameFormat);
+  void setNameFormat(@Nullable final String nameFormat);
 
   /**
    * Returns the {@code Name} attribute.
    *
    * @return the name
    */
+  @Nullable
   String getName();
 
   /**
@@ -86,6 +96,6 @@ public interface MatchValue extends XSString, SAMLObject, AttributeExtensibleXML
    *
    * @param name the name
    */
-  void setName(final String name);
+  void setName(@Nullable final String name);
 
 }

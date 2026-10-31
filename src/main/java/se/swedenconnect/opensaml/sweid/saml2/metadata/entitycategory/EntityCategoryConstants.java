@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
+import jakarta.annotation.Nonnull;
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSetConstants;
 import se.swedenconnect.opensaml.sweid.saml2.authn.LevelOfAssuranceUris;
 
@@ -29,27 +30,34 @@ import java.util.List;
 public class EntityCategoryConstants {
 
   /** The prefix for Service Entity categories. */
+  @Nonnull
   public static final String SERVICE_ENTITY_CATEGORY_PREFIX = "http://id.elegnamnden.se/ec/";
 
   /** The prefix for Service Entity categories defined by Sweden Connect. */
+  @Nonnull
   public static final String SERVICE_ENTITY_CATEGORY_PREFIX_SC = "http://id.swedenconnect.se/ec/";
 
   /** The prefix for Service Property categories. */
+  @Nonnull
   public static final String SERVICE_PROPERTY_CATEGORY_PREFIX = "http://id.elegnamnden.se/sprop/";
 
   /** The prefix for Service Type categories. */
+  @Nonnull
   public static final String SERVICE_TYPE_CATEGORY_PREFIX = "http://id.elegnamnden.se/st/";
 
   /** The prefix for Service Contract categories. */
+  @Nonnull
   public static final String SERVICE_CONTRACT_CATEGORY_PREFIX = "http://id.swedenconnect.se/contract/";
 
   /** The prefix for General categories. */
+  @Nonnull
   public static final String GENERAL_CATEGORY_PREFIX = "http://id.swedenconnect.se/general-ec/";
 
   /**
    * Service entity category: User authentication according to assurance level 2 and attribute release according to the
    * attribute set "Natural Personal Identity with Civic Registration Number".
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA2_PNR = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/loa2-pnr",
       Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2,
@@ -60,6 +68,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to assurance level 3 and attribute release according to the
    * attribute set "Natural Personal Identity with Civic Registration Number".
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA3_PNR = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/loa3-pnr",
       Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3,
@@ -70,6 +79,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to assurance level 4 and attribute release according to the
    * attribute set "Natural Personal Identity with Civic Registration Number".
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA4_PNR = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/loa4-pnr", List.of(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4),
       AttributeSetConstants.ATTRIBUTE_SET_NATURAL_PERSON_WITH_PERSONAL_ID);
@@ -84,6 +94,7 @@ public class EntityCategoryConstants {
    * attributes into eIDAS attributes.
    * </p>
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_EIDAS_PNR_DELIVERY = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/eidas-pnr-delivery", null,
       AttributeSetConstants.ATTRIBUTE_SET_NATURAL_PERSON_WITH_PERSONAL_ID);
@@ -92,6 +103,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to any of the eIDAS assurance levels and attribute release
    * according to "eIDAS Natural Person Attribute Set".
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_EIDAS_NATURAL_PERSON =
       new ServiceEntityCategoryImpl(
           SERVICE_ENTITY_CATEGORY_PREFIX + "1.0/eidas-naturalperson", null,
@@ -101,6 +113,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to LoA 2 and attributes release according to "Organizational
    * Identity for Natural Persons" (http://id.elegnamnden.se/ap/1.0/org-person-01).
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA2_ORGID = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa2-orgid", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2,
       LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA2,
@@ -111,6 +124,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to LoA 3 and attributes release according to "Organizational
    * Identity for Natural Persons" (http://id.elegnamnden.se/ap/1.0/org-person-01).
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA3_ORGID = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa3-orgid", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3,
       LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA3,
@@ -121,6 +135,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to LoA 4 and attributes release according to "Organizational
    * Identity for Natural Persons" (http://id.elegnamnden.se/ap/1.0/org-person-01).
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA4_ORGID = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa4-orgid", Arrays.asList(
       LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4, LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT),
@@ -130,6 +145,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to LoA 2 and attributes release according to "Natural
    * Personal Identity without Civic Registration Number" (http://id.elegnamnden.se/ap/1.0/natural-person-01).
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA2_NAME = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa2-name", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA2,
       LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA2,
@@ -140,6 +156,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to LoA 3 and attributes release according to "Natural
    * Personal Identity without Civic Registration Number" (http://id.elegnamnden.se/ap/1.0/natural-person-01).
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA3_NAME = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa3-name", Arrays.asList(LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA3,
       LevelOfAssuranceUris.AUTHN_CONTEXT_URI_UNCERTIFIED_LOA3,
@@ -150,6 +167,7 @@ public class EntityCategoryConstants {
    * Service entity category: User authentication according to LoA 4 and attributes release according to "Natural
    * Personal Identity without Civic Registration Number" (http://id.elegnamnden.se/ap/1.0/natural-person-01).
    */
+  @Nonnull
   public static final ServiceEntityCategory SERVICE_ENTITY_CATEGORY_LOA4_NAME = new ServiceEntityCategoryImpl(
       SERVICE_ENTITY_CATEGORY_PREFIX_SC + "1.0/loa4-name", Arrays.asList(
       LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4, LevelOfAssuranceUris.AUTHN_CONTEXT_URI_LOA4_NONRESIDENT),
@@ -164,6 +182,7 @@ public class EntityCategoryConstants {
    * cases the service must be able to display end user interfaces for both types of clients.
    * </p>
    */
+  @Nonnull
   public static final EntityCategory SERVICE_PROPERTY_CATEGORY_MOBILE_AUTH = new EntityCategoryImpl(
       SERVICE_PROPERTY_CATEGORY_PREFIX + "1.0/mobile-auth", EntityCategoryType.SERVICE_PROPERTY);
 
@@ -182,6 +201,7 @@ public class EntityCategoryConstants {
    * a Signature Service MUST NOT include this service property in its metadata.
    * </p>
    */
+  @Nonnull
   public static final EntityCategory SERVICE_PROPERTY_CATEGORY_SCAL2 = new EntityCategoryImpl(
       SERVICE_PROPERTY_CATEGORY_PREFIX + "1.0/scal2", EntityCategoryType.SERVICE_PROPERTY);
 
@@ -189,6 +209,7 @@ public class EntityCategoryConstants {
    * Service type category: A service type for a Service Provider that provides electronic signature services within the
    * Swedish eID framework.
    */
+  @Nonnull
   public static final EntityCategory SERVICE_TYPE_CATEGORY_SIGSERVICE = new EntityCategoryImpl(
       SERVICE_TYPE_CATEGORY_PREFIX + "1.0/sigservice", EntityCategoryType.SERVICE_TYPE);
 
@@ -197,6 +218,7 @@ public class EntityCategoryConstants {
    * MUST be used by public sector Service Providers wishing to use eIDAS authentication so that the Swedish eIDAS
    * connector may include this information in the eIDAS authentication request.
    */
+  @Nonnull
   public static final EntityCategory SERVICE_TYPE_CATEGORY_PUBLIC_SECTOR_SP = new EntityCategoryImpl(
       SERVICE_TYPE_CATEGORY_PREFIX + "1.0/public-sector-sp", EntityCategoryType.SERVICE_TYPE);
 
@@ -205,6 +227,7 @@ public class EntityCategoryConstants {
    * category MUST be used by private sector Service Providers wishing to use eIDAS authentication so that the Swedish
    * eIDAS connector may include this information in the eIDAS authentication request.
    */
+  @Nonnull
   public static final EntityCategory SERVICE_TYPE_CATEGORY_PRIVATE_SECTOR_SP = new EntityCategoryImpl(
       SERVICE_TYPE_CATEGORY_PREFIX + "1.0/private-sector-sp", EntityCategoryType.SERVICE_TYPE);
 
@@ -212,6 +235,7 @@ public class EntityCategoryConstants {
    * Service contract category: A service contract type that indicates that the holder has signed the Sweden Connect
    * federation contract.
    */
+  @Nonnull
   public static final EntityCategory SERVICE_CONTRACT_CATEGORY_SWEDEN_CONNECT = new EntityCategoryImpl(
       SERVICE_CONTRACT_CATEGORY_PREFIX + "sc/sweden-connect", EntityCategoryType.SERVICE_CONTRACT);
 
@@ -219,6 +243,7 @@ public class EntityCategoryConstants {
    * Service contract category: A service contract type that indicates that the holder has signed the "eID system of
    * choice 2017" (Valfrihetssystem 2017) contract.
    */
+  @Nonnull
   public static final EntityCategory SERVICE_CONTRACT_CATEGORY_EID_CHOICE_2017 = new EntityCategoryImpl(
       SERVICE_CONTRACT_CATEGORY_PREFIX + "sc/eid-choice-2017", EntityCategoryType.SERVICE_CONTRACT);
 
@@ -226,6 +251,7 @@ public class EntityCategoryConstants {
    * Service contract category: A service contract type that indicates that the holder has signed the "Digg
    * Authorization System" (Auktorisationssystem) contract.
    */
+  @Nonnull
   public static final EntityCategory SERVICE_CONTRACT_CATEGORY_EID_AUTHZ_SYSTEM = new EntityCategoryImpl(
       SERVICE_CONTRACT_CATEGORY_PREFIX + "sc/eid-authorization-system", EntityCategoryType.SERVICE_CONTRACT);
 
@@ -233,12 +259,14 @@ public class EntityCategoryConstants {
    * General category: A category that indicates that secure authenticator binding is requested (SP) or is supported
    * (IdP).
    */
+  @Nonnull
   public static final EntityCategory GENERAL_CATEGORY_SECURE_AUTHENTICATOR_BINDING = new EntityCategoryImpl(
       GENERAL_CATEGORY_PREFIX + "1.0/secure-authenticator-binding", EntityCategoryType.GENERAL);
 
   /**
    * General category: A category that indicates that the SP accepts a Swedish coordination number.
    */
+  @Nonnull
   public static final EntityCategory GENERAL_CATEGORY_ACCEPTS_COORDINATION_NUMBER = new EntityCategoryImpl(
       GENERAL_CATEGORY_PREFIX + "1.0/accepts-coordination-number", EntityCategoryType.GENERAL);
 
@@ -246,6 +274,7 @@ public class EntityCategoryConstants {
    * General category: A category that indicates that a declaring IdP supports the {@code umsg:UserMessage}
    * authentication request extension.
    */
+  @Nonnull
   public static final EntityCategory GENERAL_CATEGORY_SUPPORTS_USER_MESSAGE = new EntityCategoryImpl(
       GENERAL_CATEGORY_PREFIX + "1.0/supports-user-message", EntityCategoryType.GENERAL);
 

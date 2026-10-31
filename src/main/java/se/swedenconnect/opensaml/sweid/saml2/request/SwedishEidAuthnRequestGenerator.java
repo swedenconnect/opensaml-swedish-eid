@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.request;
 
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.metadata.resolver.MetadataResolver;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import org.opensaml.security.x509.X509Credential;
@@ -59,8 +61,8 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
    * @param signCredential the signing credential
    * @param metadataResolver the metadata resolver
    */
-  public SwedishEidAuthnRequestGenerator(final String spEntityID, final X509Credential signCredential,
-      final MetadataResolver metadataResolver) {
+  public SwedishEidAuthnRequestGenerator(@Nonnull final String spEntityID,
+      @Nullable final X509Credential signCredential, @Nonnull final MetadataResolver metadataResolver) {
     super(spEntityID, signCredential, metadataResolver);
   }
 
@@ -71,8 +73,8 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
    * @param signCredential the signing credential
    * @param metadataResolver the metadata resolver
    */
-  public SwedishEidAuthnRequestGenerator(final EntityDescriptor spMetadata, final X509Credential signCredential,
-      final MetadataResolver metadataResolver) {
+  public SwedishEidAuthnRequestGenerator(@Nonnull final EntityDescriptor spMetadata,
+      @Nullable final X509Credential signCredential, @Nonnull final MetadataResolver metadataResolver) {
     super(spMetadata, signCredential, metadataResolver);
   }
 
@@ -81,8 +83,9 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
    * builders for the {@code SignMessage} and {@code PrincipalSelection} extensions, and add them if present.
    */
   @Override
-  protected void addExtensions(final AuthnRequestBuilder builder, final AuthnRequestGeneratorContext context,
-      final EntityDescriptor idpMetadata) throws RequestGenerationException {
+  protected void addExtensions(@Nonnull final AuthnRequestBuilder builder,
+      @Nonnull final AuthnRequestGeneratorContext context, @Nonnull final EntityDescriptor idpMetadata)
+      throws RequestGenerationException {
 
     if (context instanceof final SwedishEidAuthnRequestGeneratorContext scontext) {
       final SignMessage signMessage = this.isSignatureService()
@@ -104,9 +107,10 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected List<String> getAssuranceCertificationUris(
-      final EntityDescriptor idpMetadata, final AuthnRequestGeneratorContext context)
+      @Nonnull final EntityDescriptor idpMetadata, @Nonnull final AuthnRequestGeneratorContext context)
       throws RequestGenerationException {
 
     final List<String> defaultUris = super.getAssuranceCertificationUris(idpMetadata, context);
@@ -143,7 +147,7 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
    * @param idpMetadata the IdP metadata entry
    * @return {@code true} if the IdP supports the extension, and {@code false} otherwise
    */
-  protected boolean supportsUserMessage(final EntityDescriptor idpMetadata) {
+  protected boolean supportsUserMessage(@Nonnull final EntityDescriptor idpMetadata) {
     return EntityDescriptorUtils.getEntityCategories(idpMetadata).stream()
         .anyMatch(c -> EntityCategoryConstants.GENERAL_CATEGORY_SUPPORTS_USER_MESSAGE.getUri().equals(c));
   }
@@ -153,7 +157,7 @@ public class SwedishEidAuthnRequestGenerator extends DefaultAuthnRequestGenerato
    *
    * @param signMessageEncrypter the encrypter to add
    */
-  public void setSignMessageEncrypter(final SignMessageEncrypter signMessageEncrypter) {
+  public void setSignMessageEncrypter(@Nullable final SignMessageEncrypter signMessageEncrypter) {
     this.signMessageEncrypter = signMessageEncrypter;
   }
 

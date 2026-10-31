@@ -22,6 +22,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.ext.saml2alg.DigestMethod;
 import org.opensaml.saml.saml2.core.Attribute;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
@@ -48,6 +50,7 @@ public class SignMessageDigestIssuer {
   private final Logger log = LoggerFactory.getLogger(SignMessageDigestIssuer.class);
 
   /** SHA-256 is the default digest method. */
+  @Nonnull
   public static final String DEFAULT_DIGEST_METHOD = SignatureConstants.ALGO_ID_DIGEST_SHA256;
 
   /** The default digest method to use. If not assigned, {@value #DEFAULT_DIGEST_METHOD} is used. */
@@ -59,7 +62,8 @@ public class SignMessageDigestIssuer {
    * @param message the sign message
    * @return a signMessageDigest attribute
    */
-  public Attribute create(final Message message) {
+  @Nonnull
+  public Attribute create(@Nonnull final Message message) {
     return this.create(message, null);
   }
 
@@ -71,7 +75,8 @@ public class SignMessageDigestIssuer {
    * @param recipient the recipient metadata (may be null)
    * @return a signMessageDigest attribute
    */
-  public Attribute create(final Message message, final EntityDescriptor recipient) {
+  @Nonnull
+  public Attribute create(@Nonnull final Message message, @Nullable final EntityDescriptor recipient) {
     if (message == null || message.getValue() == null) {
       throw new IllegalArgumentException("Supplied sign message is null or empty");
     }
@@ -81,7 +86,7 @@ public class SignMessageDigestIssuer {
         digestAlgorithm = SignMessageDigestIssuer.getDigestPreference(recipient);
       }
       catch (final Exception e) {
-        log.error("Error during recipient metadata analyze (looking for preferred digest algorithm)", e);
+        log.warn("Error during recipient metadata analyze (looking for preferred digest algorithm)", e);
       }
     }
     if (digestAlgorithm == null) {
@@ -118,7 +123,8 @@ public class SignMessageDigestIssuer {
    * @param metadata the recipient's metadata
    * @return the preferred digest algorithm, or null if none is specified
    */
-  public static String getDigestPreference(final EntityDescriptor metadata) {
+  @Nullable
+  public static String getDigestPreference(@Nullable final EntityDescriptor metadata) {
     if (metadata == null) {
       return null;
     }
@@ -149,6 +155,7 @@ public class SignMessageDigestIssuer {
    *
    * @return the algorithm URI for the default digest method
    */
+  @Nonnull
   public String getDefaultDigestMethod() {
     return this.defaultDigestMethod != null ? this.defaultDigestMethod : SignMessageDigestIssuer.DEFAULT_DIGEST_METHOD;
   }
@@ -158,7 +165,7 @@ public class SignMessageDigestIssuer {
    *
    * @param defaultDigestMethod the algorithm URI for the default digest method
    */
-  public void setDefaultDigestMethod(final String defaultDigestMethod) {
+  public void setDefaultDigestMethod(@Nonnull final String defaultDigestMethod) {
     final AlgorithmRegistry registry = AlgorithmSupport.getGlobalAlgorithmRegistry();
     final AlgorithmDescriptor descriptor = registry.get(defaultDigestMethod);
     if (descriptor == null) {

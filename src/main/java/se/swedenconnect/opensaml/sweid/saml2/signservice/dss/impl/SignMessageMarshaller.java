@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.saml.common.AbstractSAMLObjectMarshaller;
@@ -31,7 +32,8 @@ public class SignMessageMarshaller extends AbstractSAMLObjectMarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void marshallAttributes(final XMLObject xmlObject, final Element domElement) throws MarshallingException {
+  protected void marshallAttributes(@Nonnull final XMLObject xmlObject, @Nonnull final Element domElement)
+      throws MarshallingException {
     final SignMessage signMessage = (SignMessage) xmlObject;
 
     if (signMessage.isMustShowXSBoolean() != null) {
@@ -50,7 +52,7 @@ public class SignMessageMarshaller extends AbstractSAMLObjectMarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void marshallElementContent(final XMLObject xmlObject, final Element domElement)
+  protected void marshallElementContent(@Nonnull final XMLObject xmlObject, @Nonnull final Element domElement)
       throws MarshallingException {
     super.marshallElementContent(xmlObject, domElement);
   }

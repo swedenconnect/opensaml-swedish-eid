@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.UnmarshallingException;
 import org.opensaml.core.xml.schema.impl.XSStringUnmarshaller;
@@ -31,7 +32,8 @@ public class MatchValueUnmarshaller extends XSStringUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {
+  protected void processAttribute(@Nonnull final XMLObject xmlObject, @Nonnull final Attr attribute)
+      throws UnmarshallingException {
     final MatchValue mv = (MatchValue) xmlObject;
     if (attribute.getNamespaceURI() == null && MatchValue.NAME_FORMAT_ATTR_NAME.equals(attribute.getLocalName())) {
       mv.setNameFormat(attribute.getValue());

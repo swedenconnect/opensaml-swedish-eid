@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.dss;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AttributeExtensibleXMLObject;
 import org.opensaml.core.xml.schema.XSBooleanValue;
 import org.opensaml.saml.common.SAMLObject;
@@ -85,26 +87,33 @@ import org.opensaml.saml.common.SAMLObject;
 public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "SignMessage";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS, DEFAULT_ELEMENT_LOCAL_NAME,
       DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "SignMessageType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME =
       new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS, TYPE_LOCAL_NAME, DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
 
   /** Attribute label for the MustShow attribute. */
+  @Nonnull
   String MUST_SHOW_ATTR_NAME = "MustShow";
 
   /** Attribute label for the DisplayEntity attribute. */
+  @Nonnull
   String DISPLAY_ENTITY_ATTR_NAME = "DisplayEntity";
 
   /** Attribute label for the MimeType attribute. */
+  @Nonnull
   String MIME_TYPE_ATTR_NAME = "MimeType";
 
   /**
@@ -112,6 +121,7 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    *
    * @return the {@code MustShow} attribute
    */
+  @Nonnull
   Boolean isMustShow();
 
   /**
@@ -120,6 +130,7 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    * @return the {@code MustShow} attribute
    * @see #isMustShow()
    */
+  @Nullable
   XSBooleanValue isMustShowXSBoolean();
 
   /**
@@ -127,7 +138,7 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    *
    * @param mustShow the value to assign
    */
-  void setMustShow(final Boolean mustShow);
+  void setMustShow(@Nullable final Boolean mustShow);
 
   /**
    * Assigns the value of the {@code MustShow} attribute.
@@ -135,13 +146,14 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    * @param mustShow the value to assign
    * @see #setMustShow(Boolean)
    */
-  void setMustShow(final XSBooleanValue mustShow);
+  void setMustShow(@Nullable final XSBooleanValue mustShow);
 
   /**
    * Returns the value of the {@code DisplayEntity} attribute.
    *
    * @return the DisplayEntity attribute
    */
+  @Nullable
   String getDisplayEntity();
 
   /**
@@ -149,13 +161,14 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    *
    * @param displayEntity the entityID to assign
    */
-  void setDisplayEntity(final String displayEntity);
+  void setDisplayEntity(@Nullable final String displayEntity);
 
   /**
    * Returns the value of the {@code MimeType} attribute.
    *
    * @return the MimeType attribute
    */
+  @Nullable
   String getMimeType();
 
   /**
@@ -163,6 +176,7 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    *
    * @return the MimeType attribute
    */
+  @Nullable
   SignMessageMimeTypeEnum getMimeTypeEnum();
 
   /**
@@ -170,20 +184,21 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    *
    * @param mimeType the mime type to assign
    */
-  void setMimeType(final String mimeType);
+  void setMimeType(@Nullable final String mimeType);
 
   /**
    * Assigns the {@code MimeType} attribute.
    *
    * @param mimeType the mime type as an enum to assign
    */
-  void setMimeType(final SignMessageMimeTypeEnum mimeType);
+  void setMimeType(@Nullable final SignMessageMimeTypeEnum mimeType);
 
   /**
    * Returns the {@code Message} element.
    *
    * @return the Message element
    */
+  @Nullable
   Message getMessage();
 
   /**
@@ -191,13 +206,14 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    *
    * @param message the message to assign
    */
-  void setMessage(final Message message);
+  void setMessage(@Nullable final Message message);
 
   /**
    * Returns the {@code EncryptedMessage} element.
    *
    * @return the EncryptedMessage element
    */
+  @Nullable
   EncryptedMessage getEncryptedMessage();
 
   /**
@@ -205,6 +221,6 @@ public interface SignMessage extends SAMLObject, AttributeExtensibleXMLObject {
    *
    * @param encryptedMessage the EncryptedMessage element to assign
    */
-  void setEncryptedMessage(final EncryptedMessage encryptedMessage);
+  void setEncryptedMessage(@Nullable final EncryptedMessage encryptedMessage);
 
 }

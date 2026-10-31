@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * Internal class used for serialization across library classes.
  *
@@ -36,6 +38,7 @@ public final class LibraryVersion {
    *
    * @return the version string
    */
+  @Nonnull
   public static String getVersion() {
     return MAJOR + "." + MINOR + "." + PATCH;
   }

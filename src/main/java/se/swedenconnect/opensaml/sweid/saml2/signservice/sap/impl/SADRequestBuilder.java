@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADRequest;
@@ -27,6 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADRequest;
 public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public SADRequest buildObject() {
     return this.buildObject(SADRequest.DEFAULT_ELEMENT_NAME.getNamespaceURI(), SADRequest.DEFAULT_ELEMENT_LOCAL_NAME,
@@ -34,8 +37,10 @@ public class SADRequestBuilder extends AbstractSAMLObjectBuilder<SADRequest> {
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public SADRequest buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public SADRequest buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new SADRequestImpl(namespaceURI, localName, namespacePrefix);
   }
 

@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.UnmarshallingException;
 import org.opensaml.core.xml.schema.XSBooleanValue;
@@ -34,7 +35,8 @@ public class SignMessageUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processChildElement(final XMLObject parentSAMLObject, final XMLObject childSAMLObject)
+  protected void processChildElement(@Nonnull final XMLObject parentSAMLObject,
+      @Nonnull final XMLObject childSAMLObject)
       throws UnmarshallingException {
 
     final SignMessage signMessage = (SignMessage) parentSAMLObject;
@@ -52,7 +54,8 @@ public class SignMessageUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processAttribute(final XMLObject samlObject, final Attr attribute) throws UnmarshallingException {
+  protected void processAttribute(@Nonnull final XMLObject samlObject, @Nonnull final Attr attribute)
+      throws UnmarshallingException {
     final SignMessage signMessage = (SignMessage) samlObject;
 
     if (attribute.getLocalName().equals(SignMessage.MUST_SHOW_ATTR_NAME)) {

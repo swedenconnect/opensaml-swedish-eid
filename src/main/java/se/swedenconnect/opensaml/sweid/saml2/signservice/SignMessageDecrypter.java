@@ -18,6 +18,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.xmlsec.DecryptionParameters;
@@ -72,7 +74,7 @@ public class SignMessageDecrypter {
    *
    * @param decryptionCredential decryption credential
    */
-  public SignMessageDecrypter(final Credential decryptionCredential) {
+  public SignMessageDecrypter(@Nonnull final Credential decryptionCredential) {
     this.keyEncryptionKeyResolver = new StaticKeyInfoCredentialResolver(decryptionCredential);
   }
 
@@ -82,7 +84,7 @@ public class SignMessageDecrypter {
    *
    * @param decryptionCredentials decryption credentials
    */
-  public SignMessageDecrypter(final List<Credential> decryptionCredentials) {
+  public SignMessageDecrypter(@Nonnull final List<Credential> decryptionCredentials) {
     this.keyEncryptionKeyResolver = new StaticKeyInfoCredentialResolver(decryptionCredentials);
   }
 
@@ -91,7 +93,7 @@ public class SignMessageDecrypter {
    *
    * @param keyEncryptionKeyResolver the resolver
    */
-  public SignMessageDecrypter(final KeyInfoCredentialResolver keyEncryptionKeyResolver) {
+  public SignMessageDecrypter(@Nonnull final KeyInfoCredentialResolver keyEncryptionKeyResolver) {
     this.keyEncryptionKeyResolver = keyEncryptionKeyResolver;
   }
 
@@ -102,7 +104,8 @@ public class SignMessageDecrypter {
    * @return a cleartext {@code Message} element
    * @throws DecryptionException for decryption errors
    */
-  public Message decrypt(final SignMessage signMessage) throws DecryptionException {
+  @Nonnull
+  public Message decrypt(@Nonnull final SignMessage signMessage) throws DecryptionException {
     if (signMessage.getEncryptedMessage() == null && signMessage.getMessage() != null) {
       logger.debug("No decryption required - SignMessage contains cleartext message");
       return signMessage.getMessage();
@@ -142,7 +145,7 @@ public class SignMessageDecrypter {
    *
    * @param blacklistedAlgorithms non allowed algorithms
    */
-  public synchronized void setBlacklistedAlgorithms(final Collection<String> blacklistedAlgorithms) {
+  public synchronized void setBlacklistedAlgorithms(@Nullable final Collection<String> blacklistedAlgorithms) {
     this.blacklistedAlgorithms = blacklistedAlgorithms;
     this.decrypter = null;
   }
@@ -152,7 +155,7 @@ public class SignMessageDecrypter {
    *
    * @param whitelistedAlgorithms white listed algorithms
    */
-  public synchronized void setWhitelistedAlgorithms(final Collection<String> whitelistedAlgorithms) {
+  public synchronized void setWhitelistedAlgorithms(@Nullable final Collection<String> whitelistedAlgorithms) {
     this.whitelistedAlgorithms = whitelistedAlgorithms;
     this.decrypter = null;
   }

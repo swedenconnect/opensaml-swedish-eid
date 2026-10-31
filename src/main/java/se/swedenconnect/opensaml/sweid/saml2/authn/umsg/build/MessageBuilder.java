@@ -33,6 +33,7 @@ public class MessageBuilder extends AbstractSAMLObjectBuilder<Message> {
    *
    * @return a {@code MessageBuilder}
    */
+  @Nonnull
   public static MessageBuilder builder() {
     return new MessageBuilder();
   }

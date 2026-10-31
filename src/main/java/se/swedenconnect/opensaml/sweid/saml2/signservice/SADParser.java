@@ -20,6 +20,8 @@ import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.factories.DefaultJWSVerifierFactory;
 import com.nimbusds.jose.proc.JWSVerifierFactory;
 import com.nimbusds.jwt.SignedJWT;
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import net.shibboleth.shared.resolver.ResolverException;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.saml.common.xml.SAMLConstants;
@@ -79,7 +81,8 @@ public class SADParser {
    * @return the SAD object
    * @throws IOException for parsing errors
    */
-  public static SAD parse(final String sadJwt) throws IOException {
+  @Nonnull
+  public static SAD parse(@Nonnull final String sadJwt) throws IOException {
     try {
       final SignedJWT signedJwt = SignedJWT.parse(sadJwt);
       final String payload = signedJwt.getPayload().toBase64URL().toString();
@@ -97,7 +100,8 @@ public class SADParser {
    * @param validationCertificates certificate(s) to be used when verifying the JWT signature
    * @return a SADValidator instance
    */
-  public static SADValidator getValidator(final X509Certificate... validationCertificates) {
+  @Nonnull
+  public static SADValidator getValidator(@Nonnull final X509Certificate... validationCertificates) {
     return new SADValidator(validationCertificates);
   }
 
@@ -108,7 +112,8 @@ public class SADParser {
    * @param metadataProvider metadata provider
    * @return a SADValidator instance
    */
-  public static SADValidator getValidator(final MetadataProvider metadataProvider) {
+  @Nonnull
+  public static SADValidator getValidator(@Nonnull final MetadataProvider metadataProvider) {
     return new SADValidator(metadataProvider);
   }
 
@@ -119,7 +124,8 @@ public class SADParser {
    * @param idpMetadata the IdP metadata
    * @return a SADValidator instance
    */
-  public static SADValidator getValidator(final EntityDescriptor idpMetadata) {
+  @Nonnull
+  public static SADValidator getValidator(@Nonnull final EntityDescriptor idpMetadata) {
     return new SADValidator(idpMetadata);
   }
 
@@ -131,6 +137,7 @@ public class SADParser {
   public static class SADValidator {
 
     /** Default allowed clock skew. */
+    @Nonnull
     public static final Duration DEFAULT_ALLOWED_CLOCK_SKEW = Duration.ofSeconds(15);
 
     /** Logger instance. */
@@ -153,7 +160,7 @@ public class SADParser {
      *
      * @param certificates certificate(s) to be used when verifying the JWT signature
      */
-    public SADValidator(final X509Certificate... certificates) {
+    public SADValidator(@Nonnull final X509Certificate... certificates) {
       this.validationCertificates = Arrays.asList(certificates);
     }
 
@@ -164,7 +171,7 @@ public class SADParser {
      *
      * @param metadataProvider metadata provider
      */
-    public SADValidator(final MetadataProvider metadataProvider) {
+    public SADValidator(@Nonnull final MetadataProvider metadataProvider) {
       this.metadataProvider = metadataProvider;
     }
 
@@ -174,7 +181,7 @@ public class SADParser {
      *
      * @param idpMetadata the IdP metadata
      */
-    public SADValidator(final EntityDescriptor idpMetadata) {
+    public SADValidator(@Nonnull final EntityDescriptor idpMetadata) {
       try {
         this.metadataProvider = new StaticMetadataProvider(idpMetadata);
       }
@@ -195,8 +202,9 @@ public class SADParser {
      *     invalid by other means (e.g., missing LoA)
      * @see #validate(String, String, String, String, String, String, int, String, SADVersion)
      */
-    public SAD validate(final AuthnRequest authnRequest, final Assertion assertion) throws SADValidationException,
-        IllegalArgumentException {
+    @Nonnull
+    public SAD validate(@Nonnull final AuthnRequest authnRequest, @Nonnull final Assertion assertion)
+        throws SADValidationException, IllegalArgumentException {
 
       final long now = System.currentTimeMillis() / 1000;
 
@@ -276,7 +284,7 @@ public class SADParser {
       final String loa = getLoa(assertion);
       if (loa == null) {
         final String msg = String.format("Assertion '%s' does not contain a LoA URI", assertion.getID());
-        logger.error(msg);
+        logger.info(msg);
         throw new IllegalArgumentException(msg);
       }
 
@@ -326,9 +334,11 @@ public class SADParser {
      * @throws SADValidationException for validation errors
      * @see #validate(String, String, String, String, String, String, int, String, SADVersion)
      */
-    public SAD validate(final String sadJwt, final String idpEntityID, final String expectedRecipientEntityID,
-        final String expectedSubject, final String expectedLoa, final String sadRequestID, final int expectedNoDocs,
-        final String signRequestID) throws SADValidationException {
+    @Nonnull
+    public SAD validate(@Nonnull final String sadJwt, @Nonnull final String idpEntityID,
+        @Nonnull final String expectedRecipientEntityID, @Nonnull final String expectedSubject,
+        @Nonnull final String expectedLoa, @Nonnull final String sadRequestID, final int expectedNoDocs,
+        @Nonnull final String signRequestID) throws SADValidationException {
       return this.validate(sadJwt, idpEntityID, expectedRecipientEntityID, expectedSubject, expectedLoa, sadRequestID,
           expectedNoDocs, signRequestID, SADVersion.VERSION_10);
     }
@@ -359,9 +369,12 @@ public class SADParser {
      * @return a SAD object
      * @throws SADValidationException for validation errors
      */
-    public SAD validate(final String sadJwt, final String idpEntityID, final String expectedRecipientEntityID,
-        final String expectedSubject, final String expectedLoa, final String sadRequestID, final int expectedNoDocs,
-        final String signRequestID, final SADVersion expectedVersion) throws SADValidationException {
+    @Nonnull
+    public SAD validate(@Nonnull final String sadJwt, @Nonnull final String idpEntityID,
+        @Nonnull final String expectedRecipientEntityID, @Nonnull final String expectedSubject,
+        @Nonnull final String expectedLoa, @Nonnull final String sadRequestID, final int expectedNoDocs,
+        @Nonnull final String signRequestID, @Nullable final SADVersion expectedVersion)
+        throws SADValidationException {
 
       final long now = System.currentTimeMillis() / 1000;
 
@@ -567,7 +580,8 @@ public class SADParser {
      * @param idpEntityID the entityID of the IdP that signed the JWT
      * @throws SADValidationException for signature validation errors
      */
-    public void verifyJwtSignature(final String sadJwt, final String idpEntityID) throws SADValidationException {
+    public void verifyJwtSignature(@Nonnull final String sadJwt, @Nonnull final String idpEntityID)
+        throws SADValidationException {
       try {
         this.verifyJwtSignature(SignedJWT.parse(sadJwt), idpEntityID);
       }
@@ -669,7 +683,7 @@ public class SADParser {
      *
      * @param allowedClockSkew allowed clock skew
      */
-    public void setAllowedClockSkew(final Duration allowedClockSkew) {
+    public void setAllowedClockSkew(@Nullable final Duration allowedClockSkew) {
       if (allowedClockSkew != null) {
         this.allowedClockSkew = allowedClockSkew;
       }

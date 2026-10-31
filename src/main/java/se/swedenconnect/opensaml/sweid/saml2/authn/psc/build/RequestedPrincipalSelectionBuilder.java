@@ -18,6 +18,8 @@ package se.swedenconnect.opensaml.sweid.saml2.authn.psc.build;
 import java.util.Arrays;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.XMLRuntimeException;
 import org.opensaml.core.xml.io.MarshallingException;
 import org.opensaml.core.xml.io.UnmarshallingException;
@@ -39,11 +41,13 @@ public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilde
    *
    * @return a RequestedPrincipalSelectionBuilder instance
    */
+  @Nonnull
   public static RequestedPrincipalSelectionBuilder builder() {
     return new RequestedPrincipalSelectionBuilder();
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected Class<RequestedPrincipalSelection> getObjectType() {
     return RequestedPrincipalSelection.class;
@@ -55,7 +59,8 @@ public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilde
    * @param matchValues a list of match values
    * @return the builder
    */
-  public RequestedPrincipalSelectionBuilder matchValues(final List<MatchValue> matchValues) {
+  @Nonnull
+  public RequestedPrincipalSelectionBuilder matchValues(@Nullable final List<MatchValue> matchValues) {
     this.object().getMatchValues().clear();
     if (matchValues == null || matchValues.isEmpty()) {
       return this;
@@ -77,7 +82,8 @@ public class RequestedPrincipalSelectionBuilder extends AbstractSAMLObjectBuilde
    * @param matchValues the match values
    * @return the builder
    */
-  public RequestedPrincipalSelectionBuilder matchValues(final MatchValue... matchValues) {
+  @Nonnull
+  public RequestedPrincipalSelectionBuilder matchValues(@Nullable final MatchValue... matchValues) {
     return this.matchValues(matchValues != null ? Arrays.asList(matchValues) : null);
   }
 

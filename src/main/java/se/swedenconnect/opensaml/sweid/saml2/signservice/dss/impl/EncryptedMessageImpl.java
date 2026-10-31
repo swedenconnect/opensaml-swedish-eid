@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.saml2.core.impl.EncryptedElementTypeImpl;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.EncryptedMessage;
@@ -33,8 +35,8 @@ public class EncryptedMessageImpl extends EncryptedElementTypeImpl implements En
    * @param elementLocalName the element local name.
    * @param namespacePrefix the name space prefix.
    */
-  protected EncryptedMessageImpl(final String namespaceURI, final String elementLocalName,
-      final String namespacePrefix) {
+  protected EncryptedMessageImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }
 

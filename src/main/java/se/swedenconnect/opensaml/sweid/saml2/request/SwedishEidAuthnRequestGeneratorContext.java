@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.request;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.saml.saml2.metadata.EntityDescriptor;
 import se.swedenconnect.opensaml.saml2.request.AuthnRequestGeneratorContext;
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
@@ -41,6 +42,7 @@ public interface SwedishEidAuthnRequestGeneratorContext extends AuthnRequestGene
    *
    * @return the builder function
    */
+  @Nonnull
   default SignMessageBuilderFunction getSignMessageBuilderFunction() {
     return (m, e) -> null;
   }
@@ -53,6 +55,7 @@ public interface SwedishEidAuthnRequestGeneratorContext extends AuthnRequestGene
    *
    * @return the builder function
    */
+  @Nonnull
   default PrincipalSelectionBuilderFunction getPrincipalSelectionBuilderFunction() {
     return () -> null;
   }
@@ -68,6 +71,7 @@ public interface SwedishEidAuthnRequestGeneratorContext extends AuthnRequestGene
    *
    * @return the builder function
    */
+  @Nonnull
   default UserMessageBuilderFunction getUserMessageBuilderFunction() {
     return (um) -> null;
   }

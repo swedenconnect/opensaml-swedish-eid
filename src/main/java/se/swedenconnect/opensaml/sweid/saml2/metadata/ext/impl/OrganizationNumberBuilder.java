@@ -15,12 +15,11 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.ext.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 import se.swedenconnect.opensaml.sweid.saml2.metadata.ext.MetadataExtConstants;
 import se.swedenconnect.opensaml.sweid.saml2.metadata.ext.OrganizationNumber;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Builder for {@link OrganizationNumber}.

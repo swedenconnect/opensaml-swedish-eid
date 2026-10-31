@@ -40,6 +40,7 @@ public class UserMessageBuilder extends AbstractSAMLObjectBuilder<UserMessage> {
    *
    * @return a {@code UserMessageBuilder}
    */
+  @Nonnull
   public static UserMessageBuilder builder() {
     return new UserMessageBuilder();
   }

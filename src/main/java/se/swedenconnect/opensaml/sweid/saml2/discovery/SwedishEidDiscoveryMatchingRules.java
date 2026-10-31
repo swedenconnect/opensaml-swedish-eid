@@ -18,6 +18,7 @@ package se.swedenconnect.opensaml.sweid.saml2.discovery;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,8 @@ public class SwedishEidDiscoveryMatchingRules {
    * @see #isServiceContractMatch(Collection, Collection)
    * @see #isServicePropertyMatch(Collection, Collection)
    */
-  public static boolean isMatch(final Collection<String> consumingService, final Collection<String> providingService) {
+  public static boolean isMatch(@Nonnull final Collection<String> consumingService,
+      @Nonnull final Collection<String> providingService) {
 
     // 1. Match service entity categories
     //
@@ -94,8 +96,8 @@ public class SwedishEidDiscoveryMatchingRules {
    * @return {@code true} if the providing service declares at least one of the service entity categories declared by
    *           the consuming service and {@code false} otherwise
    */
-  public static boolean isServiceEntityMatch(final Collection<String> consumingService,
-      final Collection<String> providingService) {
+  public static boolean isServiceEntityMatch(@Nonnull final Collection<String> consumingService,
+      @Nonnull final Collection<String> providingService) {
     final Collection<String> csServiceEntityCategories = consumingService.stream()
         .filter(c -> EntityCategoryType.isType(c, EntityCategoryType.SERVICE_ENTITY))
         .collect(Collectors.toList());
@@ -131,8 +133,8 @@ public class SwedishEidDiscoveryMatchingRules {
    * @return if the providing service declares at least one service contract category and the consuming service declares
    *           at least one of those declared identifiers {@code true} is returned
    */
-  public static boolean isServiceContractMatch(final Collection<String> consumingService,
-      final Collection<String> providingService) {
+  public static boolean isServiceContractMatch(@Nonnull final Collection<String> consumingService,
+      @Nonnull final Collection<String> providingService) {
     final Collection<String> psServiceContractCategories = providingService.stream()
         .filter(c -> EntityCategoryType.isType(c, EntityCategoryType.SERVICE_CONTRACT))
         .collect(Collectors.toList());
@@ -167,8 +169,8 @@ public class SwedishEidDiscoveryMatchingRules {
    * @return if all of the Service Property identifiers declared by the consuming service is declared by the providing
    *           service {@code true} is returned
    */
-  public static boolean isServicePropertyMatch(final Collection<String> consumingService,
-      final Collection<String> providingService) {
+  public static boolean isServicePropertyMatch(@Nonnull final Collection<String> consumingService,
+      @Nonnull final Collection<String> providingService) {
     final Collection<String> csServicePropertyCategories = consumingService.stream()
         .filter(c -> EntityCategoryType.isType(c, EntityCategoryType.SERVICE_PROPERTY))
         .collect(Collectors.toList());

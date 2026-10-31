@@ -16,6 +16,7 @@
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl;
 
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.schema.impl.XSStringImpl;
 import org.opensaml.core.xml.util.AttributeMap;
 
@@ -44,18 +45,21 @@ public class MatchValueImpl extends XSStringImpl implements MatchValue {
    * @param elementLocalName the local name of the XML element this Object represents
    * @param namespacePrefix the prefix for the given namespace
    */
-  public MatchValueImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  public MatchValueImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.unknownAttributes = new AttributeMap(this);
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public AttributeMap getUnknownAttributes() {
     return this.unknownAttributes;
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getNameFormat() {
     return this.nameFormat;
@@ -63,11 +67,12 @@ public class MatchValueImpl extends XSStringImpl implements MatchValue {
 
   /** {@inheritDoc} */
   @Override
-  public void setNameFormat(final String nameFormat) {
+  public void setNameFormat(@Nullable final String nameFormat) {
     this.nameFormat = this.prepareForAssignment(this.nameFormat, nameFormat);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getName() {
     return this.name;
@@ -75,7 +80,7 @@ public class MatchValueImpl extends XSStringImpl implements MatchValue {
 
   /** {@inheritDoc} */
   @Override
-  public void setName(final String name) {
+  public void setName(@Nullable final String name) {
     this.name = this.prepareForAssignment(this.name, name);
   }
 

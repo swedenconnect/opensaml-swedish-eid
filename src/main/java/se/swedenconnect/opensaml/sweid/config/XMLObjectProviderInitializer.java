@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.config;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.config.AbstractXMLObjectProviderInitializer;
 
 /**
@@ -30,6 +31,7 @@ public class XMLObjectProviderInitializer extends AbstractXMLObjectProviderIniti
   };
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected String[] getConfigResources() {
     return configs;

@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.assertion.ValidationContext;
 import org.opensaml.saml.common.assertion.ValidationResult;
 import org.opensaml.saml.saml2.assertion.ConditionValidator;
@@ -78,8 +80,8 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
    * @param trustEngine the trust used to validate the object's signature
    * @param signaturePrevalidator the signature pre-validator used to pre-validate the object's signature
    */
-  public SwedishEidAssertionValidator(final SignatureTrustEngine trustEngine,
-      final SignaturePrevalidator signaturePrevalidator) {
+  public SwedishEidAssertionValidator(@Nonnull final SignatureTrustEngine trustEngine,
+      @Nonnull final SignaturePrevalidator signaturePrevalidator) {
     this(trustEngine, signaturePrevalidator,
         Arrays.asList(new BearerSubjectConfirmationValidator(), new HolderOfKeySubjectConfirmationValidator()),
         Arrays.asList(new AudienceRestrictionConditionValidator()),
@@ -96,11 +98,11 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
    * @param statementValidators validators used to validate Statements within the assertion
    */
   public SwedishEidAssertionValidator(
-      final SignatureTrustEngine trustEngine,
-      final SignaturePrevalidator signaturePrevalidator,
-      final Collection<SubjectConfirmationValidator> confirmationValidators,
-      final Collection<ConditionValidator> conditionValidators,
-      final Collection<StatementValidator> statementValidators) {
+      @Nonnull final SignatureTrustEngine trustEngine,
+      @Nonnull final SignaturePrevalidator signaturePrevalidator,
+      @Nullable final Collection<SubjectConfirmationValidator> confirmationValidators,
+      @Nullable final Collection<ConditionValidator> conditionValidators,
+      @Nullable final Collection<StatementValidator> statementValidators) {
 
     super(trustEngine, signaturePrevalidator, confirmationValidators, conditionValidators, statementValidators);
   }
@@ -110,8 +112,10 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
    * holds a NameID value of the correct format. We also check that there is a {@code SubjectConfirmation} element for
    * the bearer method. After that, the base implementation may execute.
    */
+  @Nonnull
   @Override
-  protected ValidationResult validateSubject(final Assertion assertion, final ValidationContext context) {
+  protected ValidationResult validateSubject(@Nonnull final Assertion assertion,
+      @Nonnull final ValidationContext context) {
 
     if (assertion.getSubject() == null) {
       context.getValidationFailureMessages().add("Missing Subject element in Assertion");
@@ -188,8 +192,10 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
   /**
    * Extends the base implementation with requirements from the Swedish eID Framework.
    */
+  @Nonnull
   @Override
-  protected ValidationResult validateConditions(final Assertion assertion, final ValidationContext context) {
+  protected ValidationResult validateConditions(@Nonnull final Assertion assertion,
+      @Nonnull final ValidationContext context) {
 
     if (assertion.getConditions() == null) {
       context.getValidationFailureMessages().add("Missing Conditions element in Assertion");
@@ -225,8 +231,10 @@ public class SwedishEidAssertionValidator extends AssertionValidator {
    * Overrides the default implementation with checks to ensure that the assertion contains exactly one
    * {@link AuthnStatement} and exactly one {@link AttributeStatement} element.
    */
+  @Nonnull
   @Override
-  protected ValidationResult validateStatements(final Assertion assertion, final ValidationContext context) {
+  protected ValidationResult validateStatements(@Nonnull final Assertion assertion,
+      @Nonnull final ValidationContext context) {
 
     if (assertion.getAuthnStatements() == null || assertion.getAuthnStatements().isEmpty()) {
       context.getValidationFailureMessages().add("No AuthnStatement in Assertion");

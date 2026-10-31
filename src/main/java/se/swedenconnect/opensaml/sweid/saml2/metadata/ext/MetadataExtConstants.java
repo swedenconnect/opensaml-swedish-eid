@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.ext;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * Defines contants for SAML metadata extensions.
  *
@@ -23,9 +25,11 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.ext;
 public class MetadataExtConstants {
 
   /** Namespace prefix for the mdorgext (Metadata Organization Extensions) namespace. */
+  @Nonnull
   public static final String MDORGEXT_NS_PREFIX = "mdorgext";
 
   /** The namespace for the OrganizationNumber schema. */
+  @Nonnull
   public static final String MDORGEXT_NS = "http://id.swedenconnect.se/authn/1.0/md-org-ext/ns";
 
   private MetadataExtConstants() {}

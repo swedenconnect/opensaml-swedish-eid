@@ -30,6 +30,8 @@
 - `MatchValue` and `UserMessage` attributes are now matched exactly and only without namespace. Attributes from other namespaces are kept as unknown attributes ([#88](https://github.com/swedenconnect/opensaml-swedish-eid/issues/88)).
 - `getServiceEntityCategories` in the entity category registry no longer throws `ClassCastException` for incorrectly typed entries ([#91](https://github.com/swedenconnect/opensaml-swedish-eid/issues/91)).
 - Added type name constants to `OrganizationNumber` ([#93](https://github.com/swedenconnect/opensaml-swedish-eid/issues/93)).
+- The public API is now annotated with `jakarta.annotation` nullability annotations ([#94](https://github.com/swedenconnect/opensaml-swedish-eid/issues/94)).
+- Lower log levels for validation failures that are reported to the caller ([#95](https://github.com/swedenconnect/opensaml-swedish-eid/issues/95)).
 
 ---
 

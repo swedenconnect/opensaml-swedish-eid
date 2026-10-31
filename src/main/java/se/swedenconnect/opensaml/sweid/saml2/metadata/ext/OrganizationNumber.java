@@ -15,12 +15,12 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.ext;
 
+import jakarta.annotation.Nonnull;
 import net.shibboleth.shared.annotation.constraint.NotEmpty;
 import org.opensaml.core.xml.schema.XSString;
 import org.opensaml.saml.common.SAMLObject;
 import org.opensaml.saml.common.xml.SAMLConstants;
 
-import javax.annotation.Nonnull;
 import javax.xml.namespace.QName;
 
 /**

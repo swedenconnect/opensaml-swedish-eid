@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
 import java.io.Serializable;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * Represents an Entity Category according to the Swedish eID Framework.
  *
@@ -29,6 +31,7 @@ public interface EntityCategory extends Serializable {
    *
    * @return the entity category URI
    */
+  @Nonnull
   String getUri();
 
   /**
@@ -36,6 +39,7 @@ public interface EntityCategory extends Serializable {
    *
    * @return the type of entity category
    */
+  @Nonnull
   EntityCategoryType getType();
 
 }

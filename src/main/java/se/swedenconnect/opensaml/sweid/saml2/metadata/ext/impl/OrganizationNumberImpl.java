@@ -15,11 +15,10 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.ext.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.schema.impl.XSStringImpl;
 import se.swedenconnect.opensaml.sweid.saml2.metadata.ext.OrganizationNumber;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * Implementation of the {@link OrganizationNumber} interface.

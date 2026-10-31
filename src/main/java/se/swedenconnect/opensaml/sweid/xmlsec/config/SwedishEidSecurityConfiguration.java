@@ -17,6 +17,7 @@ package se.swedenconnect.opensaml.sweid.xmlsec.config;
 
 import java.util.Arrays;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.xmlsec.EncryptionConfiguration;
 import org.opensaml.xmlsec.encryption.support.EncryptionConstants;
 import org.opensaml.xmlsec.impl.BasicEncryptionConfiguration;
@@ -37,12 +38,14 @@ import se.swedenconnect.opensaml.xmlsec.config.SecurityConfiguration;
 public class SwedishEidSecurityConfiguration extends SAML2IntSecurityConfiguration {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public String getProfileName() {
     return "swedish-eid-framework";
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected EncryptionConfiguration createDefaultEncryptionConfiguration() {
     final BasicEncryptionConfiguration config =

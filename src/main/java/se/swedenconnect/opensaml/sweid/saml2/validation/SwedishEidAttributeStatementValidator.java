@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.saml.common.assertion.AssertionValidationException;
 import org.opensaml.saml.common.assertion.ValidationContext;
@@ -67,27 +68,31 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
   /**
    * Key for a validation context parameter. Carries a {@link AttributeSet} holding the required attributes.
    */
+  @Nonnull
   public static final String REQUIRED_ATTRIBUTE_SET = CoreValidatorParameters.STD_PREFIX + ".RequiredAttributeSet";
 
   /**
    * Key for a validation context parameter. Carries a {@link Collection} of strings holding attribute names of
    * required attributes.
    */
+  @Nonnull
   public static final String REQUIRED_ATTRIBUTES = CoreValidatorParameters.STD_PREFIX + ".RequiredAttributes";
 
   /**
    * Key for a validation context parameter. Carries a {@link Collection} of strings holding the attribute names for
    * attributes that are "scoped".
    */
+  @Nonnull
   public static final String SCOPED_ATTRIBUTES = CoreValidatorParameters.STD_PREFIX + ".ScopedAttributes";
 
   /** Class logger. */
   private static final Logger log = LoggerFactory.getLogger(SwedishEidAttributeStatementValidator.class);
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public ValidationResult validate(final Statement statement, final Assertion assertion,
-      final ValidationContext context)
+  public ValidationResult validate(@Nonnull final Statement statement, @Nonnull final Assertion assertion,
+      @Nonnull final ValidationContext context)
       throws AssertionValidationException {
 
     final ValidationResult result = super.validate(statement, assertion, context);
@@ -108,10 +113,11 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
    * {@link #REQUIRED_ATTRIBUTE_SET} that holds an {@link AttributeSet} and/or the list of attribute names from the
    * parameter {@link SwedishEidAttributeStatementValidator#REQUIRED_ATTRIBUTES}.
    */
+  @Nonnull
   @Override
-  protected ValidationResult validateRequiredAttributes(final List<Attribute> attributes,
-      final AttributeStatement statement,
-      final Assertion assertion, final ValidationContext context) {
+  protected ValidationResult validateRequiredAttributes(@Nonnull final List<Attribute> attributes,
+      @Nonnull final AttributeStatement statement,
+      @Nonnull final Assertion assertion, @Nonnull final ValidationContext context) {
 
     final AttributeSet attributeSet = (AttributeSet) context.getStaticParameters().get(REQUIRED_ATTRIBUTE_SET);
     if (attributeSet != null) {
@@ -150,7 +156,8 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
    * @param context the validation context
    * @return a collection of attribute names (never {@code null})
    */
-  protected Collection<String> getRequiredAttributes(final ValidationContext context) {
+  @Nonnull
+  protected Collection<String> getRequiredAttributes(@Nonnull final ValidationContext context) {
     @SuppressWarnings("unchecked")
     final Collection<String> attributes = (Collection<String>) context.getStaticParameters().get(REQUIRED_ATTRIBUTES);
     return attributes != null ? attributes : Collections.emptyList();
@@ -165,9 +172,10 @@ public class SwedishEidAttributeStatementValidator extends AbstractAttributeStat
    * @param context the validation context
    * @return a validation result
    */
-  protected ValidationResult validateScopedAttributes(final List<Attribute> attributes,
-      final AttributeStatement statement,
-      final Assertion assertion, final ValidationContext context) {
+  @Nonnull
+  protected ValidationResult validateScopedAttributes(@Nonnull final List<Attribute> attributes,
+      @Nonnull final AttributeStatement statement,
+      @Nonnull final Assertion assertion, @Nonnull final ValidationContext context) {
 
     @SuppressWarnings("unchecked")
     final Collection<String> scopedAttributes =
