@@ -39,6 +39,11 @@ import javax.xml.namespace.QName;
  * }
  * </pre>
  *
+ * <p>
+ * Schema location: <a href=
+ * "https://docs.swedenconnect.se/schemas/authn/1.0/OrganizationNumber-1.0.xsd">https://docs.swedenconnect.se/schemas/authn/1.0/OrganizationNumber-1.0.xsd</a>.
+ * </p>
+ *
  * @author Martin Lindström
  */
 public interface OrganizationNumber extends SAMLObject, XSString {
@@ -52,5 +57,15 @@ public interface OrganizationNumber extends SAMLObject, XSString {
   @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(
       MetadataExtConstants.MDORGEXT_NS, DEFAULT_ELEMENT_LOCAL_NAME, MetadataExtConstants.MDORGEXT_NS_PREFIX);
+
+  /** Local name of the XSI type. */
+  @Nonnull
+  @NotEmpty
+  String TYPE_LOCAL_NAME = "OrganizationNumberType";
+
+  /** QName of the XSI type. */
+  @Nonnull
+  QName TYPE_NAME =
+      new QName(MetadataExtConstants.MDORGEXT_NS, TYPE_LOCAL_NAME, MetadataExtConstants.MDORGEXT_NS_PREFIX);
 
 }

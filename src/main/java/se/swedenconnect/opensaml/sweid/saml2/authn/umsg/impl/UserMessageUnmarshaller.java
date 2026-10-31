@@ -52,7 +52,7 @@ public class UserMessageUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
     final UserMessage userMessage = (UserMessage) xmlObject;
 
-    if (UserMessage.MIME_TYPE_ATTR_NAME.equalsIgnoreCase(attribute.getLocalName())) {
+    if (attribute.getNamespaceURI() == null && UserMessage.MIME_TYPE_ATTR_NAME.equals(attribute.getLocalName())) {
       userMessage.setMimeType(attribute.getValue());
     }
     else {

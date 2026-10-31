@@ -18,6 +18,10 @@
 - Attribute set validation no longer fails on assertions without an AttributeStatement, and checks all AttributeStatement elements ([#83](https://github.com/swedenconnect/opensaml-swedish-eid/issues/83)).
 - Under strict validation, assertions with more than one AuthnStatement or AttributeStatement are rejected ([#84](https://github.com/swedenconnect/opensaml-swedish-eid/issues/84)).
 - The default allowed clock skew for assertion validation is now one minute ([#85](https://github.com/swedenconnect/opensaml-swedish-eid/issues/85)).
+- The no-argument `buildObject()` of the `RequestedPrincipalSelection` builder created a `PrincipalSelection` element ([#87](https://github.com/swedenconnect/opensaml-swedish-eid/issues/87)).
+- `MatchValue` and `UserMessage` attributes are now matched exactly and only without namespace. Attributes from other namespaces are kept as unknown attributes ([#88](https://github.com/swedenconnect/opensaml-swedish-eid/issues/88)).
+- `getServiceEntityCategories` in the entity category registry no longer throws `ClassCastException` for incorrectly typed entries ([#91](https://github.com/swedenconnect/opensaml-swedish-eid/issues/91)).
+- Added type name constants to `OrganizationNumber` ([#93](https://github.com/swedenconnect/opensaml-swedish-eid/issues/93)).
 
 ---
 
