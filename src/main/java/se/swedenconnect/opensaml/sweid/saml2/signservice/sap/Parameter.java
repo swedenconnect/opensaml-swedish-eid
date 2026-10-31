@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.schema.XSString;
 import org.opensaml.saml.common.SAMLObject;
 
@@ -41,18 +43,23 @@ import org.opensaml.saml.common.SAMLObject;
 public interface Parameter extends XSString, SAMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "Parameter";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(SAPConstants.SAP_NS, DEFAULT_ELEMENT_LOCAL_NAME, SAPConstants.SAP_NS_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "ParameterType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME = new QName(SAPConstants.SAP_NS, TYPE_LOCAL_NAME, SAPConstants.SAP_NS_PREFIX);
 
   /** Attribute label for the Name attribute. */
+  @Nonnull
   String NAME_ATTR_NAME = "name";
 
   /**
@@ -60,6 +67,7 @@ public interface Parameter extends XSString, SAMLObject {
    *
    * @return the name attribute
    */
+  @Nullable
   String getName();
 
   /**
@@ -67,6 +75,6 @@ public interface Parameter extends XSString, SAMLObject {
    *
    * @param name the name attribute
    */
-  void setName(final String name);
+  void setName(@Nullable final String name);
 
 }

@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.saml.common.SAMLObject;
 
 /**
@@ -29,9 +30,11 @@ import org.opensaml.saml.common.SAMLObject;
 public interface RequestParams extends SAMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "RequestParams";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(SAPConstants.SAP_NS, DEFAULT_ELEMENT_LOCAL_NAME, SAPConstants.SAP_NS_PREFIX);
 
   /**
@@ -39,6 +42,7 @@ public interface RequestParams extends SAMLObject {
    *
    * @return a list of parameters
    */
+  @Nonnull
   List<Parameter> getParameters();
 
 }

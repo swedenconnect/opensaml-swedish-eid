@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.saml.common.SAMLObject;
 
 /**
@@ -41,18 +42,23 @@ import org.opensaml.saml.common.SAMLObject;
 public interface PrincipalSelection extends SAMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "PrincipalSelection";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(PscConstants.PSC_NS, DEFAULT_ELEMENT_LOCAL_NAME, PscConstants.PSC_NS_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "PrincipalSelectionType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME = new QName(PscConstants.PSC_NS, TYPE_LOCAL_NAME, PscConstants.PSC_NS_PREFIX);
 
   /** Name of the MatchValue element. */
+  @Nonnull
   String MATCH_VALUE_LOCAL_NAME = "MatchValue";
 
   /**
@@ -60,6 +66,7 @@ public interface PrincipalSelection extends SAMLObject {
    *
    * @return a list of match values
    */
+  @Nonnull
   List<MatchValue> getMatchValues();
 
 }

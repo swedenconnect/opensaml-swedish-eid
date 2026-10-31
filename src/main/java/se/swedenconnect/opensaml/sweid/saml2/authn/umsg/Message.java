@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.umsg;
 
+import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AttributeExtensibleXMLObject;
 import org.opensaml.core.xml.LangBearing;
@@ -49,16 +50,20 @@ import javax.xml.namespace.QName;
 public interface Message extends XSBase64Binary, LangBearing, SAMLObject, AttributeExtensibleXMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "Message";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(UserMessageConstants.UMSG_NS, DEFAULT_ELEMENT_LOCAL_NAME,
       UserMessageConstants.UMSG_NS_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "MessageType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME = new QName(UserMessageConstants.UMSG_NS, TYPE_LOCAL_NAME,
       UserMessageConstants.UMSG_NS_PREFIX);
 

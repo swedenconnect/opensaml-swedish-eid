@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
  * Represents the different Entity Category types defined within the Swedish eiD Framework.
  *
@@ -55,7 +58,8 @@ public enum EntityCategoryType {
    * @param uri entity category URI
    * @return the entity category type, or null if no match is found
    */
-  public static EntityCategoryType getType(final String uri) {
+  @Nullable
+  public static EntityCategoryType getType(@Nullable final String uri) {
     if (uri == null) {
       return null;
     }
@@ -76,7 +80,7 @@ public enum EntityCategoryType {
    * @param type the entity category type to test for
    * @return if the supplied URI is of the given type true is returned, otherwise false
    */
-  public static boolean isType(final String uri, final EntityCategoryType type) {
+  public static boolean isType(@Nullable final String uri, @Nonnull final EntityCategoryType type) {
     if (uri == null) {
       return false;
     }

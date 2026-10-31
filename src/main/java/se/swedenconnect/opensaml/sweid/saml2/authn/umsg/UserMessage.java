@@ -52,23 +52,29 @@ import java.util.List;
 public interface UserMessage extends SAMLObject, AttributeExtensibleXMLObject {
 
   /** Name of the element. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "UserMessage";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(UserMessageConstants.UMSG_NS, DEFAULT_ELEMENT_LOCAL_NAME,
       UserMessageConstants.UMSG_NS_PREFIX);
 
   /** Local name of the type */
+  @Nonnull
   String TYPE_LOCAL_NAME = "UserMessageType";
 
   /** QName of the XSI type. */
+  @Nonnull
   QName TYPE_NAME = new QName(UserMessageConstants.UMSG_NS, TYPE_LOCAL_NAME,
       UserMessageConstants.UMSG_NS_PREFIX);
 
   /** Attribute label for the mimeType attribute. */
+  @Nonnull
   String MIME_TYPE_ATTR_NAME = "mimeType";
 
   /** The default MIME type. */
+  @Nonnull
   String DEFAULT_MIME_TYPE = "text/plain";
 
   /**

@@ -18,6 +18,8 @@ package se.swedenconnect.opensaml.sweid.saml2.attribute;
 import java.io.Serializable;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.saml2.core.Assertion;
 import org.opensaml.saml.saml2.metadata.RequestedAttribute;
 
@@ -39,6 +41,7 @@ public interface AttributeSet extends Serializable {
    * @return the attribute set identifier
    * @see #getUri()
    */
+  @Nonnull
   String getIdentifier();
 
   /**
@@ -47,6 +50,7 @@ public interface AttributeSet extends Serializable {
    * @return the attribute set URI
    * @see #getIdentifier()
    */
+  @Nonnull
   String getUri();
 
   /**
@@ -54,6 +58,7 @@ public interface AttributeSet extends Serializable {
    *
    * @return the attribute set friendly name
    */
+  @Nonnull
   String getFriendlyName();
 
   /**
@@ -61,6 +66,7 @@ public interface AttributeSet extends Serializable {
    *
    * @return an array of required attributes for this set
    */
+  @Nonnull
   AttributeTemplate[] getRequiredAttributes();
 
   /**
@@ -68,6 +74,7 @@ public interface AttributeSet extends Serializable {
    *
    * @return an array of recommended attributes for this set
    */
+  @Nonnull
   AttributeTemplate[] getRecommendedAttributes();
 
   /**
@@ -90,7 +97,8 @@ public interface AttributeSet extends Serializable {
    * @throws AttributesValidationException
    *           for violations of the attribute set
    */
-  void validateAttributes(final Assertion assertion, final List<RequestedAttribute> explicitlyRequestedAttributes)
+  void validateAttributes(@Nonnull final Assertion assertion,
+      @Nullable final List<RequestedAttribute> explicitlyRequestedAttributes)
       throws AttributesValidationException;
 
 }

@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AbstractXMLObject;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.util.XMLObjectChildrenList;
@@ -43,13 +45,14 @@ public class PrincipalSelectionImpl extends AbstractXMLObject implements Princip
    * @param elementLocalName the local name of the XML element this Object represents
    * @param namespacePrefix the prefix for the given namespace
    */
-  protected PrincipalSelectionImpl(final String namespaceURI, final String elementLocalName,
-      final String namespacePrefix) {
+  protected PrincipalSelectionImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.matchValues = new XMLObjectChildrenList<>(this);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public List<XMLObject> getOrderedChildren() {
     final ArrayList<XMLObject> children = new ArrayList<XMLObject>();
@@ -58,6 +61,7 @@ public class PrincipalSelectionImpl extends AbstractXMLObject implements Princip
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public List<MatchValue> getMatchValues() {
     return this.matchValues;

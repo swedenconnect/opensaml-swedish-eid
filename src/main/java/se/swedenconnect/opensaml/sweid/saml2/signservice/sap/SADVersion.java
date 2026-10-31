@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,6 +33,7 @@ public class SADVersion {
   private static final Pattern VERSION_PATTERN = Pattern.compile("^(\\d+)\\.(\\d+)$");
 
   /** SAD version 1.0. */
+  @Nonnull
   public static final SADVersion VERSION_10 = new SADVersion(1, 0);
 
   /** Major version number. */
@@ -62,6 +66,7 @@ public class SADVersion {
    *
    * @return the SADVersion
    */
+  @Nonnull
   public static SADVersion valueOf(final int majorVersion, final int minorVersion) {
     if (majorVersion == 1) {
       if (minorVersion == 0) {
@@ -79,7 +84,8 @@ public class SADVersion {
    * @return SADVersion for the given string
    * @throws IllegalArgumentException if the supplied string is not a valid version string (major.minor)
    */
-  public static SADVersion valueOf(final String version) throws IllegalArgumentException {
+  @Nonnull
+  public static SADVersion valueOf(@Nullable final String version) throws IllegalArgumentException {
     final Matcher matcher = version != null ? VERSION_PATTERN.matcher(version.trim()) : null;
     if (matcher == null || !matcher.matches()) {
       throw new IllegalArgumentException("Invalid SAD version: " + version);
@@ -111,6 +117,7 @@ public class SADVersion {
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public String toString() {
     return this.versionString;
@@ -124,7 +131,7 @@ public class SADVersion {
 
   /** {@inheritDoc} */
   @Override
-  public boolean equals(final Object obj) {
+  public boolean equals(@Nullable final Object obj) {
     if (this == obj) {
       return true;
     }

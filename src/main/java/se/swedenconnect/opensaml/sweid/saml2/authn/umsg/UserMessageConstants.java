@@ -20,12 +20,16 @@ package se.swedenconnect.opensaml.sweid.saml2.authn.umsg;
  *
  * @author Martin Lindström
  */
+import jakarta.annotation.Nonnull;
+
 public class UserMessageConstants {
 
   /** Namespace prefix for the User Message namespace. */
+  @Nonnull
   public static final String UMSG_NS_PREFIX = "umsg";
 
   /** The namespace for the User Message schema. */
+  @Nonnull
   public static final String UMSG_NS = "http://id.swedenconnect.se/authn/1.0/user-message/ns";
 
   private UserMessageConstants() {

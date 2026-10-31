@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.attribute;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import se.swedenconnect.opensaml.sweid.LibraryVersion;
 
 /**
@@ -32,7 +35,7 @@ public class AttributesValidationException extends Exception {
    *
    * @param message the error message.
    */
-  public AttributesValidationException(final String message) {
+  public AttributesValidationException(@Nonnull final String message) {
     super(message);
   }
 
@@ -42,7 +45,7 @@ public class AttributesValidationException extends Exception {
    * @param message the error message.
    * @param cause the underlying cause of the error.
    */
-  public AttributesValidationException(final String message, final Throwable cause) {
+  public AttributesValidationException(@Nonnull final String message, @Nullable final Throwable cause) {
     super(message, cause);
   }
 

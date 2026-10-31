@@ -49,7 +49,8 @@ public class MessageImpl extends XSBase64BinaryImpl implements Message {
    * @param elementLocalName the local name of the XML element this Object represents
    * @param namespacePrefix the prefix for the given namespace
    */
-  public MessageImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  public MessageImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.unknownAttributes = new AttributeMap(this);
   }

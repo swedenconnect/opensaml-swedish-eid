@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+
 import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeSet;
 
 /**
@@ -37,6 +39,7 @@ public interface ServiceEntityCategory extends EntityCategory {
    * @return the URI:s representing the Level of Assurance, or an empty list if no level of assurance is associated
    *           with the category
    */
+  @Nonnull
   List<String> getLevelOfAssuranceUris();
 
   /**
@@ -49,6 +52,7 @@ public interface ServiceEntityCategory extends EntityCategory {
    *
    * @return the attribute set
    */
+  @Nonnull
   AttributeSet getAttributeSet();
 
 }

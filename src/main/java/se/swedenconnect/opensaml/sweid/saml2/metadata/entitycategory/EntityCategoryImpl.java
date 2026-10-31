@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import se.swedenconnect.opensaml.sweid.LibraryVersion;
 
 /**
@@ -27,9 +30,11 @@ public class EntityCategoryImpl implements EntityCategory {
   private static final long serialVersionUID = LibraryVersion.SERIAL_VERSION_UID;
 
   /** The unique URI for this category. */
+  @Nullable
   protected String uri;
 
   /** The type of entity category. */
+  @Nullable
   protected EntityCategoryType type;
 
   /**
@@ -44,12 +49,13 @@ public class EntityCategoryImpl implements EntityCategory {
    * @param uri the URI
    * @param type the type
    */
-  public EntityCategoryImpl(final String uri, final EntityCategoryType type) {
+  public EntityCategoryImpl(@Nonnull final String uri, @Nonnull final EntityCategoryType type) {
     this.uri = uri;
     this.type = type;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public String getUri() {
     return this.uri;
@@ -60,11 +66,12 @@ public class EntityCategoryImpl implements EntityCategory {
    *
    * @param uri the URI to assign.
    */
-  public void setUri(final String uri) {
+  public void setUri(@Nonnull final String uri) {
     this.uri = uri;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public EntityCategoryType getType() {
     return this.type;
@@ -75,7 +82,7 @@ public class EntityCategoryImpl implements EntityCategory {
    *
    * @param type the type to assign.
    */
-  public void setType(final EntityCategoryType type) {
+  public void setType(@Nonnull final EntityCategoryType type) {
     this.type = type;
   }
 

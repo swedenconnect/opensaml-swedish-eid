@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * Defines constants for the "Principal Selection in SAML Authentication Requests" specification.
  *
@@ -23,9 +25,11 @@ package se.swedenconnect.opensaml.sweid.saml2.authn.psc;
 public class PscConstants {
 
   /** Namespace prefix for the PSC (Principal Selection Criteria) namespace. */
+  @Nonnull
   public static final String PSC_NS_PREFIX = "psc";
 
   /** The namespace for the Principal Selection Criteria schema. */
+  @Nonnull
   public static final String PSC_NS = "http://id.swedenconnect.se/authn/1.0/principal-selection/ns";
 
   private PscConstants() {

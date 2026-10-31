@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.UnmarshallingException;
 import org.opensaml.saml.common.AbstractSAMLObjectUnmarshaller;
@@ -31,7 +32,8 @@ public class RequestParamsUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processChildElement(final XMLObject parentSAMLObject, final XMLObject childSAMLObject)
+  protected void processChildElement(@Nonnull final XMLObject parentSAMLObject,
+      @Nonnull final XMLObject childSAMLObject)
       throws UnmarshallingException {
     final RequestParams params = (RequestParams) parentSAMLObject;
 

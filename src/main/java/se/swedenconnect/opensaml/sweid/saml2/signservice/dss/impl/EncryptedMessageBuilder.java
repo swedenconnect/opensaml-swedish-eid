@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.EncryptedMessage;
@@ -27,6 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.EncryptedMessage;
 public class EncryptedMessageBuilder extends AbstractSAMLObjectBuilder<EncryptedMessage> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public EncryptedMessage buildObject() {
     return buildObject(EncryptedMessage.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
@@ -34,8 +37,10 @@ public class EncryptedMessageBuilder extends AbstractSAMLObjectBuilder<Encrypted
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public EncryptedMessage buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public EncryptedMessage buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new EncryptedMessageImpl(namespaceURI, localName, namespacePrefix);
   }
 

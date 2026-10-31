@@ -20,6 +20,8 @@ import java.security.SignatureException;
 import java.time.Instant;
 import java.util.Base64;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.opensaml.security.x509.X509Credential;
 
@@ -49,6 +51,7 @@ public class SADFactory {
   /**
    * The default attribute name for the user ID ({@value AttributeConstants#ATTRIBUTE_NAME_PERSONAL_IDENTITY_NUMBER}).
    */
+  @Nonnull
   public static final String DEFAULT_USER_ID_ATTRIBUTE_NAME =
       AttributeConstants.ATTRIBUTE_NAME_PERSONAL_IDENTITY_NUMBER;
 
@@ -56,6 +59,7 @@ public class SADFactory {
   public static final int DEFAULT_JWT_ID_SIZE = 24;
 
   /** The name of the default JWT signature algorithm to be used (RS256). */
+  @Nonnull
   public static final String DEFAULT_JWT_SIGNING_ALGORITHM = JWSAlgorithm.RS256.getName();
 
   /** The entityID of the issuing IdP. */
@@ -82,7 +86,7 @@ public class SADFactory {
    * @param idpEntityID the entityID of the issuing IdP
    * @param signingCredential the IdP signature credential
    */
-  public SADFactory(final String idpEntityID, final X509Credential signingCredential) {
+  public SADFactory(@Nonnull final String idpEntityID, @Nonnull final X509Credential signingCredential) {
     this.idpEntityID = idpEntityID;
     this.signingCredential = signingCredential;
   }
@@ -92,6 +96,7 @@ public class SADFactory {
    *
    * @return a SAD builder
    */
+  @Nonnull
   public SADBuilder getBuilder() {
     return new SADBuilder(this);
   }
@@ -104,7 +109,8 @@ public class SADFactory {
    * @param userIdAttributeName the user id attribute name
    * @return a SAD builder
    */
-  public SADBuilder getBuilder(final String userIdAttributeName) {
+  @Nonnull
+  public SADBuilder getBuilder(@Nullable final String userIdAttributeName) {
     if (userIdAttributeName == null) {
       return getBuilder();
     }
@@ -125,7 +131,8 @@ public class SADFactory {
    * @throws SignatureException for JWT signature errors
    * @see SADBuilder#buildJwt()
    */
-  public String createJwt(final SAD sad) throws IOException, SignatureException {
+  @Nonnull
+  public String createJwt(@Nonnull final SAD sad) throws IOException, SignatureException {
 
     final String encodedSad = Base64.getUrlEncoder().withoutPadding().encodeToString(sad.toJsonBytes());
 
@@ -162,7 +169,7 @@ public class SADFactory {
    *
    * @param userIdAttributeName attribute name (URI)
    */
-  public void setUserIdAttributeName(final String userIdAttributeName) {
+  public void setUserIdAttributeName(@Nonnull final String userIdAttributeName) {
     if (userIdAttributeName == null || userIdAttributeName.isEmpty()) {
       throw new IllegalArgumentException("userIdAttributeName must not be null or empty");
     }
@@ -186,7 +193,7 @@ public class SADFactory {
    *
    * @param jwtSigningAlgorithm JWT algorithm name
    */
-  public void setJwtSigningAlgorithm(final String jwtSigningAlgorithm) {
+  public void setJwtSigningAlgorithm(@Nonnull final String jwtSigningAlgorithm) {
     this.jwtSigningAlgorithm = jwtSigningAlgorithm;
   }
 
@@ -208,7 +215,7 @@ public class SADFactory {
      *
      * @param sadFactory the SAD factory
      */
-    SADBuilder(final SADFactory sadFactory) {
+    SADBuilder(@Nonnull final SADFactory sadFactory) {
       this.sadFactory = sadFactory;
       this.sad = new SAD();
       this.sad.setIssuer(sadFactory.idpEntityID);
@@ -222,7 +229,7 @@ public class SADFactory {
      * @param sadFactory the SAD factory
      * @param userIdAttributeName the attribute name holding the user id
      */
-    SADBuilder(final SADFactory sadFactory, final String userIdAttributeName) {
+    SADBuilder(@Nonnull final SADFactory sadFactory, @Nonnull final String userIdAttributeName) {
       this.sadFactory = sadFactory;
       this.sad = new SAD();
       this.sad.setIssuer(sadFactory.idpEntityID);
@@ -235,6 +242,7 @@ public class SADFactory {
      *
      * @return the SAD
      */
+    @Nonnull
     public SAD buildSAD() {
 
       if (this.sad.getJwtId() == null) {
@@ -258,6 +266,7 @@ public class SADFactory {
      * @throws IOException for JSON processing errors
      * @throws SignatureException for signature errors
      */
+    @Nonnull
     public String buildJwt() throws IOException, SignatureException {
       return this.sadFactory.createJwt(this.buildSAD());
     }
@@ -268,7 +277,8 @@ public class SADFactory {
      * @param subject the user ID
      * @return the SAD builder
      */
-    public SADBuilder subject(final String subject) {
+    @Nonnull
+    public SADBuilder subject(@Nullable final String subject) {
       this.sad.setSubject(subject);
       return this;
     }
@@ -279,7 +289,8 @@ public class SADFactory {
      * @param audience the entityID of the recipient
      * @return the SAD builder
      */
-    public SADBuilder audience(final String audience) {
+    @Nonnull
+    public SADBuilder audience(@Nullable final String audience) {
       this.sad.setAudience(audience);
       return this;
     }
@@ -290,7 +301,8 @@ public class SADFactory {
      * @param jwtId JWT ID
      * @return the SAD builder
      */
-    public SADBuilder jwtId(final String jwtId) {
+    @Nonnull
+    public SADBuilder jwtId(@Nullable final String jwtId) {
       this.sad.setJwtId(jwtId);
       return this;
     }
@@ -301,7 +313,8 @@ public class SADFactory {
      * @param version the version
      * @return the SAD builder
      */
-    public SADBuilder version(final SADVersion version) {
+    @Nonnull
+    public SADBuilder version(@Nonnull final SADVersion version) {
       this.sad.getSeElnSadext().setVersion(version.toString());
       return this;
     }
@@ -312,7 +325,8 @@ public class SADFactory {
      * @param irt ID of corresponding SADRequest
      * @return the SAD builder
      */
-    public SADBuilder inResponseTo(final String irt) {
+    @Nonnull
+    public SADBuilder inResponseTo(@Nullable final String irt) {
       this.sad.getSeElnSadext().setInResponseTo(irt);
       return this;
     }
@@ -323,7 +337,8 @@ public class SADFactory {
      * @param loa LoA URI
      * @return the SAD builder
      */
-    public SADBuilder loa(final String loa) {
+    @Nonnull
+    public SADBuilder loa(@Nullable final String loa) {
       this.sad.getSeElnSadext().setLoa(loa);
       return this;
     }
@@ -334,7 +349,8 @@ public class SADFactory {
      * @param requestID SignRequest ID
      * @return the SAD builder
      */
-    public SADBuilder requestID(final String requestID) {
+    @Nonnull
+    public SADBuilder requestID(@Nullable final String requestID) {
       this.sad.getSeElnSadext().setRequestID(requestID);
       return this;
     }
@@ -345,6 +361,7 @@ public class SADFactory {
      * @param docs the number of documents to be signed
      * @return the SAD builder
      */
+    @Nonnull
     public SADBuilder numberOfDocuments(final int docs) {
       this.sad.getSeElnSadext().setNumberOfDocuments(docs);
       return this;

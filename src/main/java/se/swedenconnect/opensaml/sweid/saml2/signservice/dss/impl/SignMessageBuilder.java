@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
@@ -27,6 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.SignMessage;
 public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public SignMessage buildObject() {
     return buildObject(SignMessage.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
@@ -34,8 +37,10 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public SignMessage buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public SignMessage buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new SignMessageImpl(namespaceURI, localName, namespacePrefix);
   }
 

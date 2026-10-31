@@ -18,6 +18,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AbstractXMLObject;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.schema.XSInteger;
@@ -61,11 +63,13 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
    * @param elementLocalName the local name of the XML element this Object represents
    * @param namespacePrefix the prefix for the given namespace
    */
-  protected SADRequestImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  protected SADRequestImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public List<XMLObject> getOrderedChildren() {
     final ArrayList<XMLObject> children = new ArrayList<>();
@@ -91,6 +95,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getID() {
     return this.id;
@@ -98,13 +103,14 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /** {@inheritDoc} */
   @Override
-  public void setID(final String id) {
+  public void setID(@Nullable final String id) {
     final String oldID = this.id;
     this.id = this.prepareForAssignment(this.id, id);
     this.registerOwnID(oldID, this.id);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getRequesterID() {
     return this.requesterID != null ? this.requesterID.getValue() : null;
@@ -112,7 +118,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /** {@inheritDoc} */
   @Override
-  public void setRequesterID(final String requesterID) {
+  public void setRequesterID(@Nullable final String requesterID) {
     XSString id = null;
     if (requesterID != null) {
       id = (new XSStringBuilder()).buildObject(
@@ -127,11 +133,12 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
    *
    * @param requesterID the requester ID
    */
-  public void setRequesterID(final XSString requesterID) {
+  public void setRequesterID(@Nullable final XSString requesterID) {
     this.requesterID = this.prepareForAssignment(this.requesterID, requesterID);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getSignRequestID() {
     return this.signRequestID != null ? this.signRequestID.getValue() : null;
@@ -139,7 +146,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /** {@inheritDoc} */
   @Override
-  public void setSignRequestID(final String signRequestID) {
+  public void setSignRequestID(@Nullable final String signRequestID) {
     XSString id = null;
     if (signRequestID != null) {
       id = (new XSStringBuilder()).buildObject(
@@ -154,11 +161,12 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
    *
    * @param signRequestID the sign request id
    */
-  public void setSignRequestID(final XSString signRequestID) {
+  public void setSignRequestID(@Nullable final XSString signRequestID) {
     this.signRequestID = this.prepareForAssignment(this.signRequestID, signRequestID);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public Integer getDocCount() {
     return this.docCount != null ? this.docCount.getValue() : null;
@@ -166,7 +174,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /** {@inheritDoc} */
   @Override
-  public void setDocCount(final Integer docCount) {
+  public void setDocCount(@Nullable final Integer docCount) {
     XSInteger count = null;
     if (docCount != null) {
       count = (new XSIntegerBuilder()).buildObject(
@@ -181,11 +189,12 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
    *
    * @param docCount the document count
    */
-  public void setDocCount(final XSInteger docCount) {
+  public void setDocCount(@Nullable final XSInteger docCount) {
     this.docCount = this.prepareForAssignment(this.docCount, docCount);
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public SADVersion getRequestedVersion() {
     return this.requestedVersion != null && this.requestedVersion.getValue() != null
@@ -195,7 +204,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /** {@inheritDoc} */
   @Override
-  public void setRequestedVersion(final SADVersion sadVersion) {
+  public void setRequestedVersion(@Nullable final SADVersion sadVersion) {
     XSString ver = null;
     if (sadVersion != null) {
       ver = (new XSStringBuilder()).buildObject(
@@ -210,11 +219,12 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
    *
    * @param sadVersion the requested SAD version
    */
-  public void setRequestedVersion(final XSString sadVersion) {
+  public void setRequestedVersion(@Nullable final XSString sadVersion) {
     this.requestedVersion = this.prepareForAssignment(this.requestedVersion, sadVersion);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public RequestParams getRequestParams() {
     return this.requestParams;
@@ -222,7 +232,7 @@ public class SADRequestImpl extends AbstractXMLObject implements SADRequest {
 
   /** {@inheritDoc} */
   @Override
-  public void setRequestParams(final RequestParams requestParams) {
+  public void setRequestParams(@Nullable final RequestParams requestParams) {
     this.requestParams = this.prepareForAssignment(this.requestParams, requestParams);
   }
 

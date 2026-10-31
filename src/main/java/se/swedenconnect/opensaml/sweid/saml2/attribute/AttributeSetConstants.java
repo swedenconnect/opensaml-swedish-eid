@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.attribute;
 
+import jakarta.annotation.Nonnull;
+
 import se.swedenconnect.opensaml.saml2.attribute.AttributeTemplate;
 
 /**
@@ -32,6 +34,7 @@ public class AttributeSetConstants {
    * the assertion but no attributes.
    * </p>
    */
+  @Nonnull
   public static final AttributeSet ATTRIBUTE_SET_PSEUDONYM_IDENTITY = new AttributeSetImpl("ELN-AP-Pseudonym-01",
       "http://id.elegnamnden.se/ap/1.0/pseudonym-01", "Pseudonym Identity", null, null);
 
@@ -44,6 +47,7 @@ public class AttributeSetConstants {
    * persistent NameID identifier in the assertion.
    * </p>
    */
+  @Nonnull
   public static final AttributeSet ATTRIBUTE_SET_NATURAL_PERSON_NO_PERSONAL_ID = new AttributeSetImpl(
       "ELN-AP-NaturalPerson-01", "http://id.elegnamnden.se/ap/1.0/natural-person-01",
       "Natural Personal Identity without Civic Registration Number",
@@ -62,6 +66,7 @@ public class AttributeSetConstants {
    * person’s Swedish civic registration number.
    * </p>
    */
+  @Nonnull
   public static final AttributeSet ATTRIBUTE_SET_NATURAL_PERSON_WITH_PERSONAL_ID = new AttributeSetImpl(
       "ELN-AP-Pnr-01", "http://id.elegnamnden.se/ap/1.0/pnr-01",
       "Natural Personal Identity with Civic Registration Number",
@@ -85,6 +90,7 @@ public class AttributeSetConstants {
    * natural person.
    * </p>
    */
+  @Nonnull
   public static final AttributeSet ATTRIBUTE_SET_ORGANIZATIONAL_IDENTITY_FOR_NATURAL_PERSONS = new AttributeSetImpl(
       "ELN-AP-OrgPerson-01", "http://id.elegnamnden.se/ap/1.0/org-person-01",
       "Organizational Identity for Natural Persons",
@@ -104,6 +110,7 @@ public class AttributeSetConstants {
    * of attributes to a requesting Service Provider.
    * </p>
    */
+  @Nonnull
   public static final AttributeSet ATTRIBUTE_SET_EIDAS_NATURAL_PERSON = new AttributeSetImpl(
       "ELN-AP-eIDAS-NatPer-01", "http://id.elegnamnden.se/ap/1.0/eidas-natural-person-01",
       "eIDAS Natural Person Attribute Set", new AttributeTemplate[] {

@@ -17,6 +17,7 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.UnmarshallingException;
 import org.opensaml.core.xml.schema.XSInteger;
@@ -37,7 +38,8 @@ public class SADRequestUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processChildElement(final XMLObject parentSAMLObject, final XMLObject childSAMLObject)
+  protected void processChildElement(@Nonnull final XMLObject parentSAMLObject,
+      @Nonnull final XMLObject childSAMLObject)
       throws UnmarshallingException {
 
     final SADRequest sadRequest = (SADRequest) parentSAMLObject;
@@ -97,7 +99,8 @@ public class SADRequestUnmarshaller extends AbstractSAMLObjectUnmarshaller {
 
   /** {@inheritDoc} */
   @Override
-  protected void processAttribute(final XMLObject samlObject, final Attr attribute) throws UnmarshallingException {
+  protected void processAttribute(@Nonnull final XMLObject samlObject, @Nonnull final Attr attribute)
+      throws UnmarshallingException {
     final SADRequest sadRequest = (SADRequest) samlObject;
 
     if (attribute.getLocalName().equals(SADRequest.ID_ATTRIB_NAME)) {

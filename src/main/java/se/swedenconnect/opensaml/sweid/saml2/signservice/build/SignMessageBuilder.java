@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.build;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.util.XMLObjectSupport;
 
 import se.swedenconnect.opensaml.common.builder.AbstractSAMLObjectBuilder;
@@ -35,6 +37,7 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
    *
    * @return a builder
    */
+  @Nonnull
   public static SignMessageBuilder builder() {
     return new SignMessageBuilder();
   }
@@ -48,7 +51,8 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
    * @param message the message to include (in cleartext)
    * @return the builder
    */
-  public SignMessageBuilder message(final String message) {
+  @Nonnull
+  public SignMessageBuilder message(@Nullable final String message) {
     final Message msg = (Message) XMLObjectSupport.buildXMLObject(Message.DEFAULT_ELEMENT_NAME);
     msg.setContent(message);
     this.object().setMessage(msg);
@@ -63,7 +67,8 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
    * @param displayEntity the entityID of the recipient
    * @return the builder
    */
-  public SignMessageBuilder displayEntity(final String displayEntity) {
+  @Nonnull
+  public SignMessageBuilder displayEntity(@Nullable final String displayEntity) {
     this.object().setDisplayEntity(displayEntity);
     return this;
   }
@@ -74,7 +79,8 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
    * @param mimeType the MIME type
    * @return the builder
    */
-  public SignMessageBuilder mimeType(final SignMessageMimeTypeEnum mimeType) {
+  @Nonnull
+  public SignMessageBuilder mimeType(@Nullable final SignMessageMimeTypeEnum mimeType) {
     this.object().setMimeType(mimeType);
     return this;
   }
@@ -86,12 +92,14 @@ public class SignMessageBuilder extends AbstractSAMLObjectBuilder<SignMessage> {
    * @param mustShow the must show flag
    * @return the builder
    */
-  public SignMessageBuilder mustShow(final Boolean mustShow) {
+  @Nonnull
+  public SignMessageBuilder mustShow(@Nullable final Boolean mustShow) {
     this.object().setMustShow(mustShow);
     return this;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected Class<SignMessage> getObjectType() {
     return SignMessage.class;

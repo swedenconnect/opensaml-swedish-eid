@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
@@ -27,6 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
 public class ParameterBuilder extends AbstractSAMLObjectBuilder<Parameter> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public Parameter buildObject() {
     return this.buildObject(Parameter.DEFAULT_ELEMENT_NAME.getNamespaceURI(), Parameter.DEFAULT_ELEMENT_LOCAL_NAME,
@@ -34,8 +37,10 @@ public class ParameterBuilder extends AbstractSAMLObjectBuilder<Parameter> {
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public Parameter buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public Parameter buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new ParameterImpl(namespaceURI, localName, namespacePrefix);
   }
 

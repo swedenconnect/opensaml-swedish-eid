@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
@@ -27,6 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.MatchValue;
 public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public MatchValue buildObject() {
     return this.buildObject(MatchValue.DEFAULT_ELEMENT_NAME.getNamespaceURI(), MatchValue.DEFAULT_ELEMENT_LOCAL_NAME,
@@ -34,8 +37,10 @@ public class MatchValueBuilder extends AbstractSAMLObjectBuilder<MatchValue> {
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public MatchValue buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public MatchValue buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new MatchValueImpl(namespaceURI, localName, namespacePrefix);
   }
 

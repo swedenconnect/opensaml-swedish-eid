@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.RequestedPrincipalSelection;
 
 /**
@@ -31,8 +34,8 @@ public class RequestedPrincipalSelectionImpl extends PrincipalSelectionImpl impl
    * @param elementLocalName the local name of the XML element this Object represents
    * @param namespacePrefix the prefix for the given namespace
    */
-  protected RequestedPrincipalSelectionImpl(final String namespaceURI, final String elementLocalName,
-      final String namespacePrefix) {
+  protected RequestedPrincipalSelectionImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }
 

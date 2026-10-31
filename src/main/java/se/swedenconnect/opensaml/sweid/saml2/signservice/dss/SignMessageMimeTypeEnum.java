@@ -15,6 +15,9 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
+
 /**
  * Enumeration that represents the possible values of the {@code MimeType} attribute of the {@link SignMessage} element.
  *
@@ -42,6 +45,7 @@ public enum SignMessageMimeTypeEnum {
    *
    * @return the MIME type
    */
+  @Nonnull
   public String getMimeType() {
     return this.mimeType;
   }
@@ -52,7 +56,8 @@ public enum SignMessageMimeTypeEnum {
    * @param mimeType the MIME type in string representation
    * @return the enum value, or null if no match is found
    */
-  public static SignMessageMimeTypeEnum parse(final String mimeType) {
+  @Nullable
+  public static SignMessageMimeTypeEnum parse(@Nullable final String mimeType) {
     for (SignMessageMimeTypeEnum e : SignMessageMimeTypeEnum.values()) {
       if (e.getMimeType().equals(mimeType)) {
         return e;

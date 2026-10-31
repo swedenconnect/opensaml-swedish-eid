@@ -18,6 +18,8 @@ package se.swedenconnect.opensaml.sweid.saml2.metadata.entitycategory;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * A registry that handles all "registered" entity categories. It is used to find the definition of an entity category
  * based on its URI.
@@ -32,13 +34,15 @@ public interface EntityCategoryRegistry {
    * @param uri the entity category URI
    * @return the {@code EntityCategory} object
    */
-  Optional<EntityCategory> getEntityCategory(String uri);
+  @Nonnull
+  Optional<EntityCategory> getEntityCategory(@Nonnull String uri);
 
   /**
    * Returns a list of all registered entity categories.
    *
    * @return a list of all registered entity categories
    */
+  @Nonnull
   List<EntityCategory> getEntityCategories();
 
   /**
@@ -46,6 +50,7 @@ public interface EntityCategoryRegistry {
    *
    * @return a list of all registered service entity categories
    */
+  @Nonnull
   List<ServiceEntityCategory> getServiceEntityCategories();
 
 }

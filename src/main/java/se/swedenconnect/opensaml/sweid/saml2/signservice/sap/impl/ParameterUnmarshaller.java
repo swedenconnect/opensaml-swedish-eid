@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.UnmarshallingException;
 import org.opensaml.core.xml.schema.impl.XSStringUnmarshaller;
@@ -30,7 +31,8 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
 public class ParameterUnmarshaller extends XSStringUnmarshaller {
 
   @Override
-  protected void processAttribute(final XMLObject xmlObject, final Attr attribute) throws UnmarshallingException {
+  protected void processAttribute(@Nonnull final XMLObject xmlObject, @Nonnull final Attr attribute)
+      throws UnmarshallingException {
     final Parameter p = (Parameter) xmlObject;
 
     if (attribute.getNamespaceURI() == null && Parameter.NAME_ATTR_NAME.equals(attribute.getLocalName())) {

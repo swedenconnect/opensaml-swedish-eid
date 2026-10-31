@@ -17,6 +17,7 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.dss;
 
 import javax.xml.namespace.QName;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.saml.saml2.core.EncryptedElementType;
 
 /**
@@ -27,9 +28,11 @@ import org.opensaml.saml.saml2.core.EncryptedElementType;
 public interface EncryptedMessage extends EncryptedElementType {
 
   /** Element local name. */
+  @Nonnull
   String DEFAULT_ELEMENT_LOCAL_NAME = "EncryptedMessage";
 
   /** Default element name. */
+  @Nonnull
   QName DEFAULT_ELEMENT_NAME = new QName(DssExtensionsConstants.SWEID_DSS_EXT_NS,
       DEFAULT_ELEMENT_LOCAL_NAME, DssExtensionsConstants.SWEID_DSS_EXT_PREFIX);
 

@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
@@ -27,6 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.authn.psc.PrincipalSelection;
 public class PrincipalSelectionBuilder extends AbstractSAMLObjectBuilder<PrincipalSelection> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public PrincipalSelection buildObject() {
     return this.buildObject(PrincipalSelection.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
@@ -34,9 +37,10 @@ public class PrincipalSelectionBuilder extends AbstractSAMLObjectBuilder<Princip
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public PrincipalSelection buildObject(final String namespaceURI, final String localName,
-      final String namespacePrefix) {
+  public PrincipalSelection buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new PrincipalSelectionImpl(namespaceURI, localName, namespacePrefix);
   }
 

@@ -19,6 +19,8 @@ import java.time.Duration;
 import java.util.Collection;
 import java.util.Collections;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.assertion.ValidationContext;
 import org.opensaml.saml.saml2.assertion.SAML2AssertionValidationParameters;
 import org.opensaml.saml.saml2.core.AuthnRequest;
@@ -40,6 +42,7 @@ public class SwedishEidAssertionValidationParametersBuilder
    * The default allowed clock skew. The Swedish eID Framework Deployment Profile states that the clock skew should not
    * exceed one minute.
    */
+  @Nonnull
   public static final Duration DEFAULT_CLOCK_SKEW = Duration.ofMinutes(1);
 
   /**
@@ -47,11 +50,13 @@ public class SwedishEidAssertionValidationParametersBuilder
    *
    * @return a builder
    */
+  @Nonnull
   public static SwedishEidAssertionValidationParametersBuilder builder() {
     return new SwedishEidAssertionValidationParametersBuilder();
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public ValidationContext build() {
     this.addStaticParameterIfMissing(SAML2AssertionValidationParameters.CLOCK_SKEW, DEFAULT_CLOCK_SKEW);
@@ -93,11 +98,14 @@ public class SwedishEidAssertionValidationParametersBuilder
    * @param attributes the attribute names of scoped attributes
    * @return the builder
    */
-  public SwedishEidAssertionValidationParametersBuilder scopedAttributes(final Collection<String> attributes) {
+  @Nonnull
+  public SwedishEidAssertionValidationParametersBuilder scopedAttributes(
+      @Nullable final Collection<String> attributes) {
     return this.staticParameter(SwedishEidAttributeStatementValidator.SCOPED_ATTRIBUTES, attributes);
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected SwedishEidAssertionValidationParametersBuilder getThis() {
     return this;

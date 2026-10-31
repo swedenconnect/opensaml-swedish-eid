@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AbstractXMLObject;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.schema.XSBooleanValue;
@@ -61,12 +63,14 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
    * @param elementLocalName the element local name.
    * @param namespacePrefix the name space prefix.
    */
-  public SignMessageImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  public SignMessageImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.unknownAttributes = new AttributeMap(this);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public List<XMLObject> getOrderedChildren() {
     ArrayList<XMLObject> children = new ArrayList<>();
@@ -84,12 +88,14 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public Boolean isMustShow() {
     return this.mustShow != null ? this.mustShow.getValue() : Boolean.FALSE;
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public XSBooleanValue isMustShowXSBoolean() {
     return this.mustShow;
@@ -97,7 +103,7 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
 
   /** {@inheritDoc} */
   @Override
-  public void setMustShow(final Boolean mustShow) {
+  public void setMustShow(@Nullable final Boolean mustShow) {
     if (mustShow != null) {
       this.mustShow = this.prepareForAssignment(this.mustShow, new XSBooleanValue(mustShow, false));
     }
@@ -108,11 +114,12 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
 
   /** {@inheritDoc} */
   @Override
-  public void setMustShow(final XSBooleanValue mustShow) {
+  public void setMustShow(@Nullable final XSBooleanValue mustShow) {
     this.mustShow = prepareForAssignment(this.mustShow, mustShow);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getDisplayEntity() {
     return this.displayEntity;
@@ -120,17 +127,19 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
 
   /** {@inheritDoc} */
   @Override
-  public void setDisplayEntity(final String displayEntity) {
+  public void setDisplayEntity(@Nullable final String displayEntity) {
     this.displayEntity = this.prepareForAssignment(this.displayEntity, displayEntity);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getMimeType() {
     return this.mimeType;
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public SignMessageMimeTypeEnum getMimeTypeEnum() {
     return SignMessageMimeTypeEnum.parse(this.mimeType);
@@ -138,17 +147,18 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
 
   /** {@inheritDoc} */
   @Override
-  public void setMimeType(final String mimeType) {
+  public void setMimeType(@Nullable final String mimeType) {
     this.mimeType = this.prepareForAssignment(this.mimeType, mimeType);
   }
 
   /** {@inheritDoc} */
   @Override
-  public void setMimeType(final SignMessageMimeTypeEnum mimeType) {
+  public void setMimeType(@Nullable final SignMessageMimeTypeEnum mimeType) {
     this.setMimeType(mimeType != null ? mimeType.getMimeType() : null);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public Message getMessage() {
     return this.message;
@@ -156,11 +166,12 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
 
   /** {@inheritDoc} */
   @Override
-  public void setMessage(final Message message) {
+  public void setMessage(@Nullable final Message message) {
     this.message = this.prepareForAssignment(this.message, message);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public EncryptedMessage getEncryptedMessage() {
     return this.encryptedMessage;
@@ -168,11 +179,12 @@ public class SignMessageImpl extends AbstractXMLObject implements SignMessage {
 
   /** {@inheritDoc} */
   @Override
-  public void setEncryptedMessage(final EncryptedMessage encryptedMessage) {
+  public void setEncryptedMessage(@Nullable final EncryptedMessage encryptedMessage) {
     this.encryptedMessage = this.prepareForAssignment(this.encryptedMessage, encryptedMessage);
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public AttributeMap getUnknownAttributes() {
     return this.unknownAttributes;

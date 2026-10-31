@@ -51,8 +51,8 @@ public class UserMessageImpl extends AbstractXMLObject implements UserMessage {
    * @param elementLocalName the local name of the XML element this Object represents
    * @param namespacePrefix the prefix for the given namespace
    */
-  protected UserMessageImpl(final String namespaceURI, final String elementLocalName,
-      final String namespacePrefix) {
+  protected UserMessageImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.messages = new XMLObjectChildrenList<>(this);
     this.unknownAttributes = new AttributeMap(this);

@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.util.XMLObjectSupport;
 import org.opensaml.xmlsec.EncryptionConfiguration;
 import org.opensaml.xmlsec.encryption.EncryptedData;
@@ -47,7 +49,7 @@ public class SignMessageEncrypter {
    * @param encrypter the encrypter bean
    * @throws ComponentInitializationException for init errors
    */
-  public SignMessageEncrypter(final SAMLObjectEncrypter encrypter) throws ComponentInitializationException {
+  public SignMessageEncrypter(@Nonnull final SAMLObjectEncrypter encrypter) throws ComponentInitializationException {
     this.encrypter = Constraint.isNotNull(encrypter, "encrypter must not be null");
   }
 
@@ -61,7 +63,8 @@ public class SignMessageEncrypter {
    * @throws EncryptionException for errors during encryption
    * @see #encrypt(SignMessage, String, EncryptionConfiguration)
    */
-  public void encrypt(final SignMessage signMessage, final String entityID) throws EncryptionException {
+  public void encrypt(@Nonnull final SignMessage signMessage, @Nonnull final String entityID)
+      throws EncryptionException {
     this.encrypt(signMessage, entityID, null);
   }
 
@@ -75,7 +78,8 @@ public class SignMessageEncrypter {
    * @param configuration the encryption configuration to use
    * @throws EncryptionException for errors during encryption
    */
-  public void encrypt(final SignMessage signMessage, final String entityID, final EncryptionConfiguration configuration)
+  public void encrypt(@Nonnull final SignMessage signMessage, @Nonnull final String entityID,
+      @Nullable final EncryptionConfiguration configuration)
       throws EncryptionException {
 
     Constraint.isNotNull(signMessage, "signMessage must not be null");

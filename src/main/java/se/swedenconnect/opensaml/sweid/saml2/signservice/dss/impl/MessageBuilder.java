@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AbstractXMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.Message;
@@ -27,8 +29,10 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.dss.Message;
 public class MessageBuilder extends AbstractXMLObjectBuilder<Message> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public Message buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public Message buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new MessageImpl(namespaceURI, localName, namespacePrefix);
   }
 

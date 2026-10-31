@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.AbstractXMLObject;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.util.XMLObjectChildrenList;
@@ -43,12 +45,14 @@ public class RequestParamsImpl extends AbstractXMLObject implements RequestParam
    * @param elementLocalName local name
    * @param namespacePrefix prefix
    */
-  protected RequestParamsImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  protected RequestParamsImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
     this.parameters = new XMLObjectChildrenList<Parameter>(this);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public List<XMLObject> getOrderedChildren() {
     final ArrayList<XMLObject> children = new ArrayList<XMLObject>();
@@ -57,6 +61,7 @@ public class RequestParamsImpl extends AbstractXMLObject implements RequestParam
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public List<Parameter> getParameters() {
     return this.parameters;

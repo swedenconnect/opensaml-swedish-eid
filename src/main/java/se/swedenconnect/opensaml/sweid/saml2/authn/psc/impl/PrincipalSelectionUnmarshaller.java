@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.authn.psc.impl;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.core.xml.XMLObject;
 import org.opensaml.core.xml.io.UnmarshallingException;
 import org.opensaml.saml.common.AbstractSAMLObjectUnmarshaller;
@@ -31,7 +32,7 @@ public class PrincipalSelectionUnmarshaller extends AbstractSAMLObjectUnmarshall
 
   /** {@inheritDoc} */
   @Override
-  protected void processChildElement(final XMLObject parentXMLObject, final XMLObject childXMLObject)
+  protected void processChildElement(@Nonnull final XMLObject parentXMLObject, @Nonnull final XMLObject childXMLObject)
       throws UnmarshallingException {
     final PrincipalSelection ps = (PrincipalSelection) parentXMLObject;
     if (childXMLObject instanceof MatchValue) {

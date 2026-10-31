@@ -17,6 +17,8 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.dss.impl;
 
 import java.nio.charset.StandardCharsets;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.XMLRuntimeException;
 import org.opensaml.core.xml.schema.impl.XSBase64BinaryImpl;
 
@@ -39,11 +41,13 @@ public class MessageImpl extends XSBase64BinaryImpl implements Message {
    * @param elementLocalName the element local name.
    * @param namespacePrefix the name space prefix.
    */
-  protected MessageImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  protected MessageImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getContent() {
     try {
@@ -56,7 +60,7 @@ public class MessageImpl extends XSBase64BinaryImpl implements Message {
 
   /** {@inheritDoc} */
   @Override
-  public void setContent(final String messageContent) {
+  public void setContent(@Nullable final String messageContent) {
     if (messageContent != null) {
       try {
         this.setValue(Base64Support.encode(messageContent.getBytes(StandardCharsets.UTF_8), false));

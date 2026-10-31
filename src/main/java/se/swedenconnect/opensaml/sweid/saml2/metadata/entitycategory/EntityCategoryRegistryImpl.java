@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * Implementation of the {@link EntityCategoryRegistry} interface.
  *
@@ -35,25 +37,28 @@ public class EntityCategoryRegistryImpl implements EntityCategoryRegistry {
    *
    * @param entityCategories registered entity categories
    */
-  public EntityCategoryRegistryImpl(List<EntityCategory> entityCategories) {
+  public EntityCategoryRegistryImpl(@Nonnull List<EntityCategory> entityCategories) {
     this.entityCategories = entityCategories;
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public Optional<EntityCategory> getEntityCategory(String uri) {
+  public Optional<EntityCategory> getEntityCategory(@Nonnull String uri) {
     return this.entityCategories.stream()
         .filter(e -> e.getUri().equals(uri))
         .findFirst();
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public List<EntityCategory> getEntityCategories() {
     return Collections.unmodifiableList(this.entityCategories);
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public List<ServiceEntityCategory> getServiceEntityCategories() {
     return this.entityCategories.stream()

@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.saml.common.AbstractSAMLObjectBuilder;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.RequestParams;
@@ -27,6 +29,7 @@ import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.RequestParams;
 public class RequestParamsBuilder extends AbstractSAMLObjectBuilder<RequestParams> {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   public RequestParams buildObject() {
     return this.buildObject(RequestParams.DEFAULT_ELEMENT_NAME.getNamespaceURI(),
@@ -35,8 +38,10 @@ public class RequestParamsBuilder extends AbstractSAMLObjectBuilder<RequestParam
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  public RequestParams buildObject(final String namespaceURI, final String localName, final String namespacePrefix) {
+  public RequestParams buildObject(@Nullable final String namespaceURI, @Nonnull final String localName,
+      @Nullable final String namespacePrefix) {
     return new RequestParamsImpl(namespaceURI, localName, namespacePrefix);
   }
 

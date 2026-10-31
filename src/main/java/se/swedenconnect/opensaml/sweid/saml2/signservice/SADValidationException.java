@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import se.swedenconnect.opensaml.sweid.LibraryVersion;
 
 /**
@@ -85,7 +87,7 @@ public class SADValidationException extends Exception {
    * @param errorCode the error code
    * @param message the error message
    */
-  public SADValidationException(final ErrorCode errorCode, final String message) {
+  public SADValidationException(@Nonnull final ErrorCode errorCode, @Nullable final String message) {
     super(message);
     this.errorCode = errorCode;
   }
@@ -97,7 +99,8 @@ public class SADValidationException extends Exception {
    * @param message the error message
    * @param cause the cause of the error
    */
-  public SADValidationException(final ErrorCode errorCode, final String message, final Throwable cause) {
+  public SADValidationException(@Nonnull final ErrorCode errorCode, @Nullable final String message,
+      @Nullable final Throwable cause) {
     super(message, cause);
     this.errorCode = errorCode;
   }
@@ -107,6 +110,7 @@ public class SADValidationException extends Exception {
    *
    * @return error code
    */
+  @Nonnull
   public ErrorCode getErrorCode() {
     return this.errorCode;
   }

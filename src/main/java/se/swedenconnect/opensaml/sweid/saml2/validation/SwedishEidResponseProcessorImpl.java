@@ -15,6 +15,7 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.validation;
 
+import jakarta.annotation.Nonnull;
 import org.opensaml.xmlsec.signature.support.SignaturePrevalidator;
 import org.opensaml.xmlsec.signature.support.SignatureTrustEngine;
 
@@ -32,20 +33,23 @@ import se.swedenconnect.opensaml.saml2.response.validation.ResponseValidator;
 public class SwedishEidResponseProcessorImpl extends ResponseProcessorImpl {
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  protected ResponseValidator createResponseValidator(final SignatureTrustEngine signatureTrustEngine,
-      final SignaturePrevalidator signatureProfileValidator) {
+  protected ResponseValidator createResponseValidator(@Nonnull final SignatureTrustEngine signatureTrustEngine,
+      @Nonnull final SignaturePrevalidator signatureProfileValidator) {
     return new SwedishEidResponseValidator(signatureTrustEngine, signatureProfileValidator);
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
-  protected AssertionValidator createAssertionValidator(final SignatureTrustEngine signatureTrustEngine,
-      final SignaturePrevalidator signatureProfileValidator) {
+  protected AssertionValidator createAssertionValidator(@Nonnull final SignatureTrustEngine signatureTrustEngine,
+      @Nonnull final SignaturePrevalidator signatureProfileValidator) {
     return new SwedishEidAssertionValidator(signatureTrustEngine, signatureProfileValidator);
   }
 
   /** {@inheritDoc} */
+  @Nonnull
   @Override
   protected AbstractAssertionValidationParametersBuilder<?> getAssertionValidationParametersBuilder() {
     return SwedishEidAssertionValidationParametersBuilder.builder();

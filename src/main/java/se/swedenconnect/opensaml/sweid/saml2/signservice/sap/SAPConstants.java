@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
+import jakarta.annotation.Nonnull;
+
 /**
  * Defines constants for the "Signature Activation Protocol for Federated Signing" specification.
  *
@@ -23,9 +25,11 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 public class SAPConstants {
 
   /** Namespace prefix for the SAP namespace. */
+  @Nonnull
   public static final String SAP_NS_PREFIX = "sap";
 
   /** The namespace for the Signature Activation Protocol. */
+  @Nonnull
   public static final String SAP_NS = "http://id.elegnamnden.se/csig/1.1/sap/ns";
 
   private SAPConstants() {

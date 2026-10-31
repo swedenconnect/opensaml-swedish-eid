@@ -15,6 +15,8 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap.impl;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.opensaml.core.xml.schema.impl.XSStringImpl;
 
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.Parameter;
@@ -36,11 +38,13 @@ public class ParameterImpl extends XSStringImpl implements Parameter {
    * @param elementLocalName the local name of the XML element this Object represents
    * @param namespacePrefix the prefix for the given namespace
    */
-  protected ParameterImpl(final String namespaceURI, final String elementLocalName, final String namespacePrefix) {
+  protected ParameterImpl(@Nullable final String namespaceURI, @Nonnull final String elementLocalName,
+      @Nullable final String namespacePrefix) {
     super(namespaceURI, elementLocalName, namespacePrefix);
   }
 
   /** {@inheritDoc} */
+  @Nullable
   @Override
   public String getName() {
     return this.name;
@@ -48,7 +52,7 @@ public class ParameterImpl extends XSStringImpl implements Parameter {
 
   /** {@inheritDoc} */
   @Override
-  public void setName(final String name) {
+  public void setName(@Nullable final String name) {
     this.name = this.prepareForAssignment(this.name, name);
   }
 
