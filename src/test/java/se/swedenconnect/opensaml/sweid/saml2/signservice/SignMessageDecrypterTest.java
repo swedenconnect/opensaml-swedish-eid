@@ -23,6 +23,7 @@ import org.opensaml.core.xml.XMLObject;
 import org.opensaml.saml.saml2.core.AuthnRequest;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.security.x509.impl.KeyStoreX509CredentialAdapter;
+import org.opensaml.xmlsec.encryption.support.DecryptionException;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -44,24 +45,23 @@ public class SignMessageDecrypterTest extends OpenSAMLTestBase {
     this.credential = new KeyStoreX509CredentialAdapter(keyStore, "encryption", "secret".toCharArray());
   }
 
-  // Bad type
-//  @Test
-//  public void testDecrypt1() throws Exception {
-//    SignMessageDecrypter decrypter = new SignMessageDecrypter(this.credential);
-//
-//    Resource xml = new ClassPathResource("signmessage_bad_type.xml");
-//    AuthnRequest authnRequest = ObjectUtils.unmarshall(xml.getInputStream(), AuthnRequest.class);
-//
-//    XMLObject sm = authnRequest.getExtensions().getUnknownXMLObjects(SignMessage.DEFAULT_ELEMENT_NAME).get(0);
-//    SignMessage signMessage = (SignMessage) sm;
-//
-//    // Message message = decrypter.decrypt(signMessage);
-//
-//    // Gives:
-//    // <?xml version="1.0" encoding="UTF-8"?>
-//    // <base64Binary>dGVzdGluZw==</base64Binary>
-//
-//  }
+  /**
+   * The encrypted content is not a Message element. Should give a DecryptionException.
+   *
+   * @throws Exception for errors
+   */
+  @Test
+  public void testDecryptBadType() throws Exception {
+    final SignMessageDecrypter decrypter = new SignMessageDecrypter(this.credential);
+
+    final Resource xml = new ClassPathResource("signmessage_bad_type.xml");
+    final AuthnRequest authnRequest = unmarshall(xml.getInputStream(), AuthnRequest.class);
+
+    final SignMessage signMessage =
+        (SignMessage) authnRequest.getExtensions().getUnknownXMLObjects(SignMessage.DEFAULT_ELEMENT_NAME).get(0);
+
+    Assertions.assertThrows(DecryptionException.class, () -> decrypter.decrypt(signMessage));
+  }
 
   @Test
   public void testDecrypt2() throws Exception {
