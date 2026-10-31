@@ -62,6 +62,9 @@ public class SADValidationException extends Exception {
     /** Mismatching SignRequest ID (SAD has different value that what was expected). */
     VALIDATION_BAD_SIGNREQUESTID,
 
+    /** Mismatching version - the SAD version does not match the requested version. */
+    VALIDATION_BAD_VERSION,
+
     /** SAD is missing from assertion. */
     NO_SAD_ATTRIBUTE,
 

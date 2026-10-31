@@ -45,7 +45,7 @@ public class SADTest {
     sad.setAudience("http://www.example.com/sigservice");
     sad.setIssuer("https://idp.svelegtest.se/idp");
     sad.setExpiry(expiry);
-    sad.setIssuedAt((int) (issuance.toEpochMilli() / 1000L));
+    sad.setIssuedAt(issuance.getEpochSecond());
     sad.setJwtId("d4073fc74b1b9199");
     final SAD.Extension ext = new SAD.Extension();
     ext.setVersion(SADVersion.VERSION_10.toString());
@@ -57,7 +57,7 @@ public class SADTest {
     sad.setSeElnSadext(ext);
 
     final Instant exp = sad.getExpiryDateTime();
-    Assertions.assertEquals(sad.getExpiry().intValue(), (int) (exp.toEpochMilli() / 1000));
+    Assertions.assertEquals(sad.getExpiry().longValue(), exp.getEpochSecond());
 
     final String json = sad.toJson();
 

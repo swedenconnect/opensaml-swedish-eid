@@ -40,6 +40,7 @@ import se.swedenconnect.opensaml.sweid.saml2.attribute.AttributeConstants;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.SADValidationException.ErrorCode;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SAD;
 import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADRequest;
+import se.swedenconnect.opensaml.sweid.saml2.signservice.sap.SADVersion;
 import tools.jackson.core.JacksonException;
 
 import java.io.IOException;
@@ -84,7 +85,7 @@ public class SADParser {
       final String payload = signedJwt.getPayload().toBase64URL().toString();
       return SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8));
     }
-    catch (final ParseException e) {
+    catch (final ParseException | JacksonException e) {
       throw new IOException(e);
     }
   }
@@ -188,11 +189,11 @@ public class SADParser {
      *
      * @param authnRequest the AuthnRequest holding the SADRequest
      * @param assertion the Assertion holding the sad attribute (as an encoded JWT)
-     * @return a SAD object, or null if no SAD was requested (and issued)
+     * @return the validated SAD object
      * @throws SADValidationException for SAD validation errors
      * @throws IllegalArgumentException if the supplied AuthnRequest does not contain a SADRequest extension, or is
      *     invalid by other means (e.g., missing LoA)
-     * @see #validate(String, String, String, String, String, String, int, String)
+     * @see #validate(String, String, String, String, String, String, int, String, SADVersion)
      */
     public SAD validate(final AuthnRequest authnRequest, final Assertion assertion) throws SADValidationException,
         IllegalArgumentException {
@@ -282,6 +283,9 @@ public class SADParser {
       if (sadRequest.getDocCount() == null) {
         throw new IllegalArgumentException("Bad SADRequest - missing DocCount");
       }
+      if (sadRequest.getID() == null || sadRequest.getRequesterID() == null || sadRequest.getSignRequestID() == null) {
+        throw new IllegalArgumentException("Bad SADRequest - missing ID, RequesterID or SignRequestID");
+      }
 
       // Now, validate!
       //
@@ -292,7 +296,8 @@ public class SADParser {
           loa, /* The expected LoA. */
           sadRequest.getID(), /* The expected in-response-to ID. */
           sadRequest.getDocCount(), /* The expected number of documents indicated in the SAD. */
-          sadRequest.getSignRequestID()); /* The SignRequest ID. */
+          sadRequest.getSignRequestID(), /* The SignRequest ID. */
+          sadRequest.getRequestedVersion()); /* The requested SAD version. */
     }
 
     /**
@@ -316,13 +321,47 @@ public class SADParser {
      *     assertion)
      * @param sadRequestID the ID of the SADRequest extension that was sent to the IdP
      * @param expectedNoDocs expected number of documents (from the DocCount element of the SADRequest)
-     * @param signRequestID ID for the SignRequest that was included in the SADRequest
+     * @param signRequestID ID for the SignRequest that was included in the SADRequest
+     * @return a SAD object
+     * @throws SADValidationException for validation errors
+     * @see #validate(String, String, String, String, String, String, int, String, SADVersion)
+     */
+    public SAD validate(final String sadJwt, final String idpEntityID, final String expectedRecipientEntityID,
+        final String expectedSubject, final String expectedLoa, final String sadRequestID, final int expectedNoDocs,
+        final String signRequestID) throws SADValidationException {
+      return this.validate(sadJwt, idpEntityID, expectedRecipientEntityID, expectedSubject, expectedLoa, sadRequestID,
+          expectedNoDocs, signRequestID, SADVersion.VERSION_10);
+    }
+
+    /**
+     * Validates a SAD based on expected data. If the {@code AuthnRequest} and issued {@code Assertion} is available,
+     * the method {@link #validate(AuthnRequest, Assertion)} is a better option.
+     *
+     * <p>
+     * Note: It is assumed that the supplied {@code expectedSubject} parameter is a attribute value read from the
+     * assertion having the attribute name indicated in the 'attr' field of the SAD. If this attribute name is not known
+     * in advance, the SAD needs to be parsed ({@link SADParser#parse(String)}) so that the 'attr' field can be read,
+     * and the correct attribute value be located from the assertion.
+     * </p>
+     *
+     * @param sadJwt the encoded SAD JWT (found in the sad attribute of a received assertion)
+     * @param idpEntityID the entityID of the issuing IdP (the issuer of the received assertion holding the sad
+     *     attribute)
+     * @param expectedRecipientEntityID the entityID of the recipient (the signature service SP that issued the
+     *     SADRequest)
+     * @param expectedSubject the expected subject name (user ID). See note above
+     * @param expectedLoa the expected level of assurance to be found in the SAD (should be the LoA found in the
+     *     assertion)
+     * @param sadRequestID the ID of the SADRequest extension that was sent to the IdP
+     * @param expectedNoDocs expected number of documents (from the DocCount element of the SADRequest)
+     * @param signRequestID ID for the SignRequest that was included in the SADRequest
+     * @param expectedVersion the SAD version requested in the SADRequest (if {@code null}, 1.0 is assumed)
      * @return a SAD object
      * @throws SADValidationException for validation errors
      */
     public SAD validate(final String sadJwt, final String idpEntityID, final String expectedRecipientEntityID,
         final String expectedSubject, final String expectedLoa, final String sadRequestID, final int expectedNoDocs,
-        final String signRequestID) throws SADValidationException {
+        final String signRequestID, final SADVersion expectedVersion) throws SADValidationException {
 
       final long now = System.currentTimeMillis() / 1000;
 
@@ -337,7 +376,8 @@ public class SADParser {
         final SAD sad = SAD.fromJson(new String(Base64.getUrlDecoder().decode(payload), StandardCharsets.UTF_8));
 
         return this.validate(signedJwt, sad, now, idpEntityID, expectedRecipientEntityID, expectedSubject, expectedLoa,
-            sadRequestID, expectedNoDocs, signRequestID);
+            sadRequestID, expectedNoDocs, signRequestID,
+            expectedVersion != null ? expectedVersion : SADVersion.VERSION_10);
       }
       catch (final ParseException | JacksonException e) {
         throw new SADValidationException(ErrorCode.JWT_PARSE_ERROR, "Failed to parse SAD JWT", e);
@@ -359,14 +399,15 @@ public class SADParser {
      *     assertion)
      * @param sadRequestID the ID of the SADRequest extension that was sent to the IdP
      * @param expectedNoDocs expected number of documents (from the DocCount element of the SADRequest
-     * @param signRequestID ID for the SignRequest that was included in the SADRequest
+     * @param signRequestID ID for the SignRequest that was included in the SADRequest
+     * @param expectedVersion the requested SAD version
      * @return a SAD object
      * @throws SADValidationException for validation errors
      */
     private SAD validate(final SignedJWT signedJwt, final SAD sad, final long now, final String idpEntityID,
         final String expectedRecipientEntityID, final String expectedSubject, final String expectedLoa,
-        final String sadRequestID, final int expectedNoDocs, final String signRequestID)
-        throws SADValidationException {
+        final String sadRequestID, final int expectedNoDocs, final String signRequestID,
+        final SADVersion expectedVersion) throws SADValidationException {
 
       // Verify the JWT signature
       //
@@ -379,6 +420,22 @@ public class SADParser {
         logger.info(msg);
         throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
       }
+
+      // Ensure that all required claims are present.
+      //
+      assertClaimPresent(sad.getIssuer(), "iss");
+      assertClaimPresent(sad.getAudience(), "aud");
+      assertClaimPresent(sad.getSubject(), "sub");
+      if (sad.getSeElnSadext() == null) {
+        final String msg = "seElnSadext extension claims are missing from SAD";
+        logger.info(msg);
+        throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
+      }
+      assertClaimPresent(sad.getSeElnSadext().getInResponseTo(), "seElnSadext.irt");
+      assertClaimPresent(sad.getSeElnSadext().getAttributeName(), "seElnSadext.attr");
+      assertClaimPresent(sad.getSeElnSadext().getLoa(), "seElnSadext.loa");
+      assertClaimPresent(sad.getSeElnSadext().getRequestID(), "seElnSadext.reqid");
+      assertClaimPresent(sad.getSeElnSadext().getNumberOfDocuments(), "seElnSadext.docs");
 
       // Make sure that the SAD issuer is the same as the IdP that issued the Assertion
       // that contained the SAD.
@@ -429,12 +486,21 @@ public class SADParser {
         throw new SADValidationException(ErrorCode.VALIDATION_BAD_SUBJECT, msg);
       }
 
-      // Ensure SAD format.
+      // Assert that the SAD version is the requested version.
       //
-      if (sad.getSeElnSadext() == null) {
-        final String msg = "seElnSadext extension claims are missing from SAD";
+      final SADVersion sadVersion;
+      try {
+        sadVersion = sad.getSeElnSadext().getSADVersion();
+      }
+      catch (final IllegalArgumentException e) {
+        final String msg = String.format("SAD contains invalid version (ver) '%s'", sad.getSeElnSadext().getVersion());
         logger.info(msg);
-        throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
+        throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg, e);
+      }
+      if (!Objects.equals(expectedVersion, sadVersion)) {
+        final String msg = String.format("SAD contains version (ver) '%s' - expected '%s'", sadVersion, expectedVersion);
+        logger.info(msg);
+        throw new SADValidationException(ErrorCode.VALIDATION_BAD_VERSION, msg);
       }
 
       // Assert that the SAD was issued based on the given SAD request.
@@ -476,6 +542,22 @@ public class SADParser {
 
       logger.debug("SAD with ID '{}' was successfully validated", sad.getJwtId());
       return sad;
+    }
+
+    /**
+     * Throws a {@link SADValidationException} with code {@link ErrorCode#BAD_SAD_FORMAT} if the supplied claim value is
+     * missing.
+     *
+     * @param value the claim value
+     * @param claimName the claim name (for logging)
+     * @throws SADValidationException if the claim is missing
+     */
+    private static void assertClaimPresent(final Object value, final String claimName) throws SADValidationException {
+      if (value == null || (value instanceof final String s && s.isEmpty())) {
+        final String msg = String.format("Invalid SAD JWT - %s is missing", claimName);
+        logger.info(msg);
+        throw new SADValidationException(ErrorCode.BAD_SAD_FORMAT, msg);
+      }
     }
 
     /**
