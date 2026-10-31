@@ -15,12 +15,19 @@
  */
 package se.swedenconnect.opensaml.sweid.saml2.signservice.sap;
 
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A type safe SAD version enumeration.
  *
  * @author Martin Lindström (martin@idsec.se)
  */
 public class SADVersion {
+
+  /** Pattern for a version string (major.minor). */
+  private static final Pattern VERSION_PATTERN = Pattern.compile("^(\\d+)\\.(\\d+)$");
 
   /** SAD version 1.0. */
   public static final SADVersion VERSION_10 = new SADVersion(1, 0);
@@ -69,12 +76,20 @@ public class SADVersion {
    * Gets the SADVersion for a given version string, such as "1.0".
    *
    * @param version SAD version string
-   *
    * @return SADVersion for the given string
+   * @throws IllegalArgumentException if the supplied string is not a valid version string (major.minor)
    */
-  public static SADVersion valueOf(final String version) {
-    String[] components = version.split("\\.");
-    return valueOf(Integer.valueOf(components[0]), Integer.valueOf(components[1]));
+  public static SADVersion valueOf(final String version) throws IllegalArgumentException {
+    final Matcher matcher = version != null ? VERSION_PATTERN.matcher(version.trim()) : null;
+    if (matcher == null || !matcher.matches()) {
+      throw new IllegalArgumentException("Invalid SAD version: " + version);
+    }
+    try {
+      return valueOf(Integer.parseInt(matcher.group(1)), Integer.parseInt(matcher.group(2)));
+    }
+    catch (final NumberFormatException e) {
+      throw new IllegalArgumentException("Invalid SAD version: " + version, e);
+    }
   }
 
   /**
@@ -99,6 +114,12 @@ public class SADVersion {
   @Override
   public String toString() {
     return this.versionString;
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.majorVersion, this.minorVersion);
   }
 
   /** {@inheritDoc} */

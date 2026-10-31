@@ -56,11 +56,11 @@ import org.opensaml.saml.common.SAMLObject;
  *     <xs:element name="RequesterID" type="xs:string" />
  *     <xs:element name="SignRequestID" type="xs:string" />
  *     <xs:element name="DocCount" type="xs:int" />
- *     <xs:element name="RequestedVersion" type="xs:string" default="1.0" />
+ *     <xs:element name="RequestedVersion" type="xs:string" default="1.0" minOccurs="0" />
  *     <xs:element minOccurs="0" name="RequestParams">
  *       <xs:complexType>
  *         <xs:sequence>
- *           <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameter" type="sap:ParamType" />
+ *           <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameter" type="sap:ParameterType" />
  *         </xs:sequence>
  *       </xs:complexType>
  *     </xs:element>
@@ -159,7 +159,8 @@ public interface SADRequest extends SAMLObject {
   /**
    * Returns the requested version of the SAD.
    *
-   * @return the SAD version
+   * @return the SAD version (1.0 if not set)
+   * @throws IllegalArgumentException if the version is not a valid version string
    */
   SADVersion getRequestedVersion();
 

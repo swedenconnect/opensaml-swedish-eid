@@ -45,4 +45,14 @@ public class SignMessageBuilderTest extends OpenSAMLTestBase {
 
   }
 
+  @Test
+  public void testClearMimeType() throws Exception {
+    final SignMessage msg = SignMessageBuilder.builder()
+        .mimeType(SignMessageMimeTypeEnum.TEXT)
+        .message("This is the sign message")
+        .build();
+    msg.setMimeType((SignMessageMimeTypeEnum) null);
+    Assertions.assertNull(msg.getMimeType());
+  }
+
 }

@@ -23,14 +23,14 @@ import org.opensaml.saml.common.SAMLObject;
 /**
  * Definition of the SAP {@code ParameterType} type.
  *
- * The following schema fragment defines the {@code <sap:SADRequest>} element:
+ * The following schema fragment defines the {@code <sap:Parameter>} type:
  *
  * <pre>
  * {@code
  * <xs:complexType name="ParameterType">
  *   <xs:simpleContent>
  *     <xs:extension base="xs:string">
- *       <xs:attribute name="Name" type="xs:string" use="required" />
+ *       <xs:attribute name="name" type="xs:string" use="required" />
  *     </xs:extension>
  *   </xs:simpleContent>
  * </xs:complexType>}
@@ -56,7 +56,7 @@ public interface Parameter extends XSString, SAMLObject {
   String NAME_ATTR_NAME = "name";
 
   /**
-   * Returns the "Name" attribute.
+   * Returns the "name" attribute.
    *
    * @return the name attribute
    */

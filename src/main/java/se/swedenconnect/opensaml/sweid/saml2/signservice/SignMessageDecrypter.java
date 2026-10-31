@@ -18,6 +18,7 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice;
 import java.util.Collection;
 import java.util.List;
 
+import org.opensaml.core.xml.XMLObject;
 import org.opensaml.security.credential.Credential;
 import org.opensaml.xmlsec.DecryptionParameters;
 import org.opensaml.xmlsec.encryption.support.Decrypter;
@@ -103,15 +104,19 @@ public class SignMessageDecrypter {
    */
   public Message decrypt(final SignMessage signMessage) throws DecryptionException {
     if (signMessage.getEncryptedMessage() == null && signMessage.getMessage() != null) {
-      logger.info("No decryption required - SignMessage contains cleartext message");
+      logger.debug("No decryption required - SignMessage contains cleartext message");
       return signMessage.getMessage();
     }
     if (signMessage.getEncryptedMessage() == null) {
-      final String msg = "No message available";
-      logger.error(msg);
-      throw new DecryptionException(msg);
+      throw new DecryptionException("No message available");
     }
-    return (Message) this.getDecrypter().decryptData(signMessage.getEncryptedMessage().getEncryptedData());
+    final XMLObject decrypted =
+        this.getDecrypter().decryptData(signMessage.getEncryptedMessage().getEncryptedData());
+    if (decrypted instanceof final Message message) {
+      return message;
+    }
+    throw new DecryptionException("Decrypted content is not a Message element - "
+        + (decrypted != null ? decrypted.getElementQName() : "null"));
   }
 
   /**
@@ -119,7 +124,7 @@ public class SignMessageDecrypter {
    *
    * @return the decrypter
    */
-  private Decrypter getDecrypter() {
+  private synchronized Decrypter getDecrypter() {
     if (this.decrypter == null) {
       DecryptionParameters pars = new DecryptionParameters();
       pars.setKEKKeyInfoCredentialResolver(this.keyEncryptionKeyResolver);
@@ -137,8 +142,9 @@ public class SignMessageDecrypter {
    *
    * @param blacklistedAlgorithms non allowed algorithms
    */
-  public void setBlacklistedAlgorithms(final Collection<String> blacklistedAlgorithms) {
+  public synchronized void setBlacklistedAlgorithms(final Collection<String> blacklistedAlgorithms) {
     this.blacklistedAlgorithms = blacklistedAlgorithms;
+    this.decrypter = null;
   }
 
   /**
@@ -146,8 +152,9 @@ public class SignMessageDecrypter {
    *
    * @param whitelistedAlgorithms white listed algorithms
    */
-  public void setWhitelistedAlgorithms(final Collection<String> whitelistedAlgorithms) {
+  public synchronized void setWhitelistedAlgorithms(final Collection<String> whitelistedAlgorithms) {
     this.whitelistedAlgorithms = whitelistedAlgorithms;
+    this.decrypter = null;
   }
 
   /**
@@ -158,8 +165,9 @@ public class SignMessageDecrypter {
    *
    * @param pkcs11Workaround whether to run in PKCS11 workaround mode
    */
-  public void setPkcs11Workaround(final boolean pkcs11Workaround) {
+  public synchronized void setPkcs11Workaround(final boolean pkcs11Workaround) {
     this.pkcs11Workaround = pkcs11Workaround;
+    this.decrypter = null;
   }
 
 }

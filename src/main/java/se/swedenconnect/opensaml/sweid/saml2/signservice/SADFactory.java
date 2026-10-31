@@ -17,6 +17,7 @@ package se.swedenconnect.opensaml.sweid.saml2.signservice;
 
 import java.io.IOException;
 import java.security.SignatureException;
+import java.time.Instant;
 import java.util.Base64;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -240,7 +241,7 @@ public class SADFactory {
         this.sad.setJwtId(RandomStringUtils.random(this.sadFactory.jwtIdSize, true, true));
       }
 
-      this.sad.setIssuedAt((int) (System.currentTimeMillis() / 1000));
+      this.sad.setIssuedAt(Instant.now().getEpochSecond());
       this.sad.setExpiry(this.sad.getIssuedAt() + this.sadFactory.validityTime);
 
       if (this.sad.getSeElnSadext().getVersion() == null) {
